@@ -2,1232 +2,447 @@
 <html lang="en">
 
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1250">
-    <title>The Gifting Co.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Gift For You 🎁 | The Gifting Co.</title>
     <link rel="icon" type="image/png" href="/assets/favicon.png">
-    <link rel="preload" as="image" href="/assets/bg.png">
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
-/* --- THEME VARIABLES --- */
-:root {
-    --bg-gradient: linear-gradient(135deg, #fce0e5 0%, #fac5cf 40%, #fac5cf 100%);
-    --body-bg: #fef2f4;
-    --panel-bg: #fce0e5;
-    --popup-bg: #fce0e5;
-    --receipt-bg: #fef2f4;
-    --card-bg: #ffffff;
-    --text-color: #B71A3D;
-    --heading-color: #B71A3D;
-    --btn-bg: #ffffff;
-    --btn-text: #B71A3D;
-    --cart-btn-bg: #B71A3D;
-    --cart-btn-shadow: #B71A3D;
-    --glow-color: #B71A3D;
-    --glow-soft: #fac5cf;
-    --toast-bg: #B71A3D;
-    --receipt-shadow: #fac5cf;
-    --shelf-overlay: rgba(255,255,255,0.0);
-}
-
-
-
-/* --- BASE --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-body {
-    color: var(--text-color);
-    background-image: url('/assets/bg.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: var(--body-bg);
-    overflow-x: hidden;
-    transition: background 0.5s ease, color 0.5s ease;
-    font-family: 'Fredoka', sans-serif;
-}
-
-
-
-body.receiptPage,
-body.giftPage {
-    background-image: url('/assets/bg.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: var(--receipt-bg);
-    overflow: hidden !important;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar-panel {
-    display: none;
-    /* --- controlled by JS --- */
-    background: var(--popup-bg);
-    padding: 25px;
-    border-radius: 25px;
-    text-align: center;
-    transition: background 0.5s ease, box-shadow 0.5s ease;
-}
-
-#shelf {
-    width: 1000px;
-    height: 800px;
-    background: url("shelf.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: relative;
-    margin: 0 auto;
-
-/* --- Shelf stays strictly center aligned --- */
-}
-
-.character {
-    position: absolute;
-    width: 170px;
-    cursor: pointer;
-    transition: .25s;
-}
-
-.character:hover {
-    transform: scale(1.05);
-}
-
-/* --- CHECKOUT BUTTON --- */
-
-
-/* --- Highlight selected gift element --- */
-.gifSelected {
-    outline: 3px solid #B71A3D !important;
-    outline-offset: 3px;
-}
-
-/* --- Gift text element --- */
-.giftText {
-    min-width: 80px;
-    font-size: 22px;
-    color: var(--heading-color);
-    user-select: none;
-    cursor: move;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-/* --- CUSTOM ALIGNMENTS --- */
-.checkoutTitle, .customizeTitle {
-    text-align: center !important;
-    font-family: 'Pinyon Script', cursive;
-    color: #ffffff;
-    margin-top: 50px;
-    margin-bottom: 10px;
-    font-size: 65px;
-    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
-    font-weight: bold;
-}
-
-
-
-/* --- NAVBAR --- */
-#storeNavbar {
-    background: url(\'assets/kisses-bg.png\') center/cover no-repeat !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    background: rgba(255, 228, 241, 0.95);
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 30px;
-    z-index: 999;
-    border-bottom: 3px solid #fac5cf;
-    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
-    padding: 10px 30px;
-    box-sizing: border-box;
-}
-
-
-
-.navLink {
-    font-size: 20px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    letter-spacing: 0.5px;
-}
-
-.navLink:hover {
-    color: white;
-    transform: translateY(-2px);
-    opacity: 0.9;
-}
-
-.navLink.active {
-    color: white;
-    font-weight: 800;
-    border-bottom: 3px solid var(--heading-color);
-    padding-bottom: 2px;
-}
-
-
-
-/* --- Header Text styling --- */
-.storeHeader {
-    text-align: center;
-    margin-top: 100px;
-    margin-bottom: 20px;
-    color: white;
-    font-family: 'Pinyon Script', cursive;
-    font-size: 56px;
-    text-shadow: 0 2px 12px rgba(90, 0, 53, 0.4);
-    font-weight: bold;
-}
-
-
-
-/* --- BACK TO SHOP BTN --- */
-
-
-/* --- Pulsing red dot for active recording --- */
-.recording-active {
-    animation: recordPulse 1s infinite alternate;
-    color: #e74c3c !important;
-}
-
-@keyframes recordPulse {
-    from { opacity: 0.5; }
-    to { opacity: 1; }
-}
-
-/* --- FINAL PRESENTATION --- */
-.has-audio {
-    cursor: pointer !important;
-    position: relative;
-    transition: transform 0.3s ease;
-}
-
-.has-audio:hover {
-    transform: scale(1.05);
-}
-
-/* --- Plushie speaking / audio wave pulse animation --- */
-.plushie-speaking {
-    animation: audioShake 0.15s infinite alternate;
-    box-shadow: none !important;
-    border-radius: 50%;
-}
-
-@keyframes audioShake {
-    0% { transform: rotate(-2deg) scale(1.02); }
-    100% { transform: rotate(2deg) scale(1.02); }
-}
-
-/* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
-.treats-layout #customScene {
-    width: 600px;
-    height: 600px;
-    background: white;
-    border-radius: 40px;
-    position: relative;
-    overflow: hidden;
-}
-
-#customPanel.treats-controls-panel {
-    width: 280px !important;
-    background: var(--popup-bg);
-    border-radius: 35px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-}
-
-
-
-#customPanel.treats-controls-panel h2 {
-    text-align: center;
-    color: var(--heading-color);
-    margin-bottom: 15px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-}
-
-/* --- Bubbly option elements inside selection panel --- */
-.box-option {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 20px;
-    background: var(--btn-bg);
-    border-radius: 20px;
-    cursor: pointer;
-    margin-bottom: 12px;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    width: 100%;
-}
-
-.box-option:hover {
-    transform: translateY(-3px) scale(1.02);
-    border-color: #B71A3D;
-    box-shadow: 0 5px 12px rgba(183, 26, 61, 0.2);
-}
-
-.box-option.active {
-    background: #fac5cf;
-    border-color: #B71A3D;
-    box-shadow: none;
-}
-
-.box-option img {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
-}
-
-.box-option span {
-    font-size: 16px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    color: var(--text-color);
-}
-
-.box-option.active span {
-    color: #5a0035;
-}
-
-
-
-
-
-
-
-/* --- Customization Buttons Placed Side-by-Side --- */
-.buttons-row {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.buttons-row button {
-    flex: 1;
-    margin: 0 !important;
-    padding: 12px 6px !important;
-    font-size: 14px !important;
-    border-radius: 25px !important;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    background: #fce0e5;
-    color: #5a0035;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
-}
-
-.buttons-row button:hover {
-    transform: scale(1.05);
-}
-
-#saveCustomization {
-    background: #fac5cf !important;
-    color: #5a0035 !important;
-    box-shadow: 0 0 10px pink !important;
-}
-
-#saveCustomization:hover {
-    box-shadow: none !important;
-}
-
-/* --- Spawned Draggable Treats --- */
-.draggableTreat {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
-    cursor: move;
-    z-index: 10;
-    transition: transform 0.1s ease;
-}
-
-.draggableTreatSelected {
-    outline: 3px solid #B71A3D !important;
-    outline-offset: 3px;
-}
-
-/* --- PEARL STARDUST BUTTON DESIGN --- */
-:root {
-    --bg-pink: #fac5cf;
-    --hover-glow: rgba(250, 197, 207, 0.6);
-    --hover-glow-soft: rgba(183, 26, 61, 0.8);
-    --btn-text-color: #5a0035;
-}
-
-
-
-.shiny-cta {
-    outline: none;
-    cursor: pointer;
-    border: 0;
-    position: relative;
-    border-radius: 100px;
-    background-color: var(--bg-pink);
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 6px -2px rgba(183, 26, 61, 0.2);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    padding: 10px 24px;
-}
-
-.shiny-cta span {
-    position: relative;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    color: var(--btn-text-color);
-}
-
-.shiny-cta:hover {
-    filter: brightness(1.05);
-    box-shadow: 0 6px 12px rgba(255, 105, 180, 0.3);
-}
-
-.shiny-cta:active {
-    transform: scale(0.98);
-}
-
-/* --- extra padding for box shadows --- */
-
-
-.carousel-track {
-    display: flex;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.carousel-slide {
-    flex: 0 0 calc(100% / 3);
-
-/* --- Show 3 items --- */
-padding: 0 15px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-}
-
-@media (max-width: 1024px) {
-    .carousel-slide {
-        flex: 0 0 50%;
-
-/* --- Show 2 items --- */
-}
-}
-
-@media (max-width: 768px) {
-    .carousel-slide {
-        flex: 0 0 100%;
-
-/* --- Show 1 item --- */
-}
-    .carousel-wrapper {
-        padding: 0 40px;
-    }
-}
-
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #fafafa;
-    border: 1px solid #e4e4e7;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    color: #52525b;
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-
-
-.carousel-btn:hover:not(:disabled) {
-    background: #f4f4f5;
-    color: #18181b;
-}
-
-
-
-.carousel-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.carousel-prev {
-    left: 0;
-}
-
-.carousel-next {
-    right: 0;
-}
-
-.carousel-slide .flowerCard {
-    width: 100%;
-
-/* --- Take up the slide width --- */
-max-width: 320px;
-
-/* --- Don't get too crazy large --- */
-margin: 0 auto;
-}
-
-/* --- NAV BRAND CENTERING --- */
-.navBrand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;
-    font-family: 'Pinyon Script', cursive;
-    font-size: 32px;
-    color: white !important;
-    text-decoration: none;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.3s ease;
-}
-
-.navBrand:hover {
-    transform: translateX(-50%) scale(1.08);
-    text-shadow: none;
-}
-
-/* --- SHARE BUTTON --- */
-.share-btn-container {
-    position: fixed;
-    top: 90px;
-    right: 30px;
-    z-index: 1000;
-}
-
-/* --- SHARE MODAL OVERLAY --- */
-.share-modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(6px);
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.share-modal-overlay.visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.share-modal {
-    background: var(--popup-bg);
-    border: 2px solid var(--glow-soft);
-    border-radius: 28px;
-    padding: 32px 36px;
-    max-width: 480px;
-    width: 90%;
-    box-shadow: 0 20px 60px rgba(255, 105, 180, 0.25);
-    text-align: center;
-    transform: scale(0.9) translateY(20px);
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.share-modal-overlay.visible .share-modal {
-    transform: scale(1) translateY(0);
-}
-
-.share-modal h3 {
-    font-family: 'Pinyon Script', cursive;
-    color: var(--heading-color);
-    font-size: 26px;
-    margin-bottom: 8px;
-}
-
-.share-modal p {
-    color: var(--text-color);
-    font-family: 'Fredoka', sans-serif;
-    font-size: 14px;
-    margin-bottom: 20px;
-    opacity: 0.8;
-}
-
-.share-url-box {
-    display: flex;
-    align-items: stretch;
-    gap: 0;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 2px solid var(--glow-soft);
-    background: var(--card-bg);
-    margin-bottom: 20px;
-}
-
-.share-url-box input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 14px 16px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 14px;
-    color: var(--text-color);
-    outline: none;
-    min-width: 0;
-}
-
-.share-url-box button {
-    border: none;
-    background: var(--bg-pink);
-    color: var(--btn-text-color);
-    padding: 14px 20px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
-
-.share-url-box button:hover {
-    filter: brightness(1.1);
-}
-
-.share-modal-close {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 22px;
-    cursor: pointer;
-    position: absolute;
-    top: 16px;
-    right: 20px;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-
-.share-modal-close:hover {
-    opacity: 1;
-}
-
-.share-modal {
-    position: relative;
-}
-
-/* Spinner inside share button */
-.share-spinner {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2.5px solid var(--btn-text-color);
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spinShare 0.6s linear infinite;
-    vertical-align: middle;
-    margin-right: 6px;
-}
-
-@keyframes spinShare {
-    to { transform: rotate(360deg); }
-}
-
-/* Toast notification */
-.share-toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--toast-bg);
-    color: white;
-    padding: 12px 28px;
-    border-radius: 50px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
-    z-index: 10001;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
-}
-
-.share-toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-/* --- Share buttons row inside modal --- */
-.share-social-row {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin-bottom: 8px;
-}
-
-.share-social-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 2px solid var(--glow-soft);
-    background: var(--card-bg);
-    color: var(--text-color);
-    font-size: 22px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-}
-
-.share-social-btn:hover {
-    background: var(--bg-pink);
-    transform: translateY(-3px) scale(1.08);
-}
-
-.shiny-cta > span::before {
-    content: "✧";
-    transition: all 0.2s ease;
-}
-
-.shiny-cta:hover > span::before {
-    content: "✦";
-}
-
-body.viewer-mode .checkoutTitle {
-    margin-top: 30px;
-    font-size: 36px;
-    font-weight: bold;
-}
-
-body.viewer-mode {
-    padding-bottom: 40px !important;
-}
-
-.viewer-badge {
-    text-align: center;
-    margin-top: 20px;
-    font-family: 'Pinyon Script', cursive;
-    font-size: 20px;
-    color: var(--text-color);
-    opacity: 0.7;
-}
-
-.viewer-badge a {
-    color: var(--heading-color);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.viewer-badge a:hover {
-    text-decoration: underline;
-}
-
-.nav-action-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--heading-color);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: none;
-    height: 34px;
-    padding: 0 14px;
-    cursor: pointer;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3) !important;
-}
-
-.nav-action-btn:hover {
-    opacity: 0.85;
-    transform: translateY(-2px);
-}
-
-
-
-/* Spinner inside share button */
-.share-spinner {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2.5px solid var(--btn-text-color);
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spinShare 0.6s linear infinite;
-    vertical-align: middle;
-    margin-right: 6px;
-}
-
-@keyframes spinShare {
-    to { transform: rotate(360deg); }
-}
-
-/* Toast notification */
-.share-toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--toast-bg);
-    color: white;
-    padding: 12px 28px;
-    border-radius: 50px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
-    z-index: 10001;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
-}
-
-.share-toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-/* --- NAVBAR BRAND OVERRIDE --- */
-.navBrand, a.navBrand {
-    font-family: 'Pinyon Script', cursive !important;
-    color: white !important;
-    font-size: 38px !important;
-    text-shadow: none !important;
-}
-
-
-
-/* NAVBAR OVERRIDE */
-#storeNavbar {
-    background: #900C3F !important; /* dark cherry red */
-}
-.navBrand, a.navBrand, .navBrand:hover {
-    color: white !important;
-}
-
-#cartButton, #saveCustomization, #saveGiftLayoutBtn, #giftButton {
-    background-color: #ffffff !important;
-}
-#cartButton > span::before, #saveCustomization > span::before, #saveGiftLayoutBtn > span::before, #giftButton > span::before {
-    content: none !important;
-    display: none !important;
-}
-</style>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<style>
-.site-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 45px;
-    padding: 0 20px;
-    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 12px;
-    color: rgba(255, 220, 235, 0.85);
-    width: 100%;
-    box-sizing: border-box;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 9999;
-    pointer-events: none;
-    background: rgba(40, 5, 20, 0.55);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-}
+        :root {
+            --toast-bg: #B71A3D;
+            --heading-color: #B71A3D;
+        }
 
-.site-footer a {
-    color: rgba(255, 200, 220, 0.95);
-    text-decoration: none;
-    font-weight: 600;
-    border-bottom: 1px dotted rgba(255, 200, 220, 0.6);
-    transition: opacity 0.2s ease, color 0.3s ease;
-    pointer-events: auto;
-}
-.site-footer a:hover {
-    opacity: 0.7;
-}
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-image: url('/assets/giftbg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #fef2f4;
+        }
 
-</style>
+        @media (max-width: 768px) {
+            body {
+                background-image: url('/assets/mobilegiftbg.png') !important;
+                background-attachment: scroll;
+            }
+        }
 
-<style>
-/* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
-[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item, .dessert-cart-container, .dessert-spawner-card {
-    border: none !important;
-    box-shadow: none !important;
-    filter: none !important;
-}
+        /* Full-screen scene */
+        #giftScene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
 
-button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-action-btn, .shiny-cta, .navLink {
-    box-shadow: none !important;
-    text-shadow: none !important;
-    filter: none !important;
-}
+        /* Gift elements */
+        .giftEl {
+            position: absolute;
+        }
 
-.flowerCard {
-    height: 100% !important;
-}
+        .giftText {
+            min-width: 60px;
+            font-size: 18px;
+            color: #B71A3D;
+            user-select: none;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
 
-.flowerSelector {
-    margin-top: auto !important;
-}
+        .noteText {
+            position: absolute;
+            top: 12%;
+            left: 10%;
+            width: 75%;
+            height: 70%;
+            overflow: hidden;
+            text-align: center;
+            word-wrap: break-word;
+            font-size: 18px;
+            user-select: none;
+        }
 
-.flowerCard .customizeBtn {
-    margin-top: 0 !important;
-}
+        /* Download button */
+        #downloadBtn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 9999;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(183, 26, 61, 0.90);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 10px 20px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px rgba(183, 26, 61, 0.35);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
 
-</style>
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+        #downloadBtn:hover {
+            opacity: 0.88;
+            transform: translateY(-2px);
+        }
+
+        /* Toast */
+        .share-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--toast-bg);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 10001;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .share-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Spinner */
+        .share-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2.5px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spinShare 0.6s linear infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes spinShare {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Audio animations */
+        .has-audio { cursor: pointer; transition: transform 0.3s ease; }
+        .has-audio:hover { transform: scale(1.05); }
+        .plushie-speaking { animation: audioShake 0.15s infinite alternate; }
+        @keyframes audioShake {
+            0%   { transform: rotate(-2deg) scale(1.02); }
+            100% { transform: rotate(2deg) scale(1.02); }
+        }
+
+        /* Footer badge */
+        .viewer-badge {
+            position: fixed;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 13px;
+            color: rgba(183, 26, 61, 0.7);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .viewer-badge a {
+            color: #B71A3D;
+            text-decoration: none;
+            font-weight: 600;
+            pointer-events: auto;
+        }
+
+        /* Loading state */
+        #loadingMsg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Fredoka', sans-serif;
+            font-size: 24px;
+            color: #B71A3D;
+            text-align: center;
+        }
+    </style>
 </head>
 
-<body class="giftPage">
+<body>
+    <!-- Full-screen gift scene -->
+    <div id="giftScene"></div>
 
+    <!-- Download button fixed top-right -->
+    <button id="downloadBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" x2="12" y1="15" y2="3"/>
+        </svg>
+        <span>Save</span>
+    </button>
 
+    <!-- Viewer badge -->
+    <div class="viewer-badge">Made with <a href="https://thegifting.vercel.app" target="_blank" rel="noopener">The Gifting Co.</a></div>
 
-    
+    <!-- Loading message -->
+    <div id="loadingMsg">Loading your gift... 🎁</div>
 
-    <!-- Title Header -->
-    <h1 class="checkoutTitle" style="text-align: center !important;">Your Wrapped Gift Card</h1>
-
-    <!-- Display the stationary gift layout -->
-    <div id="giftContainer" style="display: flex; flex: 1; min-height: 0; align-items: center; gap: 20px; justify-content: center; width: 95%; max-width: 1250px; margin: 0 auto; padding-top: 10px; padding-bottom: 20px;">
-        <div id="giftScene" style="height: 65vh; background: var(--card-bg); border-radius: 25px; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(183, 26, 61, 0.2); border: 4px solid var(--border-color); flex: 1;">
-            <!-- Arranged elements will be reconstructed here dynamically -->
-        </div>
-    </div>
-
-
-    <!-- Dynamic Warning Banner "Click on your gifts!" will be appended here by JS if voice note exists -->
-
-    <script>
-/* -------------------- */
-/* THEME TOGGLE         */
-/* -------------------- */
-
-// Apply saved theme immediately to <html> to prevent flash
-
-
-</script>
     <script type="module">
-import { getGift } from '/firebase-config.js';
+        import { getGift } from '/firebase-config.js';
 
-const giftScene = document.getElementById("giftScene");
+        const giftScene = document.getElementById('giftScene');
+        const loadingMsg = document.getElementById('loadingMsg');
 
-function resolveMainSrc(src) {
-    if (!src) return "";
-    if (src.startsWith("data:")) return src;
-    let path = src.replace(/\\/g, "/");
-    const assetsIndex = path.toLowerCase().indexOf("assets/");
-    if (assetsIndex !== -1) {
-        const p = path.substring(assetsIndex);
-        return p.startsWith("/") ? p : "/" + p;
-    }
-    return src;
-}
-
-function resolveAccessorySrc(src) {
-    if (!src) return "";
-    let path = src.replace(/\\/g, "/");
-    const assetsIndex = path.toLowerCase().indexOf("assets/");
-    if (assetsIndex !== -1) {
-        const p = path.substring(assetsIndex);
-        return p.startsWith("/") ? p : "/" + p;
-    }
-    const filename = path.split("/").pop();
-    if (filename.includes("custom")) {
-        return "/assets/plushies/" + filename;
-    } else if (filename.includes("dessert") || filename.includes("box")) {
-        return "/assets/treats/" + filename;
-    } else if (filename.includes("flower") || filename.includes("bow") || filename.includes("holder")) {
-        return "/assets/flowers/" + filename;
-    }
-    return "/assets/treats/" + filename;
-}
-
-window.isViewerMode = true;
-const isViewerMode = true;
-document.body.classList.add('viewer-mode');
-const titleEl = document.querySelector('.checkoutTitle');
-if (titleEl) titleEl.textContent = 'A Gift For You';
-
-let savedLayout = [];
-window.globalAudioUrl = null;
-
-async function initViewer() {
-    let docId = new URLSearchParams(window.location.search).get('id');
-    if (!docId) {
-        const pathParts = window.location.pathname.split('/');
-        docId = pathParts[pathParts.length - 1];
-    }
-    if (!docId || docId === 'result.html' || docId === 'gift') {
-        giftScene.innerHTML = '<div style="text-align: center; margin-top: 100px; font-family: Fredoka, sans-serif; font-size: 24px;">Gift not found or invalid link.</div>';
-        return;
-    }
-    
-    try {
-        const giftData = await getGift(docId);
-        if (giftData) {
-            savedLayout = giftData.components || [];
-            renderGift();
-        } else {
-            giftScene.innerHTML = '<div style="text-align: center; margin-top: 100px; font-family: Fredoka, sans-serif; font-size: 24px;">Gift not found!</div>';
+        /* ---------- src helpers ---------- */
+        function resolveMainSrc(src) {
+            if (!src) return '';
+            if (src.startsWith('data:')) return src;
+            let path = src.replace(/\\/g, '/');
+            const i = path.toLowerCase().indexOf('assets/');
+            if (i !== -1) {
+                const p = path.substring(i);
+                return p.startsWith('/') ? p : '/' + p;
+            }
+            return src;
         }
-    } catch (e) {
-        console.error("Error loading gift:", e);
-        giftScene.innerHTML = '<div style="text-align: center; margin-top: 100px; font-family: Fredoka, sans-serif; font-size: 24px;">Error loading gift.</div>';
-    }
-}
 
-initViewer();
+        function resolveAccessorySrc(src) {
+            if (!src) return '';
+            let path = src.replace(/\\/g, '/');
+            const i = path.toLowerCase().indexOf('assets/');
+            if (i !== -1) {
+                const p = path.substring(i);
+                return p.startsWith('/') ? p : '/' + p;
+            }
+            const filename = path.split('/').pop();
+            if (filename.includes('custom'))  return '/assets/plushies/' + filename;
+            if (filename.includes('dessert') || filename.includes('box')) return '/assets/treats/' + filename;
+            if (filename.includes('flower')  || filename.includes('bow') || filename.includes('holder')) return '/assets/flowers/' + filename;
+            return '/assets/treats/' + filename;
+        }
 
-function renderGift() {
-/* Reconstruct everything inside the stationary scene */
-savedLayout.forEach(item => {
-    const wrapper = document.createElement("div");
-    wrapper.className = "giftEl";
-    wrapper.style.position = "absolute";
-    
-    const finalSceneW = giftScene.clientWidth || 800;
-    if (item.centerOffset !== undefined && typeof item.left === 'string' && !item.left.endsWith('%')) {
-        wrapper.style.left = (finalSceneW / 2 + item.centerOffset) + "px";
-    } else {
-        wrapper.style.left = item.left || "50%";
-    }
-    wrapper.style.top = item.top || "50%";
-    wrapper.style.width = item.width;
-    wrapper.style.height = item.height;
-    wrapper.style.zIndex = item.zIndex;
-    
-    // Set transform states
-    const rotation = item.rotation || "0";
-    const flip = item.flip || "1";
-    wrapper.style.transform = `rotate(${rotation}deg) scaleX(${flip})`;
+        /* ---------- load gift ---------- */
+        let savedLayout = [];
 
-    if (item.type === "plushie") {
-        // Base plushie image
-        const img = document.createElement("img");
-        img.src = resolveMainSrc(item.src);
-        img.style.position = "absolute";
-        img.style.width = "100%";
-        img.style.height = "auto";
-        img.style.left = "0";
-        img.style.top = "0";
-        img.draggable = false;
-        wrapper.appendChild(img);
-
-        // Reconstruct overlays (accessories)
-        if (item.accessories && item.accessories.length > 0) {
-            const isBouquet = item.isBouquet === true || (item.src && item.src.startsWith("data:image"));
-            const canvasW = isBouquet ? 600 : 280;
-            const canvasL = isBouquet ? 50 : 210;
-            const canvasT = isBouquet ? 50 : 210;
-            
-            item.accessories.forEach(acc => {
-                const accessory = document.createElement("img");
-                let src = acc.image;
-                if (src) {
-                    src = resolveAccessorySrc(src);
+        async function initViewer() {
+            let docId = new URLSearchParams(window.location.search).get('id');
+            if (!docId) {
+                const parts = window.location.pathname.split('/');
+                docId = parts[parts.length - 1];
+            }
+            if (!docId || docId === 'result.html' || docId === 'gift') {
+                loadingMsg.textContent = 'Gift not found or invalid link.';
+                return;
+            }
+            try {
+                const giftData = await getGift(docId);
+                if (giftData) {
+                    savedLayout = giftData.components || [];
+                    loadingMsg.remove();
+                    renderGift();
+                } else {
+                    loadingMsg.textContent = 'Gift not found!';
                 }
-                accessory.src = src;
-                accessory.style.position = "absolute";
-                accessory.style.pointerEvents = "none";
-                
-                const rawLeft = parseFloat(acc.left);
-                const rawTop  = parseFloat(acc.top);
-                const rawWidth = parseFloat(acc.width);
-                
-                accessory.style.left  = (((rawLeft - canvasL) / canvasW) * 100) + "%";
-                accessory.style.top   = (((rawTop  - canvasT) / canvasW) * 100) + "%";
-                accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
-                accessory.style.transform = `rotate(${acc.rotation || 0}deg) scaleX(${acc.flip || 1})`;
-                wrapper.appendChild(accessory);
+            } catch (e) {
+                console.error('Error loading gift:', e);
+                loadingMsg.textContent = 'Error loading gift.';
+            }
+        }
+
+        initViewer();
+
+        /* ---------- render ---------- */
+        function renderGift() {
+            const isMobile = window.innerWidth <= 768;
+
+            // Original gift.html canvas reference dimensions
+            const GIFT_CANVAS_W = 900;
+            const GIFT_CANVAS_H = window.innerHeight * 0.55;
+
+            // Safe zone between the 4 bows — different for desktop vs mobile
+            const safeLeft = isMobile ? window.innerWidth  * 0.08 : window.innerWidth  * 0.15;
+            const safeTop  = isMobile ? window.innerHeight * 0.18 : window.innerHeight * 0.13;
+            const safeW    = isMobile ? window.innerWidth  * 0.84 : window.innerWidth  * 0.70;
+            const safeH    = isMobile ? window.innerHeight * 0.60 : window.innerHeight * 0.74;
+
+            const scaleX = safeW / GIFT_CANVAS_W;
+            const scaleY = safeH / GIFT_CANVAS_H;
+
+            savedLayout.forEach(item => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'giftEl';
+                wrapper.style.position = 'absolute';
+
+                // Compute original left
+                let origLeft;
+                if (item.centerOffset !== undefined) {
+                    origLeft = GIFT_CANVAS_W / 2 + item.centerOffset;
+                } else {
+                    origLeft = parseFloat(item.left) || 0;
+                }
+                const origTop = parseFloat(item.top) || 0;
+
+                wrapper.style.left   = (safeLeft + origLeft * scaleX) + 'px';
+                wrapper.style.top    = (safeTop  + origTop  * scaleY) + 'px';
+                if (item.width)  wrapper.style.width  = (parseFloat(item.width)  * scaleX) + 'px';
+                if (item.height) wrapper.style.height = (parseFloat(item.height) * scaleY) + 'px';
+                wrapper.style.zIndex = item.zIndex;
+
+                const rotation = item.rotation || '0';
+                const flip     = item.flip || '1';
+                wrapper.style.transform = `rotate(${rotation}deg) scaleX(${flip})`;
+
+                /* ----- plushie ----- */
+                if (item.type === 'plushie') {
+                    const img = document.createElement('img');
+                    img.src = resolveMainSrc(item.src);
+                    img.style.position = 'absolute';
+                    img.style.width = '100%';
+                    img.style.height = 'auto';
+                    img.style.left = '0';
+                    img.style.top = '0';
+                    img.draggable = false;
+                    wrapper.appendChild(img);
+
+                    if (item.accessories && item.accessories.length > 0) {
+                        const isBouquet = item.isBouquet === true || (item.src && item.src.startsWith('data:image'));
+                        const canvasW = isBouquet ? 600 : 280;
+                        const canvasL = isBouquet ? 50 : 210;
+                        const canvasT = isBouquet ? 50 : 210;
+
+                        item.accessories.forEach(acc => {
+                            const accessory = document.createElement('img');
+                            accessory.src = resolveAccessorySrc(acc.image);
+                            accessory.style.position = 'absolute';
+                            accessory.style.pointerEvents = 'none';
+                            const rawLeft  = parseFloat(acc.left);
+                            const rawTop   = parseFloat(acc.top);
+                            const rawWidth = parseFloat(acc.width);
+                            accessory.style.left  = (((rawLeft - canvasL) / canvasW) * 100) + '%';
+                            accessory.style.top   = (((rawTop  - canvasT) / canvasW) * 100) + '%';
+                            accessory.style.width = ((rawWidth / canvasW) * 100) + '%';
+                            accessory.style.transform = `rotate(${acc.rotation || 0}deg) scaleX(${acc.flip || 1})`;
+                            wrapper.appendChild(accessory);
+                        });
+                    }
+
+                    // Voice note
+                    if (item.voiceNote) {
+                        wrapper.classList.add('has-audio');
+                        const audio = new Audio(item.voiceNote);
+                        wrapper.addEventListener('click', () => { audio.currentTime = 0; audio.play(); });
+                        wrapper.querySelector('img').classList.add('has-audio');
+                    }
+                }
+                /* ----- note ----- */
+                else if (item.type === 'note') {
+                    const paper = document.createElement('img');
+                    paper.src = resolveMainSrc(item.src);
+                    paper.style.width = '100%';
+                    paper.draggable = false;
+                    wrapper.appendChild(paper);
+                    wrapper.className = 'note giftEl';
+
+                    if (item.noteTextDetails) {
+                        const textDiv = document.createElement('div');
+                        textDiv.className = 'noteText';
+                        textDiv.innerText = item.noteTextDetails.text;
+                        textDiv.style.fontFamily = item.noteTextDetails.fontFamily;
+                        textDiv.style.color = item.noteTextDetails.color;
+                        wrapper.appendChild(textDiv);
+                    }
+                }
+                /* ----- sticker ----- */
+                else if (item.type === 'sticker') {
+                    const img = document.createElement('img');
+                    img.src = resolveMainSrc(item.src);
+                    img.style.width = '100%';
+                    img.draggable = false;
+                    wrapper.appendChild(img);
+                }
+                /* ----- text ----- */
+                else if (item.type === 'text') {
+                    wrapper.className = 'giftEl giftText';
+                    wrapper.innerText = item.text;
+                    wrapper.style.fontFamily = item.fontFamily;
+                    wrapper.style.fontSize   = item.fontSize;
+                    wrapper.style.color      = item.color;
+                    wrapper.style.userSelect = 'none';
+                }
+
+                giftScene.appendChild(wrapper);
             });
         }
-    }
-    else if (item.type === "note") {
-        const paper = document.createElement("img");
-        paper.src = resolveMainSrc(item.src);
-        paper.style.width = "100%";
-        paper.draggable = false;
-        wrapper.appendChild(paper);
-        wrapper.className = "note giftEl";
 
-        if (item.noteTextDetails) {
-            const textDiv = document.createElement("div");
-            textDiv.className = "noteText";
-            textDiv.style.position = "absolute";
-            textDiv.style.top = "12%";
-            textDiv.style.left = "10%";
-            textDiv.style.width = "75%";
-            textDiv.style.height = "70%";
-            textDiv.style.overflow = "hidden";
-            textDiv.style.textAlign = "center";
-            textDiv.style.wordWrap = "break-word";
-            textDiv.style.fontSize = "18px";
-            textDiv.style.userSelect = "none";
-            
-            textDiv.innerText = item.noteTextDetails.text;
-            textDiv.style.fontFamily = item.noteTextDetails.fontFamily;
-            textDiv.style.color = item.noteTextDetails.color;
-            wrapper.appendChild(textDiv);
-        }
-    } 
-    else if (item.type === "sticker") {
-        const img = document.createElement("img");
-        img.src = resolveMainSrc(item.src);
-        img.style.width = "100%";
-        img.draggable = false;
-        wrapper.appendChild(img);
-    } 
-    else if (item.type === "text") {
-        wrapper.className = "giftEl giftText";
-        wrapper.innerText = item.text;
-        wrapper.style.fontFamily = item.fontFamily;
-        wrapper.style.fontSize = item.fontSize;
-        wrapper.style.color = item.color;
-        wrapper.style.userSelect = "none";
-    }
-
-    giftScene.appendChild(wrapper);
-});
-} // end renderGift
-
-/* -------------------------------- */
-/* DOWNLOAD BUTTON LOGIC            */
-/* -------------------------------- */
-
-// Show a toast notification
-function showShareToast(message) {
-    let toast = document.querySelector('.share-toast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.className = 'share-toast';
-        document.body.appendChild(toast);
-    }
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-}
-
-// Create the download button
-const shareBtn = document.createElement('button');
-shareBtn.id = 'shareGiftBtn';
-shareBtn.className = 'nav-action-btn';
-shareBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg><span>Download</span>';
-
-shareBtn.style.position = 'fixed';
-shareBtn.style.top = '20px';
-shareBtn.style.right = '20px';
-shareBtn.style.zIndex = '10000';
-document.body.appendChild(shareBtn);
-
-// Download button click handler
-shareBtn.addEventListener('click', async () => {
-        const span = shareBtn.querySelector('span');
-        const originalText = span.innerHTML;
-        
-        // Show spinner state
-        span.innerHTML = '<span class="share-spinner"></span> Downloading...';
-        shareBtn.disabled = true;
-        shareBtn.style.opacity = '0.7';
-
-        try {
-            if (typeof html2canvas === 'undefined') {
-                throw new Error("html2canvas library failed to load.");
+        /* ---------- download ---------- */
+        function showToast(message) {
+            let toast = document.querySelector('.share-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'share-toast';
+                document.body.appendChild(toast);
             }
-
-            const canvas = await html2canvas(document.getElementById('giftScene'), {
-                scale: 2, // High quality
-                useCORS: true,
-                allowTaint: false
-            });
-            const imgData = canvas.toDataURL('image/jpeg', 0.9);
-            const link = document.createElement('a');
-            link.href = imgData;
-            link.download = 'gift.jpg';
-            document.body.appendChild(link);
-            link.click();
-            
-            document.body.removeChild(link);
-            const wm = document.getElementById("download-watermark");
-            if (wm) wm.remove();
-            showShareToast(' Image downloaded!');
-        } catch (error) {
-            console.error("Error creating image:", error);
-            if (window.location.protocol === 'file:') {
-                alert("Cannot download image directly from local files (file://) due to browser security restrictions. Please use a local web server (like VS Code Live Server) to enable downloads, or take a screenshot.");
-            } else {
-                alert("Failed to download image: " + (error.message || error));
-            }
-        } finally {
-            const wm = document.getElementById('download-watermark');
-            if (wm) wm.remove();
-            // Restore button
-            span.innerHTML = originalText;
-            shareBtn.disabled = false;
-            shareBtn.style.opacity = '1';
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
         }
-    });
-</script>
 
+        const downloadBtn = document.getElementById('downloadBtn');
+        downloadBtn.addEventListener('click', async () => {
+            const span = downloadBtn.querySelector('span');
+            const orig = span.innerHTML;
+            span.innerHTML = '<span class="share-spinner"></span> Saving...';
+            downloadBtn.disabled = true;
 
-    <!-- Footer -->
-    <footer class="site-footer">&copy; 2026 | Made with <a href="https://thegifting.vercel.app" target="_blank" rel="noopener noreferrer" style="margin-left: 4px;">The Gifting Co.</a></footer>
-
-
-<style>
-#storeNavbar {
-    border-bottom: none !important;
-}
-</style>
+            try {
+                if (typeof html2canvas === 'undefined') throw new Error('html2canvas not loaded');
+                const canvas = await html2canvas(giftScene, { scale: 2, useCORS: true, allowTaint: false });
+                const imgData = canvas.toDataURL('image/jpeg', 0.9);
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'gift.jpg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast('✓ Image saved!');
+            } catch (err) {
+                console.error(err);
+                if (window.location.protocol === 'file:') {
+                    alert('Please open via a web server to enable image saving.');
+                } else {
+                    showToast('Failed to save image.');
+                }
+            } finally {
+                span.innerHTML = orig;
+                downloadBtn.disabled = false;
+            }
+        });
+    </script>
 </body>
-
 </html>

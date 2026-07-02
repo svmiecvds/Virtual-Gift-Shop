@@ -54,8 +54,9 @@ body.receiptPage,
 body.giftPage {
     color: var(--text-color);
     background-image: url('assets/notesbg.png');
-    background-repeat: repeat;
-    background-size: 350px;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
     background-attachment: fixed;
     background-color: var(--body-bg);
     overflow: hidden !important;
@@ -217,12 +218,13 @@ body.giftPage {
 
 /* --- BACK TO SHOP BTN --- */
 
-
-
+@keyframes recordPulse {
+    from { opacity: 0.5; }
     to { opacity: 1; }
 }
 
-
+@keyframes audioShake {
+    0%   { transform: rotate(-2deg) scale(1.02); }
     100% { transform: rotate(2deg) scale(1.02); }
 }
 
@@ -869,29 +871,34 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 <body class="giftPage no-scroll">
 
+    <style>
+    #saveCustomization {
+        background-color: #ffffff !important;
+    }
+    #saveCustomization > span::before {
+        content: none !important;
+        display: none !important;
+    }
+    </style>
     <!-- Baby Pink Navbar -->
     <nav id="storeNavbar">
         <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
-        <div style="margin-left: auto; display: flex; align-items: center; gap: 30px;">
-            <a href="plushies.html" class="navLink">Plushies</a>
-            <a href="flowers.html" class="navLink">Flowers</a>
-            <a href="treats.html" class="navLink">Treats</a>
-            <a href="notes.html" class="navLink active">Notes</a>
-            <button class="shiny-cta" id="cartBtn" style="padding: 8px 16px; font-size: 14px;" onclick="window.location.href='final.html'">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px; vertical-align: text-bottom;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                Cart <span id="cartCount" style="background: white; color: var(--heading-color); border-radius: 50%; padding: 2px 6px; font-size: 12px; margin-left: 5px;">0</span>
-            </button>
-        </div>
+        <a href="plushies.html" class="navLink">Plushies</a>
+        <a href="flowers.html" class="navLink">Flowers</a>
+        <a href="treats.html" class="navLink">Treats</a>
+        <a href="notes.html" class="navLink active">Notes</a>
+        <button id="saveCustomization" class="shiny-cta" style="padding: 8px 16px; font-size: 14px;">
+            <span>Save Changes</span>
+        </button>
     </nav>
 
     <!-- Header Text -->
-    <h1 class="storeHeader">add notes and stickers</h1>
 
-    <div id="mainContainer" style="display: flex; gap: 20px; justify-content: center; align-items: stretch; width: 100%; max-width: 1200px; margin: 0 auto; height: 600px;">
+    <div id="mainContainer" style="display: flex; gap: 20px; justify-content: center; align-items: stretch; width: 100%; max-width: 1200px; margin: 100px auto 40px auto; height: calc(100vh - 140px); max-height: 600px;">
         
         <!-- Left Panel: Notes -->
-        <div id="leftPanel" style="width: 220px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
-            <h2 style="color: var(--heading-color); margin-bottom: 15px; text-align: center; font-family: var(--font-ui);">Notes</h2>
+        <div id="leftPanel" style="width: 280px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
+            <h2 style="color: white; margin-bottom: 15px; text-align: center; font-family: var(--font-ui);">Notes</h2>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                 <div class="box-option noteTemplate" data-src="assets/final page/note1.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note1.png" style="width: 100%; height: auto; object-fit: contain;"></div>
                 <div class="box-option noteTemplate" data-src="assets/final page/note2.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note2.png" style="width: 100%; height: auto; object-fit: contain;"></div>
@@ -934,8 +941,8 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         </div>
 
         <!-- Right Panel: Stickers -->
-        <div id="rightPanel" style="width: 220px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
-            <h2 style="color: var(--heading-color); margin-bottom: 15px; text-align: center; font-family: var(--font-ui);">Stickers</h2>
+        <div id="rightPanel" style="width: 280px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
+            <h2 style="color: white; margin-bottom: 15px; text-align: center; font-family: var(--font-ui);">Stickers</h2>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                 <div class="box-option stickerTemplate" data-src="assets/final page/sticker1.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker1.png" style="width: 100%; height: auto; object-fit: contain;"></div>
                 <div class="box-option stickerTemplate" data-src="assets/final page/sticker 2.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker 2.png" style="width: 100%; height: auto; object-fit: contain;"></div>
@@ -947,9 +954,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_blue.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_clip_blue.png" style="width: 100%; height: auto; object-fit: contain;"></div>
                 <div class="box-option stickerTemplate" data-src="assets/final page/sticker_camera.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_camera.png" style="width: 100%; height: auto; object-fit: contain;"></div>
             </div>
-            <button id="saveCustomization" class="shiny-cta" style="margin-top: 20px; padding: 12px; width: 100%; font-size: 16px; border: none; border-radius: 50px;">
-                <span>Save Changes</span>
-            </button>
+
         </div>
 
     </div>
@@ -1123,27 +1128,9 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             });
         });
         
+        
         sessionStorage.setItem("cart", JSON.stringify(cart));
-        
-        const cartCountEl = document.getElementById('cartCount');
-        if (cartCountEl) cartCountEl.innerText = cart.length;
-        
-        const toast = document.getElementById('toast');
-        toast.style.display = 'block';
-        
-        mainNote.style.display = 'none';
-        noteData.src = null;
-        noteData.text = '';
-        noteText.style.display = 'none';
-        placeholderMsg.style.display = 'flex';
-        addTextBtn.style.display = 'none';
-        stickers.forEach(s => s.remove());
-        stickers = [];
-        selectElement(null);
-        
-        setTimeout(() => {
-            toast.style.display = 'none';
-        }, 2500);
+        window.location.href = "checkout.html";
     });
 
     // Dragging / Rotate / Resize Logic

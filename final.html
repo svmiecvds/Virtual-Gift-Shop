@@ -872,13 +872,15 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 <body class="giftPage" style="overflow-x: hidden; overflow-y: auto;">
 
-    <div id="navDownloadContainer" style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; padding: 20px; width: 95%; max-width: 1250px; margin: 0 auto;"></div>
+    <!-- Fixed Share Link Button -->
+    <div id="navDownloadContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; align-items: center; gap: 10px;"></div>
 
     <!-- Title Header -->
-    <h1 class="storeHeader" style="text-align: center !important; margin-bottom: 20px;">Your Wrapped Gift Card</h1>
+    <h1 class="storeHeader" style="text-align: center; position: relative; z-index: 10; margin-top: 20px; pointer-events: none;">Your Wrapped Gift Card</h1>
+
     <!-- Display the stationary gift layout -->
-    <div id="giftContainer" style="display: flex; flex: 1; min-height: 0; align-items: center; gap: 20px; justify-content: center; width: 95%; max-width: 1250px; margin: 0 auto; padding-top: 10px; padding-bottom: 20px;">
-        <div id="giftScene" style="height: 65vh; background: var(--card-bg); border-radius: 25px; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(183, 26, 61, 0.2); border: 4px solid var(--border-color); flex: 1;">
+    <div id="giftContainer" style="display: flex; width: 100%; height: 100vh; margin: 0; padding: 0;">
+        <div id="giftScene" style="width: 100%; height: 100vh; position: relative; overflow: hidden; flex: 1;">
             <!-- Arranged elements will be reconstructed here dynamically -->
         </div>
     </div>
@@ -960,22 +962,56 @@ let savedLayout = [];
 
 
 /* Reconstruct everything inside the stationary scene */
+// The gift.html canvas was max-width 900px, height ~55vh.
+// We need to map item positions from that canvas into the full-screen scene,
+// but keep them within the "between the bows" safe zone.
+// The background image (giftbg.png) has bows in the corners.
+// Safe zone is roughly 15% inset from each edge.
+const GIFT_CANVAS_W = 900;  // approximate gift.html canvas width
+const GIFT_CANVAS_H = window.innerHeight * 0.55; // approximate gift.html canvas height
+
+// Safe zone in final.html (between the 4 bows)
+const safeLeft   = window.innerWidth  * 0.15;
+const safeTop    = window.innerHeight * 0.13;
+const safeW      = window.innerWidth  * 0.70;
+const safeH      = window.innerHeight * 0.74;
+
 savedLayout.forEach(item => {
     const wrapper = document.createElement("div");
     wrapper.className = "giftEl";
     wrapper.style.position = "absolute";
-    
-    const finalSceneW = giftScene.clientWidth || 800;
-    if (item.centerOffset !== undefined && typeof item.left === 'string' && !item.left.endsWith('%')) {
-        wrapper.style.left = (finalSceneW / 2 + item.centerOffset) + "px";
+
+    // Compute original pixel left from centerOffset or raw left
+    let origLeft;
+    if (item.centerOffset !== undefined) {
+        origLeft = GIFT_CANVAS_W / 2 + item.centerOffset;
     } else {
-        wrapper.style.left = item.left || "50%";
+        origLeft = parseFloat(item.left) || 0;
     }
-    wrapper.style.top = item.top || "50%";
-    wrapper.style.width = item.width;
-    wrapper.style.height = item.height;
+    const origTop = parseFloat(item.top) || 0;
+
+    // Scale from gift canvas space → safe zone in final scene
+    const scaleX = safeW / GIFT_CANVAS_W;
+    const scaleY = safeH / GIFT_CANVAS_H;
+
+    const newLeft = safeLeft + origLeft * scaleX;
+    const newTop  = safeTop  + origTop  * scaleY;
+
+    wrapper.style.left = newLeft + "px";
+    wrapper.style.top  = newTop  + "px";
+
+    // Scale size too
+    if (item.width) {
+        const origW = parseFloat(item.width);
+        wrapper.style.width = (origW * scaleX) + "px";
+    }
+    if (item.height) {
+        const origH = parseFloat(item.height);
+        wrapper.style.height = (origH * scaleY) + "px";
+    }
+
     wrapper.style.zIndex = item.zIndex;
-    
+
     // Set transform states
     const rotation = item.rotation || "0";
     const flip = item.flip || "1";
@@ -1327,8 +1363,22 @@ shareBtn.addEventListener('click', async () => {
                 linkBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span>Share Link</span>';
                 
                 shareBtnContainer.appendChild(linkBtn);
+
+                // Cache the generated doc ID so we don't create a new one every click
+                let cachedShareUrl = null;
                 
                 linkBtn.addEventListener('click', async () => {
+                    // If we already have a URL, just copy it again
+                    if (cachedShareUrl) {
+                        try {
+                            await navigator.clipboard.writeText(cachedShareUrl);
+                            showShareToast('Link copied to clipboard!');
+                        } catch (e) {
+                            showShareToast('Error copying link.');
+                        }
+                        return;
+                    }
+
                     const span = linkBtn.querySelector('span');
                     const originalText = span.innerHTML;
                     span.innerHTML = '<span class="share-spinner"></span> Saving...';
@@ -1346,11 +1396,9 @@ shareBtn.addEventListener('click', async () => {
                         }
                         
                         const docId = await saveGift(layoutToSave, audioDataUrl);
-                        // If hosting is running on 127.0.0.1 without Firebase rewrite, the URL won't work locally without Firebase Serve. 
-                        // It assumes the Firebase Hosting rewrites are active.
-                        const shareUrl = window.location.origin + '/gift/' + docId;
+                        cachedShareUrl = window.location.origin + '/gift/' + docId;
                         
-                        await navigator.clipboard.writeText(shareUrl);
+                        await navigator.clipboard.writeText(cachedShareUrl);
                         showShareToast('Link copied to clipboard!');
                     } catch (error) {
                         console.error('Error sharing gift:', error);
@@ -1369,27 +1417,39 @@ shareBtn.addEventListener('click', async () => {
 
 <style>
 #giftScene {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
-    backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    border-top: 2px solid rgba(255, 255, 255, 0.8) !important;
-    border-left: 2px solid rgba(255, 255, 255, 0.8) !important;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1),
-        inset 0 4px 10px rgba(255, 255, 255, 0.6),
-        inset 0 -4px 10px rgba(255, 182, 193, 0.2) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
-</style>
-
-<style>
-#giftScene {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
-    backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    border-top: 2px solid rgba(255, 255, 255, 0.8) !important;
-    border-left: 2px solid rgba(255, 255, 255, 0.8) !important;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1),
-        inset 0 4px 10px rgba(255, 255, 255, 0.6),
-        inset 0 -4px 10px rgba(255, 182, 193, 0.2) !important;
+/* Force share/download buttons to be always visible */
+#shareGiftBtn,
+#generateLinkBtn,
+#navDownloadContainer button,
+#navDownloadContainer .nav-action-btn {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: rgba(183, 26, 61, 0.92) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 10px 20px !important;
+    font-family: 'Fredoka', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    align-items: center !important;
+    gap: 6px !important;
+    box-shadow: 0 4px 15px rgba(183, 26, 61, 0.35) !important;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+    backdrop-filter: blur(8px) !important;
+}
+#shareGiftBtn:hover,
+#generateLinkBtn:hover,
+#navDownloadContainer button:hover {
+    opacity: 0.88 !important;
+    transform: translateY(-2px) !important;
 }
 </style>
 </body>
