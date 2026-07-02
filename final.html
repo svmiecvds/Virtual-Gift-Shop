@@ -1100,10 +1100,14 @@ savedLayout.forEach(item => {
         }
     } 
     else if (item.type === "note") {
+        wrapper.style.width = (220 * scaleX) + "px";
+        
         const paper = document.createElement("img");
         paper.src = resolveMainSrc(item.src);
         paper.style.width = "100%";
+        paper.style.display = "block";
         paper.draggable = false;
+        paper.style.transform = `rotate(${item.angle || 0}rad) scale(${item.scale || 1})`;
         wrapper.appendChild(paper);
         wrapper.className = "note giftEl";
 
@@ -1125,7 +1129,8 @@ savedLayout.forEach(item => {
                 textDiv.style.left = item.noteTextDetails.left + "%";
                 textDiv.style.top = item.noteTextDetails.top + "%";
                 textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
-                textDiv.style.transform = `translate(-50%, -50%) rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
+                let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
+                textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
                 textDiv.style.height = "auto";
                 textDiv.style.overflow = "visible";
                 textDiv.style.whiteSpace = "pre-wrap";

@@ -1242,7 +1242,7 @@ giftItems.forEach((item, itemIndex) => {
         wrapper.appendChild(baseImg);
         
         if (item.accessories && item.accessories.length > 0) {
-            item.accessories.forEach(acc => {
+            item.accessories.forEach((acc, index) => {
                 const accessory = document.createElement("img");
                 let src = acc.image;
                 if (src) src = resolveAccessorySrc(src);
@@ -1271,10 +1271,15 @@ giftItems.forEach((item, itemIndex) => {
                 accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
                 accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
                 
-                if (acc.height) {
-                    const rawHeight = parseFloat(acc.height);
-                    accessory.style.height = ((rawHeight / canvasH) * 100) + "%";
-                    accessory.style.objectFit = "contain";
+                if (index === 0 && !isBouquet && item.canvasW !== undefined) {
+                    accessory.style.height = "auto";
+                    accessory.style.display = "block";
+                } else {
+                    if (acc.height) {
+                        const rawHeight = parseFloat(acc.height);
+                        accessory.style.height = ((rawHeight / canvasH) * 100) + "%";
+                        accessory.style.objectFit = "contain";
+                    }
                 }
                 
                 let accFlip = acc.flip == "-1" ? "scaleX(-1) " : "";
