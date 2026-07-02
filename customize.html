@@ -1194,54 +1194,60 @@ function getRotatedPos(cx, cy, rx, ry, angle) {
         x: cx + dx * Math.cos(rad) - dy * Math.sin(rad),
         y: cy + dx * Math.sin(rad) + dy * Math.cos(rad)
     };
-}
-
-function updateSelectionUI() {
+}function updateSelectionUI() {
     const deleteBtn = document.getElementById('itemDeleteBtn');
     const resizeBtn = document.getElementById('itemResizeBtn');
     const rotateBtn = document.getElementById('itemRotateBtn');
     
     if (!selectedItem) {
-        deleteBtn.style.display = 'none';
+        if (deleteBtn) deleteBtn.style.display = 'none';
         if (resizeBtn) resizeBtn.style.display = 'none';
         if (rotateBtn) rotateBtn.style.display = 'none';
         return;
     }
     
-    const rect = selectedItem.getBoundingClientRect();
-    const parentRect = customScene.getBoundingClientRect();
-    
-    const scaleX = parseFloat(selectedItem.dataset.flip) || 1;
-    const rotDeg = parseFloat(selectedItem.dataset.rotation) || 0;
-    
-    const cx = rect.left - parentRect.left + rect.width / 2;
-    const cy = rect.top - parentRect.top + rect.height / 2;
-    const rw = selectedItem.offsetWidth;
-    const rh = selectedItem.offsetHeight;
+    const l = parseFloat(selectedItem.style.left) || 0;
+    const t = parseFloat(selectedItem.style.top)  || 0;
+    const w = selectedItem.offsetWidth;
+    const h = selectedItem.offsetHeight;
 
-    const topRx = cx + (rw/2) * scaleX;
-    const topRy = cy - (rh/2);
-    const deletePos = getRotatedPos(cx, cy, topRx, topRy, rotDeg);
-    deleteBtn.style.left = (deletePos.x - 12) + 'px';
-    deleteBtn.style.top  = (deletePos.y - 12) + 'px';
-    deleteBtn.style.display = 'block';
+    const cx = l + w / 2;
+    const cy = t + h / 2;
     
-    if (resizeBtn) {
-        const brX = cx + (rw/2) * scaleX;
-        const brY = cy + (rh/2);
-        const resizePos = getRotatedPos(cx, cy, brX, brY, rotDeg);
-        resizeBtn.style.left = (resizePos.x - 12) + 'px';
-        resizeBtn.style.top = (resizePos.y - 12) + 'px';
-        resizeBtn.style.display = 'block';
+    const angle = parseFloat(selectedItem.dataset.rotation) || 0;
+    const rad = angle * Math.PI / 180;
+    const flip = parseInt(selectedItem.dataset.flip) || 1;
+    
+    function getRotatedPoint(dx, dy) {
+        let rx = dx * Math.cos(rad) - dy * Math.sin(rad);
+        let ry = dx * Math.sin(rad) + dy * Math.cos(rad);
+        rx *= flip;
+        return {
+            x: cx + rx,
+            y: cy + ry
+        };
+    }
+    
+    const tr = getRotatedPoint(w/2, -h/2);
+    const bl = getRotatedPoint(-w/2, h/2);
+    const br = getRotatedPoint(w/2, h/2);
+
+    if (deleteBtn) {
+        deleteBtn.style.left = (tr.x - 12) + 'px';
+        deleteBtn.style.top  = (tr.y - 12) + 'px';
+        deleteBtn.style.display = 'block';
     }
     
     if (rotateBtn) {
-        const blX = cx - (rw/2) * scaleX;
-        const blY = cy + (rh/2);
-        const rotatePos = getRotatedPos(cx, cy, blX, blY, rotDeg);
-        rotateBtn.style.left = (rotatePos.x - 12) + 'px';
-        rotateBtn.style.top = (rotatePos.y - 12) + 'px';
+        rotateBtn.style.left = (bl.x - 12) + 'px';
+        rotateBtn.style.top  = (bl.y - 12) + 'px';
         rotateBtn.style.display = 'block';
+    }
+    
+    if (resizeBtn) {
+        resizeBtn.style.left = (br.x - 12) + 'px';
+        resizeBtn.style.top  = (br.y - 12) + 'px';
+        resizeBtn.style.display = 'block';
     }
 }
 

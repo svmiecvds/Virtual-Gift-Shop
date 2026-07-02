@@ -1139,36 +1139,42 @@ function updateSelectionUI() {
     const w = selectedItem.offsetWidth;
     const h = selectedItem.offsetHeight;
     
-    const rotDeg = parseFloat(selectedItem.dataset.rotation) || 0;
-    const rotRad = rotDeg * Math.PI / 180;
-    
     const cx = l + w / 2;
     const cy = t + h / 2;
     
-    function getRotatedPos(dx, dy) {
-        const rx = cx + dx * Math.cos(rotRad) - dy * Math.sin(rotRad);
-        const ry = cy + dx * Math.sin(rotRad) + dy * Math.cos(rotRad);
-        return { x: rx, y: ry };
+    const angle = parseFloat(selectedItem.dataset.rotation) || 0;
+    const rad = angle * Math.PI / 180;
+    const flip = parseInt(selectedItem.dataset.flip) || 1;
+    
+    function getRotatedPoint(dx, dy) {
+        let rx = dx * Math.cos(rad) - dy * Math.sin(rad);
+        let ry = dx * Math.sin(rad) + dy * Math.cos(rad);
+        rx *= flip;
+        return {
+            x: cx + rx,
+            y: cy + ry
+        };
     }
     
+    const tr = getRotatedPoint(w/2, -h/2);
+    const bl = getRotatedPoint(-w/2, h/2);
+    const br = getRotatedPoint(w/2, h/2);
+
     if (deleteBtn) {
-        const pos = getRotatedPos(w/2, -h/2);
-        deleteBtn.style.left = (pos.x - 12) + 'px';
-        deleteBtn.style.top  = (pos.y - 12) + 'px';
+        deleteBtn.style.left = (tr.x - 12) + 'px';
+        deleteBtn.style.top  = (tr.y - 12) + 'px';
         deleteBtn.style.display = 'flex';
     }
     
     if (rotateBtn) {
-        const pos = getRotatedPos(-w/2, h/2);
-        rotateBtn.style.left = (pos.x - 12) + 'px';
-        rotateBtn.style.top  = (pos.y - 12) + 'px';
+        rotateBtn.style.left = (bl.x - 12) + 'px';
+        rotateBtn.style.top  = (bl.y - 12) + 'px';
         rotateBtn.style.display = 'flex';
     }
     
     if (resizeBtn) {
-        const pos = getRotatedPos(w/2, h/2);
-        resizeBtn.style.left = (pos.x - 12) + 'px';
-        resizeBtn.style.top  = (pos.y - 12) + 'px';
+        resizeBtn.style.left = (br.x - 12) + 'px';
+        resizeBtn.style.top  = (br.y - 12) + 'px';
         resizeBtn.style.display = 'flex';
     }
 }

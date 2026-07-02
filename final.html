@@ -1004,7 +1004,11 @@ savedLayout.forEach(item => {
     }
     if (item.height) {
         const origH = parseFloat(item.height);
-        wrapper.style.height = (origH * scaleY) + "px";
+        if (!isNaN(origH)) {
+            wrapper.style.height = (origH * scaleY) + "px";
+        } else if (item.height === "auto") {
+            wrapper.style.height = "auto";
+        }
     }
 
     wrapper.style.zIndex = item.zIndex;
@@ -1015,12 +1019,14 @@ savedLayout.forEach(item => {
     wrapper.style.transform = `rotate(${rotation}deg) scaleX(${flip})`;
 
     if (item.type === "plushie") {
+        const isBouquet = item.isBouquet === true || (item.src && item.src.startsWith("data:image")) || (item.image && item.image.startsWith("data:image"));
+        
         // Base plushie image
         const img = document.createElement("img");
         img.src = resolveMainSrc(item.src);
         img.style.position = "absolute";
         img.style.width = "100%";
-        img.style.height = "auto";
+        img.style.height = isBouquet ? "100%" : "auto";
         img.style.left = "0";
         img.style.top = "0";
         img.draggable = false;
@@ -1028,10 +1034,17 @@ savedLayout.forEach(item => {
 
         // Reconstruct overlays (accessories)
         if (item.accessories && item.accessories.length > 0) {
-            const isBouquet = item.isBouquet === true || (item.src && item.src.startsWith("data:image"));
-            const canvasW = isBouquet ? 600 : 280;
-            const canvasL = isBouquet ? 50 : 210;
-            const canvasT = isBouquet ? 50 : 210;
+            let canvasW = isBouquet ? 600 : 280;
+            let canvasH = canvasW;
+            let canvasL = isBouquet ? 50 : 210;
+            let canvasT = isBouquet ? 50 : 210;
+            
+            if (item.canvasW !== undefined) {
+                canvasW = item.canvasW;
+                canvasH = item.canvasH;
+                canvasL = item.canvasL;
+                canvasT = item.canvasT;
+            }
             
             item.accessories.forEach(acc => {
                 const accessory = document.createElement("img");
@@ -1044,11 +1057,24 @@ savedLayout.forEach(item => {
                 accessory.style.pointerEvents = "none";
                 
                 const rawLeft = parseFloat(acc.left);
-                const rawTop  = parseFloat(acc.top);
+                const rawTop = parseFloat(acc.top);
                 const rawWidth = parseFloat(acc.width);
                 
-                accessory.style.left  = (((rawLeft - canvasL) / canvasW) * 100) + "%";
-                accessory.style.top   = (((rawTop  - canvasT) / canvasW) * 100) + "%";
+                let adjustedLeft = rawLeft;
+                let adjustedTop = rawTop;
+                if (item.canvasW === undefined && isBouquet) {
+                    adjustedLeft = rawLeft - 50;
+                    adjustedTop = rawTop - 50;
+                } else if (item.canvasW === undefined && !isBouquet) {
+                    adjustedLeft = rawLeft - 210;
+                    adjustedTop = rawTop - 210;
+                } else {
+                    adjustedLeft = rawLeft - canvasL;
+                    adjustedTop = rawTop - canvasT;
+                }
+                
+                accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
+                accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
                 accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
                 accessory.style.transform = `rotate(${acc.rotation || 0}deg) scaleX(${acc.flip || 1})`;
                 wrapper.appendChild(accessory);
@@ -1063,24 +1089,53 @@ savedLayout.forEach(item => {
         wrapper.appendChild(paper);
         wrapper.className = "note giftEl";
 
+        wrapper.style.containerType = "inline-size";
+
         if (item.noteTextDetails) {
             const textDiv = document.createElement("div");
             textDiv.className = "noteText";
             textDiv.style.position = "absolute";
-            textDiv.style.top = "12%";
-            textDiv.style.left = "10%";
-            textDiv.style.width = "75%";
-            textDiv.style.height = "70%";
-            textDiv.style.overflow = "hidden";
             textDiv.style.textAlign = "center";
             textDiv.style.wordWrap = "break-word";
-            textDiv.style.fontSize = "18px";
             textDiv.style.userSelect = "none";
             
             textDiv.innerText = item.noteTextDetails.text;
             textDiv.style.fontFamily = item.noteTextDetails.fontFamily;
             textDiv.style.color = item.noteTextDetails.color;
+            
+            if (item.noteTextDetails.left !== undefined) {
+                textDiv.style.left = item.noteTextDetails.left + "%";
+                textDiv.style.top = item.noteTextDetails.top + "%";
+                textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
+                textDiv.style.transform = `translate(-50%, -50%) rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
+                textDiv.style.height = "auto";
+                textDiv.style.overflow = "visible";
+                textDiv.style.whiteSpace = "pre-wrap";
+                textDiv.style.fontSize = "9.6cqw";
+            } else {
+                textDiv.style.top = "12%";
+                textDiv.style.left = "10%";
+                textDiv.style.width = "75%";
+                textDiv.style.height = "70%";
+                textDiv.style.overflow = "hidden";
+                textDiv.style.fontSize = "18px";
+            }
+            
             wrapper.appendChild(textDiv);
+        }
+        
+        if (item.stickers) {
+            item.stickers.forEach(st => {
+                const stickerImg = document.createElement("img");
+                stickerImg.src = resolveMainSrc(st.src);
+                stickerImg.style.position = "absolute";
+                stickerImg.style.left = st.left + "%";
+                stickerImg.style.top = st.top + "%";
+                stickerImg.style.width = st.width + "%";
+                stickerImg.style.transform = `translate(-50%, -50%) rotate(${st.angle || 0}rad) scale(${st.scale || 1})`;
+                stickerImg.style.pointerEvents = "none";
+                wrapper.appendChild(stickerImg);
+            });
         }
     } 
     else if (item.type === "sticker") {

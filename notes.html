@@ -1105,29 +1105,49 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         
         const noteId = Math.random().toString(36).substr(2, 9);
         
+        const noteRect = mainNote.getBoundingClientRect();
+        const sceneRect = customScene.getBoundingClientRect();
+        const noteLeft = noteRect.left - sceneRect.left;
+        const noteTop = noteRect.top - sceneRect.top;
+        
+        let textDetails = null;
+        if (noteData.text) {
+            const textLeft = noteText.offsetLeft - noteLeft;
+            const textTop = noteText.offsetTop - noteTop;
+            textDetails = {
+                text: noteData.text,
+                fontFamily: noteData.font,
+                color: noteData.color,
+                left: (textLeft / noteRect.width) * 100,
+                top: (textTop / noteRect.height) * 100,
+                width: (noteText.offsetWidth / noteRect.width) * 100,
+                angle: noteText.dataset.angle || 0,
+                scale: noteText.dataset.scale || 1
+            };
+        }
+        
+        const embeddedStickers = stickers.map(s => {
+            const stickerLeft = s.offsetLeft - noteLeft;
+            const stickerTop = s.offsetTop - noteTop;
+            return {
+                src: s.src,
+                left: (stickerLeft / noteRect.width) * 100,
+                top: (stickerTop / noteRect.height) * 100,
+                width: (s.offsetWidth / noteRect.width) * 100,
+                angle: s.dataset.angle || 0,
+                scale: s.dataset.scale || 1
+            };
+        });
+        
         cart.push({
             id: noteId,
             type: 'note',
             src: noteData.src,
-            noteTextDetails: {
-                text: noteData.text,
-                fontFamily: noteData.font,
-                color: noteData.color
-            },
+            noteTextDetails: textDetails,
+            stickers: embeddedStickers,
             quantity: 1,
             name: 'Custom Note'
         });
-
-        stickers.forEach(s => {
-            cart.push({
-                id: Math.random().toString(36).substr(2, 9),
-                type: 'sticker',
-                src: s.src,
-                quantity: 1,
-                name: 'Sticker'
-            });
-        });
-        
         
         sessionStorage.setItem("cart", JSON.stringify(cart));
         window.location.href = "checkout.html";
