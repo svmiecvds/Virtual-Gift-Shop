@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>A Gift For You 🎁 | The Gifting Co.</title>
+    <title>A Gift For You | The Gifting Co.</title>
     <link rel="icon" type="image/png" href="/assets/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
@@ -158,26 +158,40 @@
             100% { transform: rotate(2deg) scale(1.02); }
         }
 
-        /* Footer badge */
-        .viewer-badge {
+        /* Glass tile footer */
+        .site-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 45px;
+            padding: 0 20px;
+            font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+            font-size: 12px;
+            color: rgba(255, 220, 235, 0.85);
+            width: 100%;
+            box-sizing: border-box;
             position: fixed;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 13px;
-            color: rgba(183, 26, 61, 0.7);
+            bottom: 0;
+            left: 0;
             z-index: 9999;
             pointer-events: none;
+            background: rgba(40, 5, 20, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .viewer-badge a {
-            color: #B71A3D;
+        .site-footer a {
+            color: rgba(255, 200, 220, 0.95);
             text-decoration: none;
             font-weight: 600;
+            border-bottom: 1px dotted rgba(255, 200, 220, 0.6);
+            transition: opacity 0.2s ease;
             pointer-events: auto;
         }
+
+        .site-footer a:hover { opacity: 0.7; }
 
         /* Loading state */
         #loadingMsg {
@@ -207,8 +221,8 @@
         <span>Save</span>
     </button>
 
-    <!-- Viewer badge -->
-    <div class="viewer-badge">Made with <a href="https://thegifting.vercel.app" target="_blank" rel="noopener">The Gifting Co.</a></div>
+    <!-- Glass tile footer -->
+    <footer class="site-footer">&copy; 2026 | &#9825; Made with <a href="https://thegifting.vercel.app" target="_blank" rel="noopener noreferrer" style="margin-left: 4px;">The Gifting Co.</a></footer>
 
     <!-- Loading message -->
     <div id="loadingMsg">Loading your gift... 🎁</div>
@@ -283,13 +297,19 @@
 
             // Original gift.html canvas reference dimensions
             const GIFT_CANVAS_W = 900;
-            const GIFT_CANVAS_H = window.innerHeight * 0.55;
+            // For mobile, treat the reference height as if it were a square canvas
+            // to avoid the 0.55vh desktop ratio making items tiny on portrait screens
+            const GIFT_CANVAS_H = isMobile
+                ? window.innerWidth * 0.9   // reference height = ~90% of phone width (square-ish)
+                : window.innerHeight * 0.55;
 
-            // Safe zone between the 4 bows — different for desktop vs mobile
-            const safeLeft = isMobile ? window.innerWidth  * 0.08 : window.innerWidth  * 0.15;
-            const safeTop  = isMobile ? window.innerHeight * 0.18 : window.innerHeight * 0.13;
-            const safeW    = isMobile ? window.innerWidth  * 0.84 : window.innerWidth  * 0.70;
-            const safeH    = isMobile ? window.innerHeight * 0.60 : window.innerHeight * 0.74;
+            // Safe zone between the 4 bows
+            // Mobile (portrait): bows are in the corners of mobilegiftbg.png
+            // Desktop: bows are in the corners of giftbg.png
+            const safeLeft = isMobile ? window.innerWidth  * 0.05 : window.innerWidth  * 0.15;
+            const safeTop  = isMobile ? window.innerHeight * 0.12 : window.innerHeight * 0.13;
+            const safeW    = isMobile ? window.innerWidth  * 0.90 : window.innerWidth  * 0.70;
+            const safeH    = isMobile ? window.innerHeight * 0.72 : window.innerHeight * 0.74;
 
             const scaleX = safeW / GIFT_CANVAS_W;
             const scaleY = safeH / GIFT_CANVAS_H;

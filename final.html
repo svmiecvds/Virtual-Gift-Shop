@@ -870,7 +870,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
 
-<body class="giftPage" style="overflow-x: hidden; overflow-y: auto;">
+<body class="giftPage" style="overflow: hidden;">
 
     <!-- Fixed Share Link Button -->
     <div id="navDownloadContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; align-items: center; gap: 10px;"></div>
@@ -1452,6 +1452,43 @@ shareBtn.addEventListener('click', async () => {
     transform: translateY(-2px) !important;
 }
 </style>
+
+<style>
+.site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    padding: 0 20px;
+    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    color: rgba(255, 220, 235, 0.85);
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: rgba(40, 5, 20, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+.site-footer a {
+    color: rgba(255, 200, 220, 0.95);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dotted rgba(255, 200, 220, 0.6);
+    transition: opacity 0.2s ease;
+    pointer-events: auto;
+}
+.site-footer a:hover { opacity: 0.7; }
+</style>
+
+<footer class="site-footer">&copy; 2026 | &#9825; designed by <a href="https://www.instagram.com/artwsomi?igsh=bHRpb2Z6aWo1ZjFi" target="_blank" rel="noopener noreferrer">@somi</a> &amp; <a href="https://www.instagram.com/ayush.824?igsh=MW01NTU3MHMzaDJ1bQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">@byayushdas</a></footer>
+
 </body>
 
 </html>

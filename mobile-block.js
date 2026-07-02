@@ -43,32 +43,37 @@
                 justify-content: center;
                 background-image: url("assets/bg_pattern.png");
                 background-repeat: repeat;
-                background-size: 350px;
+                background-size: 200px;
                 background-color: #fff0f6;
             }
             .mobile-block-content {
                 text-align: center;
-                padding: 40px 30px;
-                max-width: 360px;
-                background: rgba(255, 255, 255, 0.85);
+                padding: clamp(28px, 8vw, 48px) clamp(20px, 6vw, 36px);
+                width: min(88vw, 400px);
+                background: rgba(255, 255, 255, 0.88);
                 backdrop-filter: blur(12px);
-                border-radius: 32px;
+                -webkit-backdrop-filter: blur(12px);
+                border-radius: 28px;
                 border: 2px solid rgba(255, 182, 217, 0.6);
-                box-shadow: 0 20px 60px rgba(255, 105, 180, 0.2), 0 0 30px rgba(255, 182, 217, 0.3);
+                box-shadow: 0 20px 60px rgba(255, 105, 180, 0.2);
                 animation: mobileBlockFadeIn 0.6s ease;
             }
             .mobile-block-icon {
-                margin-bottom: 20px;
+                margin-bottom: clamp(14px, 4vw, 24px);
+            }
+            .mobile-block-icon svg {
+                width: clamp(48px, 14vw, 72px);
+                height: clamp(48px, 14vw, 72px);
             }
             .mobile-block-title {
                 font-family: 'Pacifico', 'Quicksand', cursive, sans-serif;
-                font-size: 36px;
+                font-size: clamp(28px, 9vw, 42px);
                 color: #d6336c;
-                margin: 0 0 12px 0;
+                margin: 0 0 10px 0;
             }
             .mobile-block-msg {
                 font-family: 'Quicksand', 'Fredoka', sans-serif;
-                font-size: 18px;
+                font-size: clamp(15px, 4.5vw, 20px);
                 font-weight: 600;
                 color: #5a0035;
                 margin: 0 0 10px 0;
@@ -76,10 +81,10 @@
             }
             .mobile-block-sub {
                 font-family: 'Quicksand', 'Fredoka', sans-serif;
-                font-size: 14px;
+                font-size: clamp(12px, 3.5vw, 15px);
                 color: #8b5e7a;
                 margin: 0;
-                opacity: 0.8;
+                opacity: 0.85;
             }
             @keyframes mobileBlockFadeIn {
                 from { opacity: 0; transform: scale(0.92) translateY(20px); }
