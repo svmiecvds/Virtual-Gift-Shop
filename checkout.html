@@ -1052,14 +1052,17 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             const categories = {
                 "Plushies": [],
                 "Flowers": [],
-                "Treats": []
+                "Treats": [],
+                "Notes": []
             };
 
             allItems.forEach((item, originalIndex) => {
                 // Tag it with its original index so we can remove it accurately
                 const categorizedItem = { ...item, originalIndex };
 
-                if ((item.image && item.image.includes("flowers/")) || (item.customId && item.customId.startsWith("bouquet_"))) {
+                if (item.name === "Custom Note") {
+                    categories["Notes"].push(categorizedItem);
+                } else if ((item.image && item.image.includes("flowers/")) || (item.customId && item.customId.startsWith("bouquet_"))) {
                     categories["Flowers"].push(categorizedItem);
                 } else if (item.image && item.image.includes("plushies/")) {
                     categories["Plushies"].push(categorizedItem);

@@ -1105,35 +1105,47 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         
         const noteId = Math.random().toString(36).substr(2, 9);
         
-        const noteRect = mainNote.getBoundingClientRect();
-        const sceneRect = customScene.getBoundingClientRect();
-        const noteLeft = noteRect.left - sceneRect.left;
-        const noteTop = noteRect.top - sceneRect.top;
+        const noteWidth = mainNote.offsetWidth;
+        const noteHeight = mainNote.offsetHeight;
+        
+        const mRect = mainNote.getBoundingClientRect();
+        const mCenterX = mRect.left + mRect.width / 2;
+        const mCenterY = mRect.top + mRect.height / 2;
+        
+        // Unscaled visual top-left of mainNote
+        const mTopLeftX = mCenterX - (noteWidth / 2);
+        const mTopLeftY = mCenterY - (noteHeight / 2);
         
         let textDetails = null;
         if (noteData.text) {
-            const textLeft = noteText.offsetLeft - noteLeft;
-            const textTop = noteText.offsetTop - noteTop;
+            const tRect = noteText.getBoundingClientRect();
+            const tCenterX = tRect.left + tRect.width / 2;
+            const tCenterY = tRect.top + tRect.height / 2;
+            const textLeft = tCenterX - mTopLeftX;
+            const textTop = tCenterY - mTopLeftY;
             textDetails = {
                 text: noteData.text,
                 fontFamily: noteData.font,
                 color: noteData.color,
-                left: (textLeft / noteRect.width) * 100,
-                top: (textTop / noteRect.height) * 100,
-                width: (noteText.offsetWidth / noteRect.width) * 100,
+                left: (textLeft / noteWidth) * 100,
+                top: (textTop / noteHeight) * 100,
+                width: (noteText.offsetWidth / noteWidth) * 100,
                 angle: noteText.dataset.angle || 0,
                 scale: noteText.dataset.scale || 1
             };
         }
         
         const embeddedStickers = stickers.map(s => {
-            const stickerLeft = s.offsetLeft - noteLeft;
-            const stickerTop = s.offsetTop - noteTop;
+            const sRect = s.getBoundingClientRect();
+            const sCenterX = sRect.left + sRect.width / 2;
+            const sCenterY = sRect.top + sRect.height / 2;
+            const stickerLeft = sCenterX - mTopLeftX;
+            const stickerTop = sCenterY - mTopLeftY;
             return {
                 src: s.src,
-                left: (stickerLeft / noteRect.width) * 100,
-                top: (stickerTop / noteRect.height) * 100,
-                width: (s.offsetWidth / noteRect.width) * 100,
+                left: (stickerLeft / noteWidth) * 100,
+                top: (stickerTop / noteHeight) * 100,
+                width: (s.offsetWidth / noteWidth) * 100,
                 angle: s.dataset.angle || 0,
                 scale: s.dataset.scale || 1
             };
@@ -1143,6 +1155,8 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             id: noteId,
             type: 'note',
             src: noteData.src,
+            angle: mainNote.dataset.angle || 0,
+            scale: mainNote.dataset.scale || 1,
             noteTextDetails: textDetails,
             stickers: embeddedStickers,
             quantity: 1,

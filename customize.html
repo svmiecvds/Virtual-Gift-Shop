@@ -1494,22 +1494,27 @@ document
 () => {
 
 const accessories = [];
-const rect = customScene.getBoundingClientRect();
+const sceneRect = customScene.getBoundingClientRect();
 const plushieRect = mainPlushie.getBoundingClientRect();
 const plushieW = plushieRect.width || 280;
 const plushieH = plushieRect.height || 280;
+
+const plushieLeftRel = plushieRect.left - sceneRect.left;
+const plushieTopRel = plushieRect.top - sceneRect.top;
 
 document
 .querySelectorAll(
 ".draggableAccessory"
 )
 .forEach(item => {
-    const itemRect = item.getBoundingClientRect();
+    const itemLeft = parseFloat(item.style.left) || 0;
+    const itemTop = parseFloat(item.style.top) || 0;
+    const itemWidth = item.offsetWidth; // unrotated width
     
     // Calculate coordinates relative to plushieRect
-    const relLeft = (itemRect.left - plushieRect.left) / plushieW;
-    const relTop = (itemRect.top - plushieRect.top) / plushieH;
-    const relWidth = itemRect.width / plushieW;
+    const relLeft = (itemLeft - plushieLeftRel) / plushieW;
+    const relTop = (itemTop - plushieTopRel) / plushieH;
+    const relWidth = itemWidth / plushieW;
     
     // Virtualize coordinates to a 700x700 canvas with plushie centered at (210, 210) and size 280x280
     const rawLeft = 210 + relLeft * 280;
@@ -1520,7 +1525,9 @@ document
         image: getRelativePath(item.src),
         left: rawLeft + "px",
         top: rawTop + "px",
-        width: rawWidth + "px"
+        width: rawWidth + "px",
+        rotation: item.dataset.rotation || "0",
+        flip: item.dataset.flip || "1"
     });
 });
 

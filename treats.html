@@ -1095,6 +1095,7 @@ document.querySelectorAll(".dessertSpawner").forEach(spawner => {
         dessert.style.position = "absolute";
         dessert.style.width = "70px";
         dessert.style.height = "70px";
+        dessert.style.objectFit = "contain";
         dessert.style.left = "265px"; // Centered inside the 600px scene (600/2 - 70/2)
         dessert.style.top = "265px";  // Centered inside the 600px scene
         dessert.style.zIndex = highestZ++;
@@ -1358,31 +1359,74 @@ document.getElementById("saveCustomization").addEventListener("click", () => {
         alert("Please select a box first!");
         return;
     }
+    const mainBox = document.getElementById("mainBox");
+    const boxWidth = mainBox.offsetWidth;
+    const boxHeight = mainBox.offsetHeight;
+    const boxLeft = 300 - (boxWidth / 2);
+    const boxTop = 300 - (boxHeight / 2);
+
+    let minX = boxLeft, minY = boxTop, maxX = boxLeft + boxWidth, maxY = boxTop + boxHeight;
     const accessories = [];
     
+    // Add box as first accessory
+    accessories.push({
+        image: "assets/treats/" + currentBoxImage.split("/").pop(),
+        left: boxLeft + "px",
+        top: boxTop + "px",
+        width: boxWidth + "px",
+        height: boxHeight + "px",
+        rotation: "0",
+        flip: "1"
+    });
+
     document.querySelectorAll("#customScene .draggableTreat").forEach(item => {
-        const realLeft = parseFloat(item.style.left) || 0;
-        const realTop = parseFloat(item.style.top) || 0;
-        const sceneW = customScene.clientWidth;
-        const sceneH = customScene.clientHeight;
-        const virtualLeft = realLeft - (sceneW / 2) + 350;
-        const virtualTop = realTop - (sceneH / 2) + 350;
+        const left = parseFloat(item.style.left) || 0;
+        const top = parseFloat(item.style.top) || 0;
+        const width = parseFloat(item.style.width) || 70;
+        const height = item.offsetHeight || width;
+        
+        if (left < minX) minX = left;
+        if (top < minY) minY = top;
+        if ((left + width) > maxX) maxX = left + width;
+        if ((top + height) > maxY) maxY = top + height;
+    });
+
+    // Add some padding to bounds
+    minX = Math.max(0, minX - 20);
+    minY = Math.max(0, minY - 20);
+    maxX = Math.min(600, maxX + 20);
+    maxY = Math.min(600, maxY + 20);
+
+    const canvasW = Math.max(100, maxX - minX);
+    const canvasH = Math.max(100, maxY - minY);
+
+    document.querySelectorAll("#customScene .draggableTreat").forEach(item => {
+        const left = parseFloat(item.style.left) || 0;
+        const top = parseFloat(item.style.top) || 0;
+        
         accessories.push({
             image: "assets/treats/" + item.src.split("/").pop(),
-            left: virtualLeft + "px",
-            top: virtualTop + "px",
-            width: item.style.width,
+            left: left + "px",
+            top: top + "px",
+            width: (parseFloat(item.style.width) || 70) + "px",
+            height: item.offsetHeight + "px",
             rotation: item.dataset.rotation || "0",
             flip: item.dataset.flip || "1"
         });
     });
 
+    const transparentImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1' height='1'></svg>";
+
     const customizedBox = {
         customId: "box_" + Date.now(),
         name: currentBoxName,
-        image: currentBoxImage,
+        image: transparentImg,
         quantity: 1,
-        accessories: accessories
+        accessories: accessories,
+        canvasW: canvasW,
+        canvasH: canvasH,
+        canvasL: minX,
+        canvasT: minY
     };
 
     let cart = JSON.parse(sessionStorage.getItem("cart")) || [];

@@ -863,6 +863,24 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 <body class="giftPage" style="overflow: hidden;">
 
+    <!-- Share Button -->
+    <button id="shareGiftBtn" class="nav-action-btn" style="position: absolute; top: 20px; right: 20px; z-index: 999;">
+        <svg style="margin-right: 6px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        Share
+    </button>
+
+    <!-- Share Modal -->
+    <div class="share-modal-overlay" id="shareModal">
+        <div class="share-modal">
+            <button class="share-modal-close" id="closeShareModal">&times;</button>
+            <h3 style="font-family: var(--font-ui); color: var(--heading-color);">Share Your Gift!</h3>
+            <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">Copy the link below and send it to your special someone so they can open this gift.</p>
+            <div class="share-url-box">
+                <input type="text" id="shareUrlInput" readonly />
+                <button id="copyShareBtn">Copy</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Title Header -->
     <h1 class="storeHeader" style="text-align: center; position: relative; z-index: 10; margin-top: 20px; pointer-events: none;">Your Wrapped Gift Card</h1>
@@ -1316,6 +1334,57 @@ if (isViewerMode) {
     badge.innerHTML = 'Made with  <a href="index.html">The Gifting Co.</a>';
     document.body.appendChild(badge);
 }
+
+// Share functionality
+const shareBtn = document.getElementById("shareGiftBtn");
+const shareModal = document.getElementById("shareModal");
+const closeShareModal = document.getElementById("closeShareModal");
+const shareUrlInput = document.getElementById("shareUrlInput");
+const copyShareBtn = document.getElementById("copyShareBtn");
+
+if (shareBtn) {
+    shareBtn.addEventListener("click", () => {
+        let shareUrl = window.location.href;
+        if (!isViewerMode) {
+            const cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+            if (cartItems.length > 0) {
+                const compressed = LZString.compressToEncodedURIComponent(JSON.stringify(cartItems));
+                const url = new URL(window.location.href);
+                url.hash = 'gift=' + compressed;
+                shareUrl = url.toString();
+            }
+        }
+        shareUrlInput.value = shareUrl;
+        shareModal.classList.add("visible");
+    });
+}
+
+if (closeShareModal) {
+    closeShareModal.addEventListener("click", () => {
+        shareModal.classList.remove("visible");
+        copyShareBtn.innerText = "Copy";
+    });
+}
+
+if (copyShareBtn) {
+    copyShareBtn.addEventListener("click", () => {
+        shareUrlInput.select();
+        shareUrlInput.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(shareUrlInput.value).then(() => {
+            copyShareBtn.innerText = "Copied!";
+            setTimeout(() => {
+                copyShareBtn.innerText = "Copy";
+            }, 2000);
+        });
+    });
+}
+
+window.addEventListener("click", (e) => {
+    if (e.target === shareModal) {
+        shareModal.classList.remove("visible");
+        copyShareBtn.innerText = "Copy";
+    }
+});
 
 </script>
 
