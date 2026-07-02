@@ -853,11 +853,13 @@ margin: 0 auto;
     /* --- SIDE PANELS --- */
     .side-panel {
     width: 280px;
-    height: auto !important;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    background: var(--panel-bg) !important;
+    background: rgba(144, 12, 63, 0.15) !important;
     padding: 24px;
     border-radius: 24px;
     transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
@@ -873,7 +875,7 @@ margin: 0 auto;
         font-size: 18px;
         color: var(--heading-color);
         letter-spacing: 0.3px;
-        border-bottom: 2px dashed rgba(183, 26, 61, 0.2);
+        border-bottom: 2px dashed rgba(144, 12, 63, 0.4);
         padding-bottom: 8px;
     }
 
@@ -886,7 +888,7 @@ margin: 0 auto;
     }
 
     .side-panel::-webkit-scrollbar-thumb {
-        background: rgba(255, 182, 217, 0.5);
+        background: #900C3F;
         border-radius: 10px;
     }
 
@@ -1442,7 +1444,6 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <div class="side-column" style="display: flex; flex-direction: column; gap: 24px; flex: 1; max-width: 320px; height: 600px;">
                 <div class="side-panel">
                     <h2>Flowers</h2>
-<hr style="margin: 10px 0 15px 0; border: none; border-top: 1px solid var(--text-color); opacity: 0.2;">
                     <div class="spawner-grid">
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower1.png', 'flower', '')">
                         <img src="assets/flowers/flower1.png" alt="">
@@ -1491,7 +1492,6 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
                 <div class="side-panel">
                     <h2>Leaves</h2>
-<hr style="margin: 10px 0 15px 0; border: none; border-top: 1px solid var(--text-color); opacity: 0.2;">
                     <div class="spawner-grid">
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves1.png', 'leaf', '')">
                         <img src="assets/flowers/leaves1.png" alt="">
@@ -1565,47 +1565,49 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             </div>
 
             <!-- Column 3: Spawner Tray (Bows, Holders) & Controls -->
-            <div class="side-panel">
-                <h2>Wraps & Bows</h2>
-                <div class="spawner-grid">
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_pink.png', 'holder', '')">
-                        <img src="assets/flowers/holder_pink.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_green.png', 'holder', '')">
-                        <img src="assets/flowers/holder_green.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_lightblue.png', 'holder', '')">
-                        <img src="assets/flowers/holder_lightblue.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_black.png', 'holder', '')">
-                        <img src="assets/flowers/holder_black.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_purple.png', 'holder', '')">
-                        <img src="assets/flowers/holder_purple.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_brown.png', 'holder', '')">
-                        <img src="assets/flowers/holder_brown.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_white.png', 'holder', '')">
-                        <img src="assets/flowers/holder_white.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_blue.png', 'holder', '')">
-                        <img src="assets/flowers/holder_blue.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_aqua.png', 'bow', '')">
-                        <img src="assets/flowers/bow_aqua.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_blue.png', 'bow', '')">
-                        <img src="assets/flowers/bow_blue.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_purple.png', 'bow', '')">
-                        <img src="assets/flowers/bow_purple.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_green.png', 'bow', '')">
-                        <img src="assets/flowers/bow_green.png" alt="">
-                    </div>
-                    <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_pink.png', 'bow', '')">
-                        <img src="assets/flowers/bow_pink.png" alt="">
+            <div class="side-column" style="display: flex; flex-direction: column; gap: 24px; flex: 1; max-width: 320px; height: 600px;">
+                <div class="side-panel">
+                    <h2>Wraps & Bows</h2>
+                    <div class="spawner-grid">
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_pink.png', 'holder', '')">
+                            <img src="assets/flowers/holder_pink.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_green.png', 'holder', '')">
+                            <img src="assets/flowers/holder_green.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_lightblue.png', 'holder', '')">
+                            <img src="assets/flowers/holder_lightblue.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_black.png', 'holder', '')">
+                            <img src="assets/flowers/holder_black.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_purple.png', 'holder', '')">
+                            <img src="assets/flowers/holder_purple.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_brown.png', 'holder', '')">
+                            <img src="assets/flowers/holder_brown.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_white.png', 'holder', '')">
+                            <img src="assets/flowers/holder_white.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_blue.png', 'holder', '')">
+                            <img src="assets/flowers/holder_blue.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_aqua.png', 'bow', '')">
+                            <img src="assets/flowers/bow_aqua.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_blue.png', 'bow', '')">
+                            <img src="assets/flowers/bow_blue.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_purple.png', 'bow', '')">
+                            <img src="assets/flowers/bow_purple.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_green.png', 'bow', '')">
+                            <img src="assets/flowers/bow_green.png" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_pink.png', 'bow', '')">
+                            <img src="assets/flowers/bow_pink.png" alt="">
+                        </div>
                     </div>
                 </div>
             </div>

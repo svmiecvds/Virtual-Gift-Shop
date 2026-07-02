@@ -165,7 +165,7 @@ body.giftPage {
     align-items: center;
     gap: 30px;
     z-index: 999;
-    border-bottom: 3px solid #fac5cf;
+    border-bottom: none;
     box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
     padding: 10px 30px;
     box-sizing: border-box;
@@ -866,79 +866,101 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
 
+
 <body class="giftPage no-scroll">
 
     <!-- Baby Pink Navbar -->
     <nav id="storeNavbar">
         <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
-        <a href="plushies.html" class="navLink">Plushies</a>
-        <a href="flowers.html" class="navLink">Flowers</a>
-        <a href="treats.html" class="navLink">Treats</a>
-        <a href="notes.html" class="navLink active">Notes</a>
-        <div id="cartButton" class="shiny-cta" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding-left: 14px; padding-right: 14px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span style="margin: 0; padding: 0;">Cart (<span id="cartCount">0</span>)</span>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 30px;">
+            <a href="plushies.html" class="navLink">Plushies</a>
+            <a href="flowers.html" class="navLink">Flowers</a>
+            <a href="treats.html" class="navLink">Treats</a>
+            <a href="notes.html" class="navLink active">Notes</a>
+            <button class="shiny-cta" id="cartBtn" style="padding: 8px 16px; font-size: 14px;" onclick="window.location.href='final.html'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px; vertical-align: text-bottom;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                Cart <span id="cartCount" style="background: white; color: var(--heading-color); border-radius: 50%; padding: 2px 6px; font-size: 12px; margin-left: 5px;">0</span>
+            </button>
         </div>
     </nav>
-
-    
 
     <!-- Header Text -->
     <h1 class="storeHeader">add notes and stickers</h1>
 
-    
-    <div id="mainContainer" style="display: flex; gap: 20px; justify-content: center; align-items: flex-start; max-width: 1200px; margin: 0 auto;">
+    <div id="mainContainer" style="display: flex; gap: 20px; justify-content: center; align-items: stretch; width: 100%; max-width: 1200px; margin: 0 auto; height: 600px;">
         
-        <!-- Left Panel: Notes & Stickers Selection -->
-        <div id="customPanel" class="notes-controls-panel" style="width: 320px; background: var(--popup-bg); border-radius: 35px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto; max-height: 70vh;">
-            <button id="addTextBtn" class="giftControlBtn" style="margin: 0 auto 15px auto; display: block; width: 100%; border: none; border-radius: 50px; background: var(--btn-bg); color: var(--btn-text); padding: 10px 14px; font-weight: bold; cursor: pointer;">
-                 Add Custom Text
-            </button>
-            <div class="asset-columns" style="display: flex; gap: 15px; justify-content: space-around;">
-                <div class="asset-column" style="display: flex; flex-direction: column; align-items: center; width: 50%;">
-                    <h2 style="color: var(--heading-color); margin-bottom: 10px;">Notes</h2>
-                    <img src="assets/final page/note1.png" class="noteTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/note2.png" class="noteTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/note3.png" class="noteTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/note4.png" class="noteTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/note5.png" class="noteTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/note6.png" class="noteTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                </div>
-                <div class="asset-column" style="display: flex; flex-direction: column; align-items: center; width: 50%;">
-                    <h2 style="color: var(--heading-color); margin-bottom: 10px;">Stickers</h2>
-                    <img src="assets/final page/sticker1.png" class="stickerTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/sticker 2.png" class="stickerTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/sticker3.png" class="stickerTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/sticker_clip_purple.png" class="stickerTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/sticker_pin_red.png" class="stickerTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/sticker_clip_beige.png" class="stickerTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/sticker_clip_pink.png" class="stickerTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/sticker_clip_blue.png" class="stickerTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                    <img src="assets/final page/sticker_camera.png" class="stickerTemplate" style="width: 80px; margin-bottom: 10px; cursor: pointer;">
-                </div>
+        <!-- Left Panel: Notes -->
+        <div id="leftPanel" style="width: 220px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
+            <h2 style="color: var(--heading-color); margin-bottom: 15px; text-align: center; font-family: var(--font-ui);">Notes</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="box-option noteTemplate" data-src="assets/final page/note1.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note1.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option noteTemplate" data-src="assets/final page/note2.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note2.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option noteTemplate" data-src="assets/final page/note3.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note3.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option noteTemplate" data-src="assets/final page/note4.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note4.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option noteTemplate" data-src="assets/final page/note5.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note5.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option noteTemplate" data-src="assets/final page/note6.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note6.png" style="width: 100%; height: auto; object-fit: contain;"></div>
             </div>
         </div>
 
-        <!-- Right Panel: Currently selected items list (Cart preview) -->
-        <div class="dessert-cart-container" style="width: 320px; background: var(--card-bg); border-radius: 35px; padding: 24px; display: flex; flex-direction: column; min-height: 50vh;">
-            <h2 style="text-align: center; color: var(--heading-color); margin-bottom: 15px; font-weight: 600;">Selected Notes</h2>
-            <div id="cartItemsContainer" style="flex: 1; overflow-y: auto;">
-                <!-- items go here -->
+        <!-- Center Panel: Canvas -->
+        <div id="customScene" style="position: relative; flex: 1; width: 100%; max-width: 600px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important; backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4) !important; border-radius: 40px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 4px 10px rgba(255, 255, 255, 0.6), inset 0 -4px 10px rgba(255, 182, 193, 0.2) !important;">
+            <div id="itemDeleteBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            </div>
+
+            <div id="itemRotateBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.21l5.67-1.36"/></svg>
+            </div>
+            <div id="itemResizeBtn" style="display: none; position: absolute; z-index: 1000; cursor: nwse-resize; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </div>
+
+            
+            <div class="canvas-placeholder" id="placeholderMsg">
+                <span style="font-family: var(--font-heading); font-size: 30px; color: var(--heading-color);">Write a note for someone</span>
+                <span style="font-size: 15px; font-family: var(--font-body); margin-top: 15px; opacity: 0.8;">
+                    Select a note to start. Then add custom text and stickers!
+                </span>
             </div>
             
-            <button id="addToCartBtn" class="shiny-cta" style="margin-top: 15px; width: 100%; border: none;">
-                <span>Save to Cart</span>
+            <button id="addTextBtn" class="giftControlBtn" style="display: none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 999; border: none; border-radius: 50px; background: var(--btn-bg); color: var(--btn-text); padding: 10px 20px; font-family: var(--font-ui); font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid rgba(255, 182, 217, 0.25);">
+                 Add Custom Text
+            </button>
+            
+            <div id="canvasContent" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none;">
+                <img id="mainNote" src="" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 250px; pointer-events: auto;">
+                <div id="noteText" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: auto; cursor: move; text-align: center; white-space: pre-wrap; font-size: 24px; min-width: 100px;"></div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Stickers -->
+        <div id="rightPanel" style="width: 220px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
+            <h2 style="color: var(--heading-color); margin-bottom: 15px; text-align: center; font-family: var(--font-ui);">Stickers</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker1.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker1.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker 2.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker 2.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker3.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker3.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_purple.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_clip_purple.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_pin_red.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_pin_red.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_beige.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_clip_beige.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_pink.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_clip_pink.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_blue.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_clip_blue.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_camera.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_camera.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+            </div>
+            <button id="saveCustomization" class="shiny-cta" style="margin-top: 20px; padding: 12px; width: 100%; font-size: 16px; border: none; border-radius: 50px;">
+                <span>Save Changes</span>
             </button>
         </div>
+
     </div>
-    
+
     <!-- Note Editor Modal -->
     <div id="noteEditor" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--popup-bg); padding: 25px; border-radius: 25px; z-index: 99999; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
         <h2 style="color: var(--heading-color); margin-bottom: 15px; font-family: var(--font-ui);">Edit Text</h2>
-        <textarea id="noteMessage" placeholder="Write your message..." style="width: 320px; height: 130px; margin-bottom: 15px; resize: none; border-radius: 10px; padding: 10px; border: 1px solid var(--card-border);"></textarea>
+        <textarea id="noteMessage" placeholder="Write your message..." style="width: 320px; height: 130px; margin-bottom: 15px; resize: none; border-radius: 10px; padding: 10px; border: 1px solid rgba(183, 26, 61, 0.2);"></textarea>
         <br>
         <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px;">
-            <select id="fontSelect" style="flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--card-border);">
+            <select id="fontSelect" style="flex: 1; padding: 10px; border-radius: 10px; border: 1px solid rgba(183, 26, 61, 0.2); font-family: var(--font-ui);">
                 <option value="Pacifico">Pacifico</option>
                 <option value="Fredoka">Fredoka</option>
                 <option value="Quicksand">Quicksand</option>
@@ -946,227 +968,354 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             </select>
             <input type="color" id="textColorPicker" value="#B71A3D" style="width: 40px; height: 40px; border: none; cursor: pointer; padding: 0; background: transparent;">
         </div>
-        <button id="saveNote" style="width: 100%; border: none; border-radius: 50px; padding: 15px; background: #ffffff; color: #B71A3D; font-weight: bold; cursor: pointer;">Save</button>
-    </div>
-
-
-            <!-- Column 2: Workspace Canvas (Tad bit smaller) -->
-            <div id="customScene">
-                <div id="itemDeleteBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                </div>
-
-
-                
-            <div id="itemRotateBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.21l5.67-1.36"/></svg>
-            </div>
-            <div id="itemResizeBtn" style="display: none; position: absolute; z-index: 1000; cursor: nwse-resize; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-            </div>
-<div class="canvas-placeholder" id="placeholderMsg">
-                    <span>Treats Canvas</span>
-                    <span style="font-size: 15px; font-family: var(--font-body); margin-top: 15px; opacity: 0.8;">
-                        Select a box, then click desserts to spawn them. Drag to arrange, and use controls to customize!
-                    </span>
-                </div>
-                <img id="mainBox" src="" class="mainPlushie" style="width: 280px;" alt="">
-            </div>
-
-            <!-- Column 3: Customizer Sidebar Controls -->
-            <div id="customPanel" class="treats-controls-panel">
-                <h2>Choose a Box</h2>
-                <hr class="box-hr" style="margin: 10px 0 15px 0; border: none; border-top: 1px solid var(--text-color); opacity: 0.2;">
-                
-                <div class="box-option" data-box="heart" data-image="assets/treats/box_heart.png" data-name="Heart Treat Box">
-                    <img src="assets/treats/box_heart.png" alt="Heart Box">
-                    <span>Heart Box</span>
-                </div>
-                
-                <div class="box-option" data-box="rect" data-image="assets/treats/box_rect.png" data-name="Rectangle Treat Box">
-                    <img src="assets/treats/box_rect.png" alt="Rectangle Box">
-                    <span>Rectangle Box</span>
-                </div>
-                
-                <div class="box-option" data-box="circle" data-image="assets/treats/box_circle.png" data-name="Circle Treat Box">
-                    <img src="assets/treats/box_circle.png" alt="Circle Box">
-                    <span>Circle Box</span>
-                </div>
-
-                <hr style="margin-top: 15px; margin-bottom: 15px; border: none; border-top: 2px solid var(--glow-soft);">
-
-                <button id="saveCustomization" class="shiny-cta addToCartBtn" style="width: 100%; margin-top: auto; border: 2px solid #B71A3D;"><span>Add to Cart</span></button>
-            </div>
-
-        </div>
+        <button id="saveNoteText" style="width: 100%; border: none; border-radius: 50px; padding: 12px; background: #ffffff; color: #B71A3D; font-weight: bold; font-family: var(--font-ui); cursor: pointer; border: 1.5px solid rgba(255, 182, 217, 0.25);">Save</button>
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast">
-        Added To Cart 
+    <div id="toast" style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--toast-bg); color: white; padding: 15px 25px; border-radius: 50px; z-index: 9999; font-family: var(--font-ui); font-weight: 600;">
+        Note saved to cart!
     </div>
-
     
+    <style>
+        #leftPanel::-webkit-scrollbar, #rightPanel::-webkit-scrollbar { width: 6px; }
+        #leftPanel::-webkit-scrollbar-track, #rightPanel::-webkit-scrollbar-track { background: transparent; }
+        #leftPanel::-webkit-scrollbar-thumb, #rightPanel::-webkit-scrollbar-thumb { background: #900C3F; border-radius: 10px; }
+        .draggableSticker { position: absolute; width: 60px; height: auto; cursor: move; pointer-events: auto; }
+        .canvas-selected { outline: 2px dashed #B71A3D; outline-offset: 4px; }
+    </style>
+
 
 <script>
     let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-    let pendingNoteType = null;
-    let pendingNoteSrc = null;
-    let isEditingTextOnly = false;
     
-    function updateCartCount() {
-        const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-        document.getElementById('cartCount').innerText = count;
-    }
-    
-    function renderLocalCart() {
-        const container = document.getElementById('cartItemsContainer');
-        container.innerHTML = '';
-        
-        const localItems = cart.filter(item => item.type === 'note' || item.type === 'sticker' || item.type === 'text');
-        
-        if (localItems.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#999; margin-top:20px;">No notes added yet.</p>';
-            return;
-        }
-        
-        localItems.forEach((item, index) => {
-            const div = document.createElement('div');
-            div.style.display = 'flex';
-            div.style.alignItems = 'center';
-            div.style.gap = '10px';
-            div.style.marginBottom = '15px';
-            div.style.padding = '10px';
-            div.style.background = '#ffffff';
-            div.style.borderRadius = '15px';
-            
-            if (item.type === 'text') {
-                div.innerHTML = `
-                    <div style="flex: 1; font-family: ${item.fontFamily}; color: ${item.color}; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        ${item.text}
-                    </div>
-                    <button onclick="removeLocalItem('${item.id}')" style="background: none; border: none; color: red; cursor: pointer; font-weight: bold;">X</button>
-                `;
-            } else {
-                div.innerHTML = `
-                    <img src="${item.src}" style="width: 50px; height: 50px; object-fit: contain;">
-                    <div style="flex: 1; font-family: var(--font-ui); font-size: 14px;">
-                        ${item.type === 'note' ? 'Note: ' + (item.noteTextDetails ? item.noteTextDetails.text : '') : 'Sticker'}
-                    </div>
-                    <button onclick="removeLocalItem('${item.id}')" style="background: none; border: none; color: red; cursor: pointer; font-weight: bold;">X</button>
-                `;
-            }
-            container.appendChild(div);
-        });
-    }
-    
-    window.removeLocalItem = function(id) {
-        cart = cart.filter(item => item.id !== id);
-        sessionStorage.setItem("cart", JSON.stringify(cart));
-        updateCartCount();
-        renderLocalCart();
+    const mainNote = document.getElementById('mainNote');
+    const placeholderMsg = document.getElementById('placeholderMsg');
+    const addTextBtn = document.getElementById('addTextBtn');
+    const noteEditor = document.getElementById('noteEditor');
+    const noteText = document.getElementById('noteText');
+    const canvasContent = document.getElementById('canvasContent');
+    const customScene = document.getElementById('customScene');
+    const itemDeleteBtn = document.getElementById('itemDeleteBtn');
+    const itemRotateBtn = document.getElementById('itemRotateBtn');
+    const itemResizeBtn = document.getElementById('itemResizeBtn');
+
+    let stickers = [];
+    let noteData = {
+        src: null,
+        text: '',
+        font: 'Pacifico',
+        color: '#B71A3D'
     };
     
-    function generateId() {
-        return Math.random().toString(36).substr(2, 9);
-    }
+    const cartCountEl = document.getElementById('cartCount');
+    if (cartCountEl) cartCountEl.innerText = cart.length;
     
-    document.querySelectorAll('.stickerTemplate').forEach(img => {
-        img.addEventListener('click', () => {
-            cart.push({
-                id: generateId(),
-                type: 'sticker',
-                src: img.src,
-                quantity: 1,
-                name: 'Sticker'
-            });
-            sessionStorage.setItem("cart", JSON.stringify(cart));
-            updateCartCount();
-            renderLocalCart();
+    let selectedElement = null;
+
+    // Note Selection
+    document.querySelectorAll('.noteTemplate').forEach(el => {
+        el.addEventListener('click', () => {
+            noteData.src = el.dataset.src;
+            mainNote.src = noteData.src;
+            mainNote.style.display = 'block';
+            
+            if (!mainNote.dataset.scale) {
+                mainNote.dataset.angle = 0;
+                mainNote.dataset.scale = 1;
+                mainNote.style.transform = `translate(-50%, -50%) rotate(0rad) scale(1)`;
+            }
+            
+            placeholderMsg.style.display = 'none';
+            addTextBtn.style.display = 'block';
         });
     });
-    
-    document.querySelectorAll('.noteTemplate').forEach(img => {
-        img.addEventListener('click', () => {
-            pendingNoteType = 'note';
-            pendingNoteSrc = img.src;
-            isEditingTextOnly = false;
-            document.getElementById('noteMessage').value = '';
-            document.getElementById('noteEditor').style.display = 'block';
+
+    // Sticker Selection
+    document.querySelectorAll('.stickerTemplate').forEach(el => {
+        el.addEventListener('click', () => {
+            if (!noteData.src) {
+                alert("Please select a note first to place stickers on!");
+                return;
+            }
+            const img = document.createElement('img');
+            img.src = el.dataset.src;
+            img.className = 'draggableSticker';
+            img.style.left = '50%';
+            img.style.top = '50%';
+            
+            img.dataset.angle = 0;
+            img.dataset.scale = 1;
+            img.style.transform = `translate(-50%, -50%) rotate(0rad) scale(1)`;
+            
+            canvasContent.appendChild(img);
+            stickers.push(img);
+            selectElement(img);
         });
     });
-    
-    document.getElementById('addTextBtn').addEventListener('click', () => {
-        pendingNoteType = 'text';
-        isEditingTextOnly = true;
-        document.getElementById('noteMessage').value = '';
-        document.getElementById('noteEditor').style.display = 'block';
+
+    // Add Custom Text
+    addTextBtn.addEventListener('click', () => {
+        noteEditor.style.display = 'block';
     });
-    
-    document.getElementById('saveNote').addEventListener('click', () => {
+
+    // Save Text from Modal
+    document.getElementById('saveNoteText').addEventListener('click', () => {
         const text = document.getElementById('noteMessage').value;
         const font = document.getElementById('fontSelect').value;
         const color = document.getElementById('textColorPicker').value;
         
-        if (isEditingTextOnly) {
-            if (text.trim() === '') {
-                document.getElementById('noteEditor').style.display = 'none';
-                return;
+        if (text.trim() !== '') {
+            noteData.text = text;
+            noteData.font = font;
+            noteData.color = color;
+            
+            noteText.innerText = text;
+            noteText.style.fontFamily = font;
+            noteText.style.color = color;
+            noteText.style.lineHeight = '1.2'; 
+            
+            if (!noteText.dataset.scale) {
+                noteText.dataset.angle = 0;
+                noteText.dataset.scale = 1;
+                noteText.style.transform = `translate(-50%, -50%) rotate(0rad) scale(1)`;
             }
-            cart.push({
-                id: generateId(),
-                type: 'text',
-                text: text,
-                fontFamily: font + ", cursive",
-                color: color,
-                quantity: 1,
-                name: 'Custom Text'
-            });
+            
+            noteText.style.display = 'block';
         } else {
-            cart.push({
-                id: generateId(),
-                type: 'note',
-                src: pendingNoteSrc,
-                noteTextDetails: {
-                    text: text,
-                    fontFamily: font + ", cursive",
-                    color: color
-                },
-                quantity: 1,
-                name: 'Custom Note'
-            });
+            noteText.style.display = 'none';
+        }
+        noteEditor.style.display = 'none';
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') noteEditor.style.display = 'none';
+    });
+
+    // Save Changes
+    document.getElementById('saveCustomization').addEventListener('click', () => {
+        if (!noteData.src) {
+            alert('Please compose a note before saving!');
+            return;
         }
         
-        sessionStorage.setItem("cart", JSON.stringify(cart));
-        updateCartCount();
-        renderLocalCart();
-        document.getElementById('noteEditor').style.display = 'none';
-    });
-    
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') document.getElementById('noteEditor').style.display = 'none';
-    });
-    
-    document.getElementById('addToCartBtn').addEventListener('click', () => {
-        // already saved to session storage during add
-        alert('Notes & Stickers saved to your cart!');
-        window.location.href = 'gift.html';
-    });
-    
-    // Init
-    updateCartCount();
-    renderLocalCart();
-
-    const cartButton = document.getElementById("cartButton");
-    if (cartButton) {
-        cartButton.addEventListener("click", () => {
-            window.location = "checkout.html";
+        const noteId = Math.random().toString(36).substr(2, 9);
+        
+        cart.push({
+            id: noteId,
+            type: 'note',
+            src: noteData.src,
+            noteTextDetails: {
+                text: noteData.text,
+                fontFamily: noteData.font,
+                color: noteData.color
+            },
+            quantity: 1,
+            name: 'Custom Note'
         });
+
+        stickers.forEach(s => {
+            cart.push({
+                id: Math.random().toString(36).substr(2, 9),
+                type: 'sticker',
+                src: s.src,
+                quantity: 1,
+                name: 'Sticker'
+            });
+        });
+        
+        sessionStorage.setItem("cart", JSON.stringify(cart));
+        
+        const cartCountEl = document.getElementById('cartCount');
+        if (cartCountEl) cartCountEl.innerText = cart.length;
+        
+        const toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        
+        mainNote.style.display = 'none';
+        noteData.src = null;
+        noteData.text = '';
+        noteText.style.display = 'none';
+        placeholderMsg.style.display = 'flex';
+        addTextBtn.style.display = 'none';
+        stickers.forEach(s => s.remove());
+        stickers = [];
+        selectElement(null);
+        
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 2500);
+    });
+
+    // Dragging / Rotate / Resize Logic
+    let isDragging = false;
+    let isRotating = false;
+    let isResizing = false;
+    let dragStartX, dragStartY;
+    let initialLeft, initialTop;
+    let startAngle = 0;
+    let startScale = 1;
+
+    function selectElement(el) {
+        if (selectedElement) {
+            selectedElement.classList.remove('canvas-selected');
+        }
+        selectedElement = el;
+        if (el) {
+            el.classList.add('canvas-selected');
+            updateControls();
+        } else {
+            itemDeleteBtn.style.display = 'none';
+            itemRotateBtn.style.display = 'none';
+            itemResizeBtn.style.display = 'none';
+        }
     }
+
+    function updateControls() {
+        if (!selectedElement) {
+            itemDeleteBtn.style.display = 'none';
+            itemRotateBtn.style.display = 'none';
+            itemResizeBtn.style.display = 'none';
+            return;
+        }
+        
+        const rect = selectedElement.getBoundingClientRect();
+        const parentRect = customScene.getBoundingClientRect();
+        
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        
+        const scale = parseFloat(selectedElement.dataset.scale) || 1;
+        const w = selectedElement.offsetWidth * scale;
+        const h = selectedElement.offsetHeight * scale;
+        
+        const rotRad = parseFloat(selectedElement.dataset.angle) || 0;
+        
+        function getRotatedPos(dx, dy) {
+            const rx = cx + dx * Math.cos(rotRad) - dy * Math.sin(rotRad);
+            const ry = cy + dx * Math.sin(rotRad) + dy * Math.cos(rotRad);
+            return { x: rx, y: ry };
+        }
+        
+        const offsetX = parentRect.left;
+        const offsetY = parentRect.top;
+        
+        const delPos = getRotatedPos(w/2, -h/2);
+        itemDeleteBtn.style.left = (delPos.x - offsetX - 16) + 'px';
+        itemDeleteBtn.style.top = (delPos.y - offsetY - 16) + 'px';
+        itemDeleteBtn.style.display = 'block';
+
+        const rotPos = getRotatedPos(-w/2, h/2);
+        itemRotateBtn.style.left = (rotPos.x - offsetX - 16) + 'px';
+        itemRotateBtn.style.top = (rotPos.y - offsetY - 16) + 'px';
+        itemRotateBtn.style.display = 'block';
+
+        const resPos = getRotatedPos(w/2, h/2);
+        itemResizeBtn.style.left = (resPos.x - offsetX - 16) + 'px';
+        itemResizeBtn.style.top = (resPos.y - offsetY - 16) + 'px';
+        itemResizeBtn.style.display = 'block';
+    }
+
+    customScene.addEventListener('mousedown', (e) => {
+        if (e.target.closest('#itemDeleteBtn')) {
+            if (selectedElement && selectedElement.classList.contains('draggableSticker')) {
+                selectedElement.remove();
+                stickers = stickers.filter(s => s !== selectedElement);
+            } else if (selectedElement === noteText) {
+                noteText.style.display = 'none';
+                noteData.text = '';
+            } else if (selectedElement === mainNote) {
+                mainNote.style.display = 'none';
+                noteData.src = null;
+                placeholderMsg.style.display = 'flex';
+                addTextBtn.style.display = 'none';
+                noteText.style.display = 'none';
+                stickers.forEach(s => s.remove());
+                stickers = [];
+            }
+            selectElement(null);
+            return;
+        }
+
+        if (e.target.closest('#itemRotateBtn')) {
+            isRotating = true;
+            const rect = selectedElement.getBoundingClientRect();
+            dragStartX = rect.left + rect.width / 2;
+            dragStartY = rect.top + rect.height / 2;
+            startAngle = Math.atan2(e.clientY - dragStartY, e.clientX - dragStartX);
+            e.preventDefault();
+            return;
+        }
+
+        if (e.target.closest('#itemResizeBtn')) {
+            isResizing = true;
+            const rect = selectedElement.getBoundingClientRect();
+            dragStartX = rect.left + rect.width / 2;
+            dragStartY = rect.top + rect.height / 2;
+            startScale = parseFloat(selectedElement.dataset.scale || 1);
+            selectedElement.dataset.startDist = Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY);
+            e.preventDefault();
+            return;
+        }
+
+        if (e.target.classList.contains('draggableSticker') || e.target === noteText || e.target === mainNote) {
+            isDragging = true;
+            selectElement(e.target);
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            initialLeft = selectedElement.offsetLeft;
+            initialTop = selectedElement.offsetTop;
+            e.preventDefault();
+        } else if (!e.target.closest('#addTextBtn') && !e.target.closest('.canvas-placeholder')) {
+            selectElement(null);
+        }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!selectedElement) return;
+
+        if (isRotating) {
+            const angle = Math.atan2(e.clientY - dragStartY, e.clientX - dragStartX);
+            const currentAngle = parseFloat(selectedElement.dataset.angle || 0);
+            const delta = angle - startAngle;
+            const newAngle = currentAngle + delta;
+            
+            selectedElement.dataset.angle = newAngle;
+            const scale = selectedElement.dataset.scale || 1;
+            selectedElement.style.transform = `translate(-50%, -50%) rotate(${newAngle}rad) scale(${scale})`;
+            
+            startAngle = angle;
+            updateControls();
+        } else if (isResizing) {
+            const dist = Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY);
+            const startDist = parseFloat(selectedElement.dataset.startDist);
+            
+            let newScale = startScale * (dist / startDist);
+            newScale = Math.max(0.2, Math.min(newScale, 5));
+            
+            selectedElement.dataset.scale = newScale;
+            const angle = selectedElement.dataset.angle || 0;
+            selectedElement.style.transform = `translate(-50%, -50%) rotate(${angle}rad) scale(${newScale})`;
+            
+            updateControls();
+        } else if (isDragging) {
+            const dx = e.clientX - dragStartX;
+            const dy = e.clientY - dragStartY;
+            
+            selectedElement.style.left = (initialLeft + dx) + 'px';
+            selectedElement.style.top = (initialTop + dy) + 'px';
+            
+            updateControls();
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        isRotating = false;
+        isResizing = false;
+    });
+
 </script>
+
 </body>
 
 </html>
-
-
-
