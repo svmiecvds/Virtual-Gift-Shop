@@ -81,73 +81,7 @@
             user-select: none;
         }
 
-        /* Download button */
-        #downloadBtn {
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            z-index: 9999;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background-color: rgba(183, 26, 61, 0.90);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            padding: 10px 20px;
-            cursor: pointer;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 15px rgba(183, 26, 61, 0.35);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
 
-        #downloadBtn:hover {
-            opacity: 0.88;
-            transform: translateY(-2px);
-        }
-
-        /* Toast */
-        .share-toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--toast-bg);
-            color: white;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            z-index: 10001;
-            opacity: 0;
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .share-toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* Spinner */
-        .share-spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2.5px solid white;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spinShare 0.6s linear infinite;
-            vertical-align: middle;
-        }
-
-        @keyframes spinShare {
-            to { transform: rotate(360deg); }
-        }
 
         /* Audio animations */
         .has-audio { cursor: pointer; transition: transform 0.3s ease; }
@@ -211,15 +145,6 @@
     <!-- Full-screen gift scene -->
     <div id="giftScene"></div>
 
-    <!-- Download button fixed top-right -->
-    <button id="downloadBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" x2="12" y1="15" y2="3"/>
-        </svg>
-        <span>Save</span>
-    </button>
 
     <!-- Glass tile footer -->
     <footer class="site-footer">&copy; 2026 | &#9825; Made with <a href="https://thegifting.vercel.app" target="_blank" rel="noopener noreferrer" style="margin-left: 4px;">The Gifting Co.</a></footer>
@@ -419,50 +344,6 @@
                 giftScene.appendChild(wrapper);
             });
         }
-
-        /* ---------- download ---------- */
-        function showToast(message) {
-            let toast = document.querySelector('.share-toast');
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.className = 'share-toast';
-                document.body.appendChild(toast);
-            }
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
-        }
-
-        const downloadBtn = document.getElementById('downloadBtn');
-        downloadBtn.addEventListener('click', async () => {
-            const span = downloadBtn.querySelector('span');
-            const orig = span.innerHTML;
-            span.innerHTML = '<span class="share-spinner"></span> Saving...';
-            downloadBtn.disabled = true;
-
-            try {
-                if (typeof html2canvas === 'undefined') throw new Error('html2canvas not loaded');
-                const canvas = await html2canvas(giftScene, { scale: 2, useCORS: true, allowTaint: false });
-                const imgData = canvas.toDataURL('image/jpeg', 0.9);
-                const link = document.createElement('a');
-                link.href = imgData;
-                link.download = 'gift.jpg';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                showToast('✓ Image saved!');
-            } catch (err) {
-                console.error(err);
-                if (window.location.protocol === 'file:') {
-                    alert('Please open via a web server to enable image saving.');
-                } else {
-                    showToast('Failed to save image.');
-                }
-            } finally {
-                span.innerHTML = orig;
-                downloadBtn.disabled = false;
-            }
-        });
     </script>
 </body>
 </html>
