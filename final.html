@@ -231,34 +231,6 @@ body.giftPage {
 }
 
 /* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
-.treats-layout #customScene {
-    width: 600px;
-    height: 600px;
-    background: white;
-    border-radius: 40px;
-    position: relative;
-    overflow: hidden;
-}
-
-#customPanel.treats-controls-panel {
-    width: 280px !important;
-    background: var(--popup-bg);
-    border-radius: 35px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-}
-
-
-
-#customPanel.treats-controls-panel h2 {
-    text-align: center;
-    color: var(--heading-color);
-    margin-bottom: 15px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-}
 
 /* --- Bubbly option elements inside selection panel --- */
 .box-option {
@@ -334,9 +306,6 @@ body.giftPage {
 .buttons-row button:hover {
     transform: scale(1.05);
 }
-
-
-/* --- Spawned Draggable Treats --- */
 .draggableTreat {
     position: absolute;
     width: 70px;
@@ -345,11 +314,6 @@ body.giftPage {
     cursor: move;
     z-index: 10;
     transition: transform 0.1s ease;
-}
-
-.draggableTreatSelected {
-    outline: 3px solid #B71A3D !important;
-    outline-offset: 3px;
 }
 
 /* --- PEARL STARDUST BUTTON DESIGN --- */
@@ -833,7 +797,7 @@ body.viewer-mode {
 
 <style>
 /* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
-[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item, .dessert-cart-container, .dessert-spawner-card {
+[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
     border: none !important;
     box-shadow: none !important;
     filter: none !important;
@@ -937,12 +901,9 @@ function resolveAccessorySrc(src) {
     const filename = path.split("/").pop();
     if (filename.includes("custom")) {
         return "assets/plushies/" + filename;
-    } else if (filename.includes("dessert") || filename.includes("box")) {
-        return "assets/treats/" + filename;
     } else if (filename.includes("flower") || filename.includes("bow") || filename.includes("holder")) {
         return "assets/flowers/" + filename;
     }
-    return "assets/treats/" + filename;
 }
 
 /* ---------- VIEWER MODE DETECTION ---------- */
@@ -1015,7 +976,7 @@ savedLayout.forEach(item => {
     wrapper.style.left = newLeft + "px";
     wrapper.style.top  = newTop  + "px";
 
-    // Scale size too
+    // Scale size too (use scaleX for both to maintain aspect ratio!)
     if (item.width) {
         const origW = parseFloat(item.width);
         wrapper.style.width = (origW * scaleX) + "px";
@@ -1023,7 +984,7 @@ savedLayout.forEach(item => {
     if (item.height) {
         const origH = parseFloat(item.height);
         if (!isNaN(origH)) {
-            wrapper.style.height = (origH * scaleY) + "px";
+            wrapper.style.height = (origH * scaleX) + "px";
         } else if (item.height === "auto") {
             wrapper.style.height = "auto";
         }
@@ -1044,7 +1005,10 @@ savedLayout.forEach(item => {
         img.src = resolveMainSrc(item.src);
         img.style.position = "absolute";
         img.style.width = "100%";
-        img.style.height = isBouquet ? "100%" : "auto";
+        img.style.height = (isBouquet || item.canvasW !== undefined) ? "100%" : "auto";
+        if (isBouquet || item.canvasW !== undefined) {
+            img.style.objectFit = "contain";
+        }
         img.style.left = "0";
         img.style.top = "0";
         img.draggable = false;
@@ -1094,20 +1058,34 @@ savedLayout.forEach(item => {
                 accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
                 accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
                 accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
+                
+                if (item.accessories.indexOf(acc) === 0 && !isBouquet && item.canvasW !== undefined) {
+                    accessory.style.height = "auto";
+                    accessory.style.display = "block";
+                } else {
+                    if (acc.height) {
+                        const rawHeight = parseFloat(acc.height);
+                        accessory.style.height = ((rawHeight / canvasH) * 100) + "%";
+                        accessory.style.objectFit = "contain";
+                    }
+                }
+                
                 accessory.style.transform = `rotate(${acc.rotation || 0}deg) scaleX(${acc.flip || 1})`;
                 wrapper.appendChild(accessory);
             });
         }
     } 
     else if (item.type === "note") {
-        wrapper.style.width = (220 * scaleX) + "px";
+        // Use the actual saved width from gift.html (respects any resizing done there)
+        const noteW = parseFloat(item.width) || 220;
+        wrapper.style.width = (noteW * scaleX) + "px";
+        wrapper.style.height = "auto";
         
         const paper = document.createElement("img");
         paper.src = resolveMainSrc(item.src);
         paper.style.width = "100%";
         paper.style.display = "block";
         paper.draggable = false;
-        paper.style.transform = `rotate(${item.angle || 0}rad) scale(${item.scale || 1})`;
         wrapper.appendChild(paper);
         wrapper.className = "note giftEl";
 
@@ -1131,9 +1109,11 @@ savedLayout.forEach(item => {
                 textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
                 let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
                 textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
-                textDiv.style.height = "auto";
-                textDiv.style.overflow = "visible";
+                textDiv.style.height = "50%";
+                textDiv.style.maxHeight = "50%";
+                textDiv.style.overflow = "hidden";
                 textDiv.style.whiteSpace = "pre-wrap";
+                textDiv.style.wordBreak = "break-word";
                 textDiv.style.fontSize = "9.6cqw";
             } else {
                 textDiv.style.top = "12%";

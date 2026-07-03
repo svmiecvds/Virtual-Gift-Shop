@@ -490,37 +490,6 @@
         }
 
         /* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
-        .treats-layout #customScene {
-            width: 600px;
-            height: 600px;
-            background: white;
-            border-radius: 40px;
-            box-shadow: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #customPanel.treats-controls-panel {
-            width: 280px !important;
-            background: var(--popup-bg);
-            border: none !important;
-            border-radius: 35px;
-            padding: 24px;
-            box-shadow: 0 10px 25px transparent;
-            display: flex;
-            flex-direction: column;
-        }
-
-        
-
-        #customPanel.treats-controls-panel h2 {
-            text-align: center;
-            color: var(--heading-color);
-            margin-bottom: 15px;
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 600;
-            font-size: 20px;
-        }
 
         /* --- Bubbly option elements inside selection panel --- */
         .box-option {
@@ -609,8 +578,6 @@
         #saveCustomization:hover {
             box-shadow: none !important;
         }
-
-        /* --- Spawned Draggable Treats --- */
         .draggableTreat {
             position: absolute;
             width: 70px;
@@ -619,11 +586,6 @@
             cursor: move;
             z-index: 10;
             transition: transform 0.1s ease;
-        }
-
-        .draggableTreatSelected {
-            outline: 3px solid #B71A3D !important;
-            outline-offset: 3px;
         }
 
         /* --- PEARL STARDUST BUTTON DESIGN --- */
@@ -961,7 +923,7 @@
 
 <style>
 /* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
-[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item, .dessert-cart-container, .dessert-spawner-card {
+[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
     border: none !important;
     box-shadow: none !important;
     filter: none !important;
@@ -1052,7 +1014,6 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             const categories = {
                 "Plushies": [],
                 "Flowers": [],
-                "Treats": [],
                 "Notes": []
             };
 
@@ -1066,8 +1027,6 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                     categories["Flowers"].push(categorizedItem);
                 } else if (item.image && item.image.includes("plushies/")) {
                     categories["Plushies"].push(categorizedItem);
-                } else {
-                    categories["Treats"].push(categorizedItem);
                 }
             });
 

@@ -181,9 +181,8 @@
             }
             const filename = path.split('/').pop();
             if (filename.includes('custom'))  return '/assets/plushies/' + filename;
-            if (filename.includes('dessert') || filename.includes('box')) return '/assets/treats/' + filename;
             if (filename.includes('flower')  || filename.includes('bow') || filename.includes('holder')) return '/assets/flowers/' + filename;
-            return '/assets/treats/' + filename;
+            return '/assets/' + filename;
         }
 
         /* ---------- load gift ---------- */

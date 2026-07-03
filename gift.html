@@ -373,34 +373,6 @@ body.giftPage {
 }
 
 /* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
-.treats-layout #customScene {
-    width: 600px;
-    height: 600px;
-    background: white;
-    border-radius: 40px;
-    position: relative;
-    overflow: hidden;
-}
-
-#customPanel.treats-controls-panel {
-    width: 280px !important;
-    background: var(--popup-bg);
-    border-radius: 35px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-}
-
-
-
-#customPanel.treats-controls-panel h2 {
-    text-align: center;
-    color: var(--heading-color);
-    margin-bottom: 15px;
-    font-family: var(--font-ui);
-    font-weight: 600;
-    font-size: 20px;
-}
 
 /* --- Bubbly option elements inside selection panel --- */
 .box-option {
@@ -486,8 +458,6 @@ body.giftPage {
 #saveCustomization:hover {
     box-shadow: none !important;
 }
-
-/* --- Spawned Draggable Treats --- */
 .draggableTreat {
     position: absolute;
     width: 70px;
@@ -496,11 +466,6 @@ body.giftPage {
     cursor: move;
     z-index: 10;
     transition: transform 0.1s ease;
-}
-
-.draggableTreatSelected {
-    outline: 3px solid #B71A3D !important;
-    outline-offset: 3px;
 }
 
 /* --- PEARL STARDUST BUTTON DESIGN --- */
@@ -811,7 +776,7 @@ margin: 0 auto;
 
 <style>
 /* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
-[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item, .dessert-cart-container, .dessert-spawner-card {
+[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
     border: none !important;
     box-shadow: none !important;
     filter: none !important;
@@ -905,12 +870,9 @@ function resolveAccessorySrc(src) {
     const filename = path.split("/").pop();
     if (filename.includes("custom")) {
         return "assets/plushies/" + filename;
-    } else if (filename.includes("dessert") || filename.includes("box")) {
-        return "assets/treats/" + filename;
     } else if (filename.includes("flower") || filename.includes("bow") || filename.includes("holder")) {
         return "assets/flowers/" + filename;
     }
-    return "assets/treats/" + filename;
 }
 
 /* Read from "giftItems" - the key set by checkout.js */
@@ -1109,15 +1071,20 @@ giftItems.forEach((item, itemIndex) => {
             wrapper.style.position = "absolute";
             wrapper.style.left = (200 + q * 20) + "px";
             wrapper.style.top = (150 + q * 20) + "px";
-            wrapper.style.width = "220px";
+            const scaleMultiplier = item.scale || 1;
+            wrapper.style.width = (220 * scaleMultiplier) + "px";
             wrapper.style.zIndex = highestZ++;
+            
+            const angleRad = item.angle || 0;
+            const angleDeg = angleRad * (180 / Math.PI);
+            wrapper.dataset.rotation = angleDeg;
+            wrapper.style.transform = `rotate(${angleDeg}deg)`;
             
             const paper = document.createElement("img");
             paper.src = item.src;
             paper.style.width = "100%";
             paper.style.display = "block";
             paper.draggable = false;
-            paper.style.transform = `rotate(${item.angle || 0}rad) scale(${item.scale || 1})`;
             wrapper.appendChild(paper);
             
             wrapper.style.containerType = "inline-size";
@@ -1138,9 +1105,11 @@ giftItems.forEach((item, itemIndex) => {
                     let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
                     textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
                     
-                    textDiv.style.height = "auto";
-                    textDiv.style.overflow = "visible";
+                    textDiv.style.height = "50%";
+                    textDiv.style.maxHeight = "50%";
+                    textDiv.style.overflow = "hidden";
                     textDiv.style.whiteSpace = "pre-wrap";
+                    textDiv.style.wordBreak = "break-word";
                     textDiv.style.textAlign = "center";
                     textDiv.style.lineHeight = "1.2";
                     textDiv.style.fontSize = "9.6cqw";
@@ -1400,6 +1369,7 @@ if (saveGiftBtn) {
             let src = "";
             let text = "";
             let noteTextDetails = null;
+            let noteStickers = [];
 
             if (type === "plushie") {
                 src = el.querySelector("img").src;
@@ -1435,9 +1405,15 @@ if (saveGiftBtn) {
             }
 
             let stickers = [];
+            let canvasW, canvasH, canvasL, canvasT;
             if (itemIndex !== undefined && giftItems[itemIndex]) {
-                accessories = giftItems[itemIndex].accessories || [];
-                stickers = giftItems[itemIndex].stickers || [];
+                const itemData = giftItems[itemIndex];
+                accessories = itemData.accessories || [];
+                stickers = itemData.stickers || [];
+                canvasW = itemData.canvasW;
+                canvasH = itemData.canvasH;
+                canvasL = itemData.canvasL;
+                canvasT = itemData.canvasT;
             }
 
             const isBouquetItem = el.dataset.isBouquet === "true";
@@ -1462,7 +1438,11 @@ if (saveGiftBtn) {
                 color: el.style.color || "",
                 voiceNote: el.dataset.voiceNote || "",
                 voiceNoteDuration: parseInt(el.dataset.voiceNoteDuration) || 0,
-                accessories: accessories
+                accessories: accessories,
+                canvasW: canvasW,
+                canvasH: canvasH,
+                canvasL: canvasL,
+                canvasT: canvasT
             });
         });
         

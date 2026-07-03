@@ -10,7 +10,7 @@
 
 <title>The Gifting Co.</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="preload" as="image" href="assets/plushiesbg.jpeg">
+    <link rel="preload" as="image" href="assets/plushiesbg.png">
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
@@ -57,7 +57,7 @@ body,
 body.receiptPage,
 body.giftPage {
     color: var(--text-color);
-    background-image: url('assets/plushiesbg.jpeg');
+    background-image: url('assets/plushiesbg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -443,34 +443,6 @@ height:auto;
 /* --- BACK TO SHOP BTN --- */
 
 /* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
-.treats-layout #customScene {
-    width: 600px;
-    height: 600px;
-    background: white;
-    border-radius: 40px;
-    position: relative;
-    overflow: hidden;
-}
-
-#customPanel.treats-controls-panel {
-    width: 280px !important;
-    background: var(--popup-bg);
-    border-radius: 35px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-}
-
-
-
-#customPanel.treats-controls-panel h2 {
-    text-align: center;
-    color: var(--heading-color);
-    margin-bottom: 15px;
-    font-family: var(--font-ui);
-    font-weight: 600;
-    font-size: 20px;
-}
 
 /* --- Bubbly option elements inside selection panel --- */
 .box-option {
@@ -560,8 +532,6 @@ height:auto;
 #saveCustomization:hover {
     box-shadow: 0 4px 16px rgba(255, 105, 180, 0.25) !important;
 }
-
-/* --- Spawned Draggable Treats --- */
 .draggableTreat {
     position: absolute;
     width: 70px;
@@ -570,11 +540,6 @@ height:auto;
     cursor: move;
     z-index: 10;
     transition: transform 0.1s ease;
-}
-
-.draggableTreatSelected {
-    outline: 3px solid #B71A3D !important;
-    outline-offset: 3px;
 }
 
 /* --- PEARL STARDUST BUTTON DESIGN --- */
@@ -1006,7 +971,7 @@ body.no-scroll {
 
 <style>
 /* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
-[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item, .dessert-cart-container, .dessert-spawner-card {
+[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
     border: none !important;
     box-shadow: none !important;
     filter: none !important;

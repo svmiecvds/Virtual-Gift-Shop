@@ -228,32 +228,6 @@ body.giftPage {
     100% { transform: rotate(2deg) scale(1.02); }
 }
 
-/* --- TREATS PAGE LAYOUT --- */
-.dessert-cart-container {
-    width: 280px !important;
-    height: 700px !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: visible;
-    background: var(--panel-bg) !important;
-    padding: 24px !important;
-    border-radius: 24px !important;
-    box-shadow: none !important;
-    border: none !important;
-}
-
-
-
-.dessert-spawner-card h3 {
-    text-align: center;
-    color: var(--heading-color);
-    margin-bottom: 18px;
-    font-family: var(--font-ui);
-    font-weight: 600;
-    font-size: 18px;
-}
-
 .spawner-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -261,66 +235,13 @@ body.giftPage {
     justify-items: center;
 }
 
-.dessertSpawner {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
-    cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.25s ease;
-}
-
-.dessertSpawner:hover {
-    transform: scale(1.2) rotate(8deg);
-    filter: drop-shadow(0 8px 12px rgba(255, 105, 180, 0.45));
-}
-
 /* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
-.treats-layout #customScene {
-    width: 600px;
-    height: 600px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    border-top: 2px solid rgba(255, 255, 255, 0.8) !important;
-    border-left: 2px solid rgba(255, 255, 255, 0.8) !important;
-    box-shadow: 
-        inset 0 4px 10px rgba(255, 255, 255, 0.6),
-        inset 0 -4px 10px rgba(255, 182, 193, 0.2) !important;
-    border-radius: 40px;
-    position: relative;
-    overflow: hidden;
-}
 
 #mainBox {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-}
-
-#customPanel.treats-controls-panel {
-    width: 280px !important;
-    height: 700px !important;
-    box-sizing: border-box !important;
-    background: var(--panel-bg) !important;
-    padding: 24px !important;
-    border-radius: 24px !important;
-    box-shadow: none !important;
-    border: none !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-
-
-#customPanel.treats-controls-panel h2 {
-    text-align: center;
-    color: var(--heading-color);
-    margin-bottom: 15px;
-    font-family: var(--font-ui);
-    font-weight: 600;
-    font-size: 20px;
 }
 
 .canvas-placeholder {
@@ -418,10 +339,6 @@ body.giftPage {
 .buttons-row button:hover {
     transform: scale(1.05);
 }
-
-
-
-/* --- Spawned Draggable Treats --- */
 .draggableTreat {
     position: absolute;
     width: 70px;
@@ -430,11 +347,6 @@ body.giftPage {
     cursor: move;
     z-index: 10;
     transition: transform 0.1s ease;
-}
-
-.draggableTreatSelected {
-    outline: 3px solid #B71A3D !important;
-    outline-offset: 3px;
 }
 
 /* --- PEARL STARDUST BUTTON DESIGN --- */
@@ -724,36 +636,6 @@ body.no-scroll #mainContainer {
     align-items: center;
     justify-content: center;
 }
-.treats-layout {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    gap: 30px;
-    padding: 10px 20px;
-    flex-wrap: nowrap;
-    width: 100%;
-    max-width: 1350px;
-    margin: 0 auto;
-}
-.dessert-cart-container {
-    width: 280px !important;
-    height: 700px !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: visible;
-    background: var(--panel-bg) !important;
-    padding: 24px !important;
-    border-radius: 24px !important;
-    box-shadow: none !important;
-    border: none !important;
-}
-.treats-controls-panel {
-    max-height: 80vh;
-    overflow-y: auto;
-}
 
 /* --- NAV BRAND CENTERING --- */
 .navBrand {
@@ -840,7 +722,7 @@ body.no-scroll #mainContainer {
 
 <style>
 /* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
-[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item, .dessert-cart-container, .dessert-spawner-card {
+[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
     border: none !important;
     box-shadow: none !important;
     filter: none !important;
@@ -885,7 +767,6 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
         <a href="plushies.html" class="navLink">Plushies</a>
         <a href="flowers.html" class="navLink">Flowers</a>
-        <a href="treats.html" class="navLink">Treats</a>
         <a href="notes.html" class="navLink active">Notes</a>
         <button id="saveCustomization" class="shiny-cta" style="padding: 8px 16px; font-size: 14px;">
             <span>Save Changes</span>
@@ -893,24 +774,41 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     </nav>
 
     <!-- Header Text -->
+    <h1 class="storeHeader">write a Note.</h1>
 
-    <div id="mainContainer" style="display: flex; gap: 20px; justify-content: center; align-items: stretch; width: 100%; max-width: 1200px; margin: 100px auto 40px auto; height: calc(100vh - 140px); max-height: 600px;">
+    <div id="mainContainer" style="display: flex; gap: 20px; justify-content: center; align-items: stretch; width: 100%; max-width: 1200px; margin: 20px auto 40px auto; height: calc(100vh - 140px); max-height: 600px;">
         
         <!-- Left Panel: Notes -->
         <div id="leftPanel" style="width: 280px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
-            <h2 style="color: white; margin-bottom: 15px; text-align: center; font-family: var(--font-ui);">Notes</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="box-option noteTemplate" data-src="assets/final page/note1.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note1.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option noteTemplate" data-src="assets/final page/note2.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note2.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option noteTemplate" data-src="assets/final page/note3.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note3.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option noteTemplate" data-src="assets/final page/note4.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note4.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option noteTemplate" data-src="assets/final page/note5.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note5.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option noteTemplate" data-src="assets/final page/note6.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/note6.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+            <!-- Colour swatches for Note -->
+            <h3 style="color: white; margin: 0 0 10px; text-align: center; font-family: var(--font-ui); font-size: 14px; letter-spacing: 0.5px;">Note Colour</h3>
+            <div id="noteColourSwatches" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;">
+                <div class="colour-swatch note-swatch swatch-active" data-src="assets/final page/note1.png" style="background:#fef3c7;" title="Yellow"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note2.png" style="background:#fce7f3;" title="Pink"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note3.png" style="background:#dbeafe;" title="Blue"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note4.png" style="background:#dcfce7;" title="Green"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note5.png" style="background:#f3e8ff;" title="Purple"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note6.png" style="background:#f3f4f6;" title="White"></div>
+            </div>
+
+            <!-- Colour swatches for font -->
+            <h3 style="color: white; margin: 25px 0 10px; text-align: center; font-family: var(--font-ui); font-size: 14px; letter-spacing: 0.5px;">Font Colour</h3>
+            <div id="colourSwatches" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+                <div class="colour-swatch font-swatch swatch-active" data-color="#B71A3D" style="background:#B71A3D;" title="Crimson"></div>
+                <div class="colour-swatch font-swatch" data-color="#1a1a1a" style="background:#1a1a1a;" title="Black"></div>
+                <div class="colour-swatch font-swatch" data-color="#ffffff" style="background:#ffffff; border: 1.5px solid #ccc;" title="White"></div>
+                <div class="colour-swatch font-swatch" data-color="#F97316" style="background:#F97316;" title="Orange"></div>
+                <div class="colour-swatch font-swatch" data-color="#EAB308" style="background:#EAB308;" title="Yellow"></div>
+                <div class="colour-swatch font-swatch" data-color="#22C55E" style="background:#22C55E;" title="Green"></div>
+                <div class="colour-swatch font-swatch" data-color="#3B82F6" style="background:#3B82F6;" title="Blue"></div>
+                <div class="colour-swatch font-swatch" data-color="#8B5CF6" style="background:#8B5CF6;" title="Purple"></div>
+                <div class="colour-swatch font-swatch" data-color="#EC4899" style="background:#EC4899;" title="Pink"></div>
+                <div class="colour-swatch font-swatch" data-color="#14B8A6" style="background:#14B8A6;" title="Teal"></div>
             </div>
         </div>
 
         <!-- Center Panel: Canvas -->
-        <div id="customScene" style="position: relative; flex: 1; width: 100%; max-width: 600px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important; backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4) !important; border-radius: 40px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 4px 10px rgba(255, 255, 255, 0.6), inset 0 -4px 10px rgba(255, 182, 193, 0.2) !important;">
+        <div id="customScene" style="position: relative; flex: 1; width: 100%; max-width: 600px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important; backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4) !important; border-radius: 40px; display: flex; align-items: center; justify-content: center; overflow: visible; box-shadow: inset 0 4px 10px rgba(255, 255, 255, 0.6), inset 0 -4px 10px rgba(255, 182, 193, 0.2) !important;">
             <div id="itemDeleteBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
             </div>
@@ -923,20 +821,23 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             </div>
 
             
-            <div class="canvas-placeholder" id="placeholderMsg">
+            <div class="canvas-placeholder" id="placeholderMsg" style="display: none;">
                 <span style="font-family: var(--font-heading); font-size: 30px; color: var(--heading-color);">Write a note for someone</span>
                 <span style="font-size: 15px; font-family: var(--font-body); margin-top: 15px; opacity: 0.8;">
                     Select a note to start. Then add custom text and stickers!
                 </span>
             </div>
             
-            <button id="addTextBtn" class="giftControlBtn" style="display: none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 999; border: none; border-radius: 50px; background: var(--btn-bg); color: var(--btn-text); padding: 10px 20px; font-family: var(--font-ui); font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid rgba(255, 182, 217, 0.25);">
-                 Add Custom Text
-            </button>
+            <!-- Hidden native colour input -->
+            <input type="color" id="textColorPicker" value="#B71A3D" style="position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;">
+
+
             
             <div id="canvasContent" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none;">
-                <img id="mainNote" src="" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 250px; pointer-events: auto;">
-                <div id="noteText" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: auto; cursor: move; text-align: center; white-space: pre-wrap; font-size: 24px; min-width: 100px;"></div>
+                <img id="mainNote" src="assets/final page/note1.png" style="display: block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; object-fit: contain; pointer-events: none;">
+                <!-- Live text textarea overlaid on note — constrained horizontally and vertically -->
+                <textarea id="noteTextarea" placeholder="Write your message here..." style="position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); width: 62%; height: 50%; max-width: 62%; max-height: 50%; background: transparent; border: none; outline: none; resize: none; overflow: hidden; font-family: 'Pacifico', cursive; font-size: 18px; color: #B71A3D; text-align: center; pointer-events: auto; cursor: text; line-height: 1.5; padding: 8px; word-wrap: break-word; word-break: break-word;"></textarea>
+                <div id="noteText" style="display: none;"></div>
             </div>
         </div>
 
@@ -959,22 +860,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
     </div>
 
-    <!-- Note Editor Modal -->
-    <div id="noteEditor" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--popup-bg); padding: 25px; border-radius: 25px; z-index: 99999; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-        <h2 style="color: var(--heading-color); margin-bottom: 15px; font-family: var(--font-ui);">Edit Text</h2>
-        <textarea id="noteMessage" placeholder="Write your message..." style="width: 320px; height: 130px; margin-bottom: 15px; resize: none; border-radius: 10px; padding: 10px; border: 1px solid rgba(183, 26, 61, 0.2);"></textarea>
-        <br>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px;">
-            <select id="fontSelect" style="flex: 1; padding: 10px; border-radius: 10px; border: 1px solid rgba(183, 26, 61, 0.2); font-family: var(--font-ui);">
-                <option value="Pacifico">Pacifico</option>
-                <option value="Fredoka">Fredoka</option>
-                <option value="Quicksand">Quicksand</option>
-                <option value="Ribeye">Ribeye</option>
-            </select>
-            <input type="color" id="textColorPicker" value="#B71A3D" style="width: 40px; height: 40px; border: none; cursor: pointer; padding: 0; background: transparent;">
-        </div>
-        <button id="saveNoteText" style="width: 100%; border: none; border-radius: 50px; padding: 12px; background: #ffffff; color: #B71A3D; font-weight: bold; font-family: var(--font-ui); cursor: pointer; border: 1.5px solid rgba(255, 182, 217, 0.25);">Save</button>
-    </div>
+    <!-- Colour popover is now inline above the canvas; no modal needed -->
 
     <!-- Toast Notification -->
     <div id="toast" style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--toast-bg); color: white; padding: 15px 25px; border-radius: 50px; z-index: 9999; font-family: var(--font-ui); font-weight: 600;">
@@ -987,6 +873,16 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         #leftPanel::-webkit-scrollbar-thumb, #rightPanel::-webkit-scrollbar-thumb { background: #900C3F; border-radius: 10px; }
         .draggableSticker { position: absolute; width: 60px; height: auto; cursor: move; pointer-events: auto; }
         .canvas-selected { outline: 2px dashed #B71A3D; outline-offset: 4px; }
+        .colour-swatch {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+        }
+        .colour-swatch:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+        .colour-swatch.swatch-active { outline: 3px solid white; outline-offset: 2px; transform: scale(1.15); }
     </style>
 
 
@@ -995,8 +891,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     
     const mainNote = document.getElementById('mainNote');
     const placeholderMsg = document.getElementById('placeholderMsg');
-    const addTextBtn = document.getElementById('addTextBtn');
-    const noteEditor = document.getElementById('noteEditor');
+
     const noteText = document.getElementById('noteText');
     const canvasContent = document.getElementById('canvasContent');
     const customScene = document.getElementById('customScene');
@@ -1006,7 +901,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
     let stickers = [];
     let noteData = {
-        src: null,
+        src: 'assets/final page/note1.png',
         text: '',
         font: 'Pacifico',
         color: '#B71A3D'
@@ -1017,21 +912,20 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     
     let selectedElement = null;
 
-    // Note Selection
-    document.querySelectorAll('.noteTemplate').forEach(el => {
-        el.addEventListener('click', () => {
-            noteData.src = el.dataset.src;
-            mainNote.src = noteData.src;
-            mainNote.style.display = 'block';
+    // Note Colour swatches
+    document.querySelectorAll('.note-swatch').forEach(swatch => {
+        swatch.addEventListener('click', () => {
+            const src = swatch.dataset.src;
+            noteData.src = src;
+            mainNote.src = src;
+            document.querySelectorAll('.note-swatch').forEach(s => s.classList.remove('swatch-active'));
+            swatch.classList.add('swatch-active');
             
-            if (!mainNote.dataset.scale) {
-                mainNote.dataset.angle = 0;
-                mainNote.dataset.scale = 1;
-                mainNote.style.transform = `translate(-50%, -50%) rotate(0rad) scale(1)`;
+            // Remove placeholder if present
+            if (placeholderMsg.style.display !== 'none') {
+                placeholderMsg.style.display = 'none';
+                document.getElementById('noteTextarea').focus();
             }
-            
-            placeholderMsg.style.display = 'none';
-            addTextBtn.style.display = 'block';
         });
     });
 
@@ -1058,42 +952,45 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         });
     });
 
-    // Add Custom Text
-    addTextBtn.addEventListener('click', () => {
-        noteEditor.style.display = 'block';
-    });
+    const noteTextarea = document.getElementById('noteTextarea');
+    const textColorPicker = document.getElementById('textColorPicker');
+    const colorPopover = document.getElementById('colorPopover');
 
-    // Save Text from Modal
-    document.getElementById('saveNoteText').addEventListener('click', () => {
-        const text = document.getElementById('noteMessage').value;
-        const font = document.getElementById('fontSelect').value;
-        const color = document.getElementById('textColorPicker').value;
-        
-        if (text.trim() !== '') {
-            noteData.text = text;
-            noteData.font = font;
-            noteData.color = color;
-            
-            noteText.innerText = text;
-            noteText.style.fontFamily = font;
-            noteText.style.color = color;
-            noteText.style.lineHeight = '1.2'; 
-            
-            if (!noteText.dataset.scale) {
-                noteText.dataset.angle = 0;
-                noteText.dataset.scale = 1;
-                noteText.style.transform = `translate(-50%, -50%) rotate(0rad) scale(1)`;
-            }
-            
-            noteText.style.display = 'block';
+    // Set initial Pacifico font & colour on textarea
+    noteTextarea.style.fontFamily = "'Pacifico', cursive";
+    noteTextarea.style.color = noteData.color;
+
+    // Live typing — text appears directly on the note and stops if it exceeds page limits
+    let lastValidNoteText = noteTextarea.value;
+    noteTextarea.addEventListener('input', () => {
+        if (noteTextarea.scrollHeight > noteTextarea.clientHeight || noteTextarea.scrollWidth > noteTextarea.clientWidth) {
+            noteTextarea.value = lastValidNoteText; // Revert to prevent vertical/horizontal overflow
         } else {
-            noteText.style.display = 'none';
+            lastValidNoteText = noteTextarea.value;
         }
-        noteEditor.style.display = 'none';
+        noteData.text = noteTextarea.value;
     });
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') noteEditor.style.display = 'none';
+
+
+    // Live colour change via native picker applies instantly to textarea text
+    textColorPicker.addEventListener('input', () => {
+        noteData.color = textColorPicker.value;
+        noteTextarea.style.color = noteData.color;
+        // Reflect active state on swatches
+        document.querySelectorAll('.colour-swatch').forEach(s => s.classList.remove('swatch-active'));
+    });
+
+    // Colour swatches in left panel — click to instantly change font colour
+    document.querySelectorAll('.font-swatch').forEach(swatch => {
+        swatch.addEventListener('click', () => {
+            const color = swatch.dataset.color;
+            noteData.color = color;
+            noteTextarea.style.color = color;
+            textColorPicker.value = color;
+            document.querySelectorAll('.font-swatch').forEach(s => s.classList.remove('swatch-active'));
+            swatch.classList.add('swatch-active');
+        });
     });
 
     // Save Changes
@@ -1117,21 +1014,21 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         const mTopLeftY = mCenterY - (noteHeight / 2);
         
         let textDetails = null;
-        if (noteData.text) {
-            const tRect = noteText.getBoundingClientRect();
+        if (noteData.text && noteData.text.trim()) {
+            const tRect = noteTextarea.getBoundingClientRect();
             const tCenterX = tRect.left + tRect.width / 2;
             const tCenterY = tRect.top + tRect.height / 2;
             const textLeft = tCenterX - mTopLeftX;
             const textTop = tCenterY - mTopLeftY;
             textDetails = {
                 text: noteData.text,
-                fontFamily: noteData.font,
+                fontFamily: 'Pacifico',
                 color: noteData.color,
                 left: (textLeft / noteWidth) * 100,
                 top: (textTop / noteHeight) * 100,
-                width: (noteText.offsetWidth / noteWidth) * 100,
-                angle: noteText.dataset.angle || 0,
-                scale: noteText.dataset.scale || 1
+                width: (noteTextarea.offsetWidth / noteWidth) * 100,
+                angle: 0,
+                scale: 1
             };
         }
         
@@ -1322,8 +1219,22 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             const dx = e.clientX - dragStartX;
             const dy = e.clientY - dragStartY;
             
-            selectedElement.style.left = (initialLeft + dx) + 'px';
-            selectedElement.style.top = (initialTop + dy) + 'px';
+            let newLeft = initialLeft + dx;
+            let newTop = initialTop + dy;
+            
+            // Constrain dragging to the canvas boundaries
+            const sceneWidth = customScene.offsetWidth;
+            const sceneHeight = customScene.offsetHeight;
+            
+            const scale = parseFloat(selectedElement.dataset.scale) || 1;
+            const w = selectedElement.offsetWidth * scale;
+            const h = selectedElement.offsetHeight * scale;
+            
+            newLeft = Math.max(w/2, Math.min(newLeft, sceneWidth - w/2));
+            newTop = Math.max(h/2, Math.min(newTop, sceneHeight - h/2));
+            
+            selectedElement.style.left = newLeft + 'px';
+            selectedElement.style.top = newTop + 'px';
             
             updateControls();
         }
