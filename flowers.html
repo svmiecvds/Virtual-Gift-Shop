@@ -86,7 +86,7 @@ body.giftPage {
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
-    margin: 0 auto;
+    margin: auto;
 
 /* --- Shelf stays strictly center aligned --- */
 }
@@ -205,7 +205,7 @@ body.giftPage {
 
 /* --- NAVBAR --- */
 #storeNavbar {
-    background: url(\'assets/kisses-bg.png\') center/cover no-repeat !important;
+    background: url('assets/kisses-bg.png') center/cover no-repeat !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -271,7 +271,7 @@ body.giftPage {
 /* --- CARD LAYOUT SYSTEM --- */
 #flowersMainContainer, #bouquetMainContainer {
     flex: 1;
-    min-height: 0;
+    min-height: 650px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -286,7 +286,7 @@ body.giftPage {
     gap: 40px;
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: auto;
     align-items: center;
 }
 
@@ -334,7 +334,7 @@ body.giftPage {
     font-size: 24px;
     color: var(--heading-color);
     margin-bottom: 15px;
-    font-family: var(--font-heading);
+    font-family: 'Pinyon Script', cursive !important;
     text-align: center;
     text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
 }
@@ -652,7 +652,7 @@ body.giftPage {
 /* --- CAROUSEL STYLES (NO-SCROLL LAYOUT) --- */
 body.no-scroll {
     overflow-x: hidden !important;
-    overflow-y: hidden !important;
+    overflow-y: auto !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -660,10 +660,9 @@ body.no-scroll {
 
 body.no-scroll #mainContainer {
     flex: 1;
-    min-height: 0;
+    min-height: 650px;
     padding: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
@@ -793,9 +792,8 @@ margin: 0 auto;
 /* --- BOUQUET STYLES --- */
 #mainContainer {
         flex: 1;
-        min-height: 0;
+        min-height: 650px;
         display: flex;
-        align-items: center;
         justify-content: center;
         width: 100%;
     }
@@ -832,11 +830,11 @@ margin: 0 auto;
     .side-panel h2 {
         text-align: center;
         margin-bottom: 15px;
-        font-family: var(--font-ui);
-        font-weight: 600;
-        font-size: 18px;
+        font-family: 'Pinyon Script', cursive !important;
+        font-weight: normal !important;
+        font-size: 36px !important;
         color: var(--heading-color);
-        letter-spacing: 0.3px;
+        letter-spacing: 1px;
         border-bottom: 2px dashed rgba(144, 12, 63, 0.4);
         padding-bottom: 8px;
     }
@@ -1317,26 +1315,26 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         <div class="flowers-layout">
             <div class="flowersRowTop">
         <div class="flowerCard">
-            <img src="assets/flowers/flower1.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <img loading="lazy" src="assets/flowers/flower1.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
             <div class="color-scroll-container">
                 
             <div class="color-option active" data-image="assets/flowers/flower1.png" data-flower="1">
-                <img src="assets/flowers/flower1.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower1.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower4.png" data-flower="4">
-                <img src="assets/flowers/flower4.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower4.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower5.png" data-flower="5">
-                <img src="assets/flowers/flower5.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower5.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower6.png" data-flower="6">
-                <img src="assets/flowers/flower6.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower6.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower10.png" data-flower="10">
-                <img src="assets/flowers/flower10.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower10.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower14.png" data-flower="14">
-                <img src="assets/flowers/flower14.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower14.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             </div>
             <div class="flowerSelector">
@@ -1348,14 +1346,14 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         </div>
     
         <div class="flowerCard">
-            <img src="assets/flowers/flower2.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <img loading="lazy" src="assets/flowers/flower2.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
             <div class="color-scroll-container">
                 
             <div class="color-option active" data-image="assets/flowers/flower2.png" data-flower="2">
-                <img src="assets/flowers/flower2.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower2.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower11.png" data-flower="11">
-                <img src="assets/flowers/flower11.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower11.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             </div>
             <div class="flowerSelector">
@@ -1367,26 +1365,26 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         </div>
     
         <div class="flowerCard">
-            <img src="assets/flowers/flower3.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <img loading="lazy" src="assets/flowers/flower3.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
             <div class="color-scroll-container">
                 
             <div class="color-option active" data-image="assets/flowers/flower3.png" data-flower="3">
-                <img src="assets/flowers/flower3.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower3.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower7.png" data-flower="7">
-                <img src="assets/flowers/flower7.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower7.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower8.png" data-flower="8">
-                <img src="assets/flowers/flower8.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower8.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower9.png" data-flower="9">
-                <img src="assets/flowers/flower9.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower9.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower12.png" data-flower="12">
-                <img src="assets/flowers/flower12.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower12.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             <div class="color-option " data-image="assets/flowers/flower13.png" data-flower="13">
-                <img src="assets/flowers/flower13.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" src="assets/flowers/flower13.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
             </div>
             </div>
             <div class="flowerSelector">
@@ -1398,22 +1396,22 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         </div>
 
         <div class="flowerCard">
-            <img src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <img loading="lazy" src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
             <div class="color-scroll-container">
                 <div class="color-option active" data-image="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.png" data-flower="15">
-                    <img src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.png" data-flower="16">
-                    <img src="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.png" data-flower="17">
-                    <img src="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.png" data-flower="18">
-                    <img src="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.png" data-flower="19">
-                    <img src="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
             </div>
             <div class="flowerSelector">
@@ -1425,22 +1423,22 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         </div>
         
         <div class="flowerCard">
-            <img src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <img loading="lazy" src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
             <div class="color-scroll-container">
                 <div class="color-option active" data-image="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.png" data-flower="20">
-                    <img src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.png" data-flower="21">
-                    <img src="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.png" data-flower="22">
-                    <img src="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.png" data-flower="23">
-                    <img src="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.png" data-flower="24">
-                    <img src="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
             </div>
             <div class="flowerSelector">
@@ -1452,25 +1450,25 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         </div>
         
         <div class="flowerCard">
-            <img src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <img loading="lazy" src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.png" class="flowerImage" style="max-height: 150px; object-fit: contain;">
             <div class="color-scroll-container">
                 <div class="color-option active" data-image="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.png" data-flower="25">
-                    <img src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.png" data-flower="26">
-                    <img src="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.png" data-flower="27">
-                    <img src="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.png" data-flower="28">
-                    <img src="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.png" data-flower="29">
-                    <img src="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
                 <div class="color-option " data-image="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.png" data-flower="30">
-                    <img src="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+                    <img loading="lazy" src="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.png" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
                 </div>
             </div>
             <div class="flowerSelector">
@@ -1494,94 +1492,94 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                     <h2>Flowers</h2>
                     <div class="spawner-grid">
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower1.png', 'flower', '')">
-                        <img src="assets/flowers/flower1.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower1.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower2.png', 'flower', '')">
-                        <img src="assets/flowers/flower2.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower2.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower3.png', 'flower', '')">
-                        <img src="assets/flowers/flower3.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower3.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower4.png', 'flower', '')">
-                        <img src="assets/flowers/flower4.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower4.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower5.png', 'flower', '')">
-                        <img src="assets/flowers/flower5.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower5.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower6.png', 'flower', '')">
-                        <img src="assets/flowers/flower6.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower6.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower7.png', 'flower', '')">
-                        <img src="assets/flowers/flower7.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower7.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower8.png', 'flower', '')">
-                        <img src="assets/flowers/flower8.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower8.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower9.png', 'flower', '')">
-                        <img src="assets/flowers/flower9.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower9.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower10.png', 'flower', '')">
-                        <img src="assets/flowers/flower10.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower10.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower11.png', 'flower', '')">
-                        <img src="assets/flowers/flower11.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower11.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower12.png', 'flower', '')">
-                        <img src="assets/flowers/flower12.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower12.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower13.png', 'flower', '')">
-                        <img src="assets/flowers/flower13.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower13.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/flower14.png', 'flower', '')">
-                        <img src="assets/flowers/flower14.png" alt="">
+                        <img loading="lazy" src="assets/flowers/flower14.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.png', 'flower', '')">
-                        <img src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.png" alt="">
+                        <img loading="lazy" src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.png', 'flower', '')">
-                        <img src="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.png" alt="">
+                        <img loading="lazy" src="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.png', 'flower', '')">
-                        <img src="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.png" alt="">
+                        <img loading="lazy" src="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.png', 'flower', '')">
-                        <img src="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.png" alt="">
+                        <img loading="lazy" src="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.png', 'flower', '')">
-                        <img src="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.png" alt="">
+                        <img loading="lazy" src="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.png', 'flower', '')">
-                        <img src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.png" alt="">
+                        <img loading="lazy" src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.png', 'flower', '')">
-                        <img src="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.png" alt="">
+                        <img loading="lazy" src="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.png', 'flower', '')">
-                        <img src="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.png" alt="">
+                        <img loading="lazy" src="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.png', 'flower', '')">
-                        <img src="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.png" alt="">
+                        <img loading="lazy" src="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.png', 'flower', '')">
-                        <img src="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.png" alt="">
+                        <img loading="lazy" src="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.png', 'flower', '')">
-                        <img src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.png" alt="">
+                        <img loading="lazy" src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.png', 'flower', '')">
-                        <img src="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.png" alt="">
+                        <img loading="lazy" src="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.png', 'flower', '')">
-                        <img src="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.png" alt="">
+                        <img loading="lazy" src="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.png', 'flower', '')">
-                        <img src="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.png" alt="">
+                        <img loading="lazy" src="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.png', 'flower', '')">
-                        <img src="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.png" alt="">
+                        <img loading="lazy" src="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.png', 'flower', '')">
-                        <img src="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.png" alt="">
+                        <img loading="lazy" src="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.png" alt="">
                     </div>
                     </div>
                 </div>
@@ -1590,31 +1588,31 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                     <h2>Leaves</h2>
                     <div class="spawner-grid">
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves1.png', 'leaf', '')">
-                        <img src="assets/flowers/leaves1.png" alt="">
+                        <img loading="lazy" src="assets/flowers/leaves1.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves2.png', 'leaf', '')">
-                        <img src="assets/flowers/leaves2.png" alt="">
+                        <img loading="lazy" src="assets/flowers/leaves2.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves3.png', 'leaf', '')">
-                        <img src="assets/flowers/leaves3.png" alt="">
+                        <img loading="lazy" src="assets/flowers/leaves3.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves4.png', 'leaf', '')">
-                        <img src="assets/flowers/leaves4.png" alt="">
+                        <img loading="lazy" src="assets/flowers/leaves4.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves5.png', 'leaf', '')">
-                        <img src="assets/flowers/leaves5.png" alt="">
+                        <img loading="lazy" src="assets/flowers/leaves5.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves6.png', 'leaf', '')">
-                        <img src="assets/flowers/leaves6.png" alt="">
+                        <img loading="lazy" src="assets/flowers/leaves6.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves7.png', 'leaf', '')">
-                        <img src="assets/flowers/leaves7.png" alt="">
+                        <img loading="lazy" src="assets/flowers/leaves7.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves8.png', 'leaf', '')">
-                        <img src="assets/flowers/leaves8.png" alt="">
+                        <img loading="lazy" src="assets/flowers/leaves8.png" alt="">
                     </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves9.png', 'leaf', '')">
-                        <img src="assets/flowers/leaves9.png" alt="">
+                        <img loading="lazy" src="assets/flowers/leaves9.png" alt="">
                     </div>
                     </div>
                 </div>
@@ -1666,43 +1664,43 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                     <h2>Wraps & Bows</h2>
                     <div class="spawner-grid">
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_pink.png', 'holder', '')">
-                            <img src="assets/flowers/holder_pink.png" alt="">
+                            <img loading="lazy" src="assets/flowers/holder_pink.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_green.png', 'holder', '')">
-                            <img src="assets/flowers/holder_green.png" alt="">
+                            <img loading="lazy" src="assets/flowers/holder_green.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_lightblue.png', 'holder', '')">
-                            <img src="assets/flowers/holder_lightblue.png" alt="">
+                            <img loading="lazy" src="assets/flowers/holder_lightblue.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_black.png', 'holder', '')">
-                            <img src="assets/flowers/holder_black.png" alt="">
+                            <img loading="lazy" src="assets/flowers/holder_black.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_purple.png', 'holder', '')">
-                            <img src="assets/flowers/holder_purple.png" alt="">
+                            <img loading="lazy" src="assets/flowers/holder_purple.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_brown.png', 'holder', '')">
-                            <img src="assets/flowers/holder_brown.png" alt="">
+                            <img loading="lazy" src="assets/flowers/holder_brown.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_white.png', 'holder', '')">
-                            <img src="assets/flowers/holder_white.png" alt="">
+                            <img loading="lazy" src="assets/flowers/holder_white.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_blue.png', 'holder', '')">
-                            <img src="assets/flowers/holder_blue.png" alt="">
+                            <img loading="lazy" src="assets/flowers/holder_blue.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_aqua.png', 'bow', '')">
-                            <img src="assets/flowers/bow_aqua.png" alt="">
+                            <img loading="lazy" src="assets/flowers/bow_aqua.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_blue.png', 'bow', '')">
-                            <img src="assets/flowers/bow_blue.png" alt="">
+                            <img loading="lazy" src="assets/flowers/bow_blue.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_purple.png', 'bow', '')">
-                            <img src="assets/flowers/bow_purple.png" alt="">
+                            <img loading="lazy" src="assets/flowers/bow_purple.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_green.png', 'bow', '')">
-                            <img src="assets/flowers/bow_green.png" alt="">
+                            <img loading="lazy" src="assets/flowers/bow_green.png" alt="">
                         </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_pink.png', 'bow', '')">
-                            <img src="assets/flowers/bow_pink.png" alt="">
+                            <img loading="lazy" src="assets/flowers/bow_pink.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -2292,6 +2290,7 @@ customScene.addEventListener("mousedown", (e) => {
                 left: realLeft + "px",
                 top: realTop + "px",
                 width: item.style.width,
+                height: item.style.height || (item.offsetHeight + "px"),
                 rotation: item.dataset.rotation || "0",
                 flip: item.dataset.flip || "1"
             });
@@ -2437,11 +2436,11 @@ document.addEventListener("click", e => {
 .side-panel h2 {
     text-align: center !important;
     margin-bottom: 16px !important;
-    font-family: var(--font-ui) !important;
-    font-weight: 600 !important;
-    font-size: 18px !important;
+    font-family: 'Pinyon Script', cursive !important;
+    font-weight: normal !important;
+    font-size: 36px !important;
     color: var(--heading-color) !important;
-    letter-spacing: 0.3px !important;
+    letter-spacing: 1px !important;
 }
 </style>
 

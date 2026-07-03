@@ -1018,8 +1018,8 @@ savedLayout.forEach(item => {
         if (item.accessories && item.accessories.length > 0) {
             let canvasW = isBouquet ? 600 : 280;
             let canvasH = canvasW;
-            let canvasL = isBouquet ? 50 : 210;
-            let canvasT = isBouquet ? 50 : 210;
+            let canvasL = isBouquet ? 0 : 210;
+            let canvasT = isBouquet ? 0 : 210;
             
             if (item.canvasW !== undefined) {
                 canvasW = item.canvasW;
@@ -1054,10 +1054,15 @@ savedLayout.forEach(item => {
                     adjustedLeft = rawLeft - canvasL;
                     adjustedTop = rawTop - canvasT;
                 }
-                
-                accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
-                accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
-                accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
+                if (item.canvasW !== undefined) {
+                    accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
+                    accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
+                    accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
+                } else {
+                    accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
+                    accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
+                    accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
+                }
                 
                 if (item.accessories.indexOf(acc) === 0 && !isBouquet && item.canvasW !== undefined) {
                     accessory.style.height = "auto";
@@ -1066,6 +1071,9 @@ savedLayout.forEach(item => {
                     if (acc.height) {
                         const rawHeight = parseFloat(acc.height);
                         accessory.style.height = ((rawHeight / canvasH) * 100) + "%";
+                        accessory.style.objectFit = "contain";
+                    } else if (isBouquet) {
+                        accessory.style.height = "auto";
                         accessory.style.objectFit = "contain";
                     }
                 }
@@ -1076,11 +1084,6 @@ savedLayout.forEach(item => {
         }
     } 
     else if (item.type === "note") {
-        // Use the actual saved width from gift.html (respects any resizing done there)
-        const noteW = parseFloat(item.width) || 220;
-        wrapper.style.width = (noteW * scaleX) + "px";
-        wrapper.style.height = "auto";
-        
         const paper = document.createElement("img");
         paper.src = resolveMainSrc(item.src);
         paper.style.width = "100%";
@@ -1152,7 +1155,10 @@ savedLayout.forEach(item => {
         wrapper.className = "giftEl giftText";
         wrapper.innerText = item.text;
         wrapper.style.fontFamily = item.fontFamily;
-        wrapper.style.fontSize = item.fontSize;
+        
+        let fs = parseFloat(item.fontSize) || 22;
+        wrapper.style.fontSize = (fs * scaleX) + "px";
+        
         wrapper.style.color = item.color;
         wrapper.style.userSelect = "none";
     }

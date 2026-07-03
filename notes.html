@@ -623,7 +623,7 @@ margin: 0 auto;
 
 body.no-scroll {
     overflow-x: hidden !important;
-    overflow-y: hidden !important;
+    overflow-y: auto !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -776,12 +776,12 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     <!-- Header Text -->
     <h1 class="storeHeader">write a Note.</h1>
 
-    <div id="mainContainer" style="display: flex; gap: 20px; justify-content: center; align-items: stretch; width: 100%; max-width: 1200px; margin: 20px auto 40px auto; height: calc(100vh - 140px); max-height: 600px;">
+    <div id="mainContainer" style="display: flex; gap: 20px; justify-content: center; align-items: stretch; width: 100%; max-width: 1200px; margin: 20px auto 40px auto; min-height: 600px; padding-bottom: 20px;">
         
         <!-- Left Panel: Notes -->
         <div id="leftPanel" style="width: 280px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
             <!-- Colour swatches for Note -->
-            <h3 style="color: white; margin: 0 0 10px; text-align: center; font-family: var(--font-ui); font-size: 14px; letter-spacing: 0.5px;">Note Colour</h3>
+            <h3 style="color: var(--heading-color); margin: 0 0 10px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 28px; font-weight: normal; letter-spacing: 1px;">Note Colour</h3>
             <div id="noteColourSwatches" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;">
                 <div class="colour-swatch note-swatch swatch-active" data-src="assets/final page/note1.png" style="background:#fef3c7;" title="Yellow"></div>
                 <div class="colour-swatch note-swatch" data-src="assets/final page/note2.png" style="background:#fce7f3;" title="Pink"></div>
@@ -792,7 +792,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             </div>
 
             <!-- Colour swatches for font -->
-            <h3 style="color: white; margin: 25px 0 10px; text-align: center; font-family: var(--font-ui); font-size: 14px; letter-spacing: 0.5px;">Font Colour</h3>
+            <h3 style="color: var(--heading-color); margin: 25px 0 10px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 28px; font-weight: normal; letter-spacing: 1px;">Font Colour</h3>
             <div id="colourSwatches" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
                 <div class="colour-swatch font-swatch swatch-active" data-color="#B71A3D" style="background:#B71A3D;" title="Crimson"></div>
                 <div class="colour-swatch font-swatch" data-color="#1a1a1a" style="background:#1a1a1a;" title="Black"></div>
@@ -832,28 +832,27 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <input type="color" id="textColorPicker" value="#B71A3D" style="position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;">
 
 
-            
-            <div id="canvasContent" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none;">
-                <img id="mainNote" src="assets/final page/note1.png" style="display: block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; object-fit: contain; pointer-events: none;">
-                <!-- Live text textarea overlaid on note — constrained horizontally and vertically -->
-                <textarea id="noteTextarea" placeholder="Write your message here..." style="position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); width: 62%; height: 50%; max-width: 62%; max-height: 50%; background: transparent; border: none; outline: none; resize: none; overflow: hidden; font-family: 'Pacifico', cursive; font-size: 18px; color: #B71A3D; text-align: center; pointer-events: auto; cursor: text; line-height: 1.5; padding: 8px; word-wrap: break-word; word-break: break-word;"></textarea>
+                      <div id="canvasContent" style="position: relative; height: 90%; max-width: 90%; aspect-ratio: 1 / 1; pointer-events: none;">
+                <img loading="lazy" id="mainNote" src="assets/final page/note1.png" style="display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
+                <!-- Live text textarea overlaid on note - constrained horizontally and vertically -->
+                <textarea id="noteTextarea" placeholder="Write your message here..." style="position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); width: 62%; height: 50%; background: transparent; border: none; outline: none; resize: none; overflow: hidden; font-family: 'Pacifico', cursive; font-size: 18px; color: #B71A3D; text-align: center; pointer-events: auto; cursor: text; line-height: 1.5; padding: 8px; word-wrap: break-word; word-break: break-word;"></textarea>
                 <div id="noteText" style="display: none;"></div>
             </div>
         </div>
 
         <!-- Right Panel: Stickers -->
         <div id="rightPanel" style="width: 280px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
-            <h2 style="color: white; margin-bottom: 15px; text-align: center; font-family: var(--font-ui);">Stickers</h2>
+            <h2 style="color: var(--heading-color); margin-bottom: 15px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 36px; font-weight: normal; letter-spacing: 1px;">Stickers</h2>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker1.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker1.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker 2.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker 2.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker3.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker3.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_purple.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_clip_purple.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_pin_red.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_pin_red.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_beige.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_clip_beige.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_pink.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_clip_pink.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_blue.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_clip_blue.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_camera.png" style="justify-content: center; padding: 10px;"><img src="assets/final page/sticker_camera.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker1.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker1.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker 2.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker 2.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker3.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker3.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_purple.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_purple.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_pin_red.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_pin_red.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_beige.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_beige.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_pink.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_pink.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_blue.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_blue.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_camera.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_camera.png" style="width: 100%; height: auto; object-fit: contain;"></div>
             </div>
 
         </div>
@@ -937,6 +936,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 return;
             }
             const img = document.createElement('img');
+            img.loading = 'lazy';
             img.src = el.dataset.src;
             img.className = 'draggableSticker';
             img.style.left = '50%';

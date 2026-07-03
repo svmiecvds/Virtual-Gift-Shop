@@ -265,6 +265,7 @@
                 /* ----- plushie ----- */
                 if (item.type === 'plushie') {
                     const img = document.createElement('img');
+                    img.loading = 'lazy';
                     img.src = resolveMainSrc(item.src);
                     img.style.position = 'absolute';
                     img.style.width = '100%';
@@ -282,6 +283,7 @@
 
                         item.accessories.forEach(acc => {
                             const accessory = document.createElement('img');
+                            accessory.loading = 'lazy';
                             accessory.src = resolveAccessorySrc(acc.image);
                             accessory.style.position = 'absolute';
                             accessory.style.pointerEvents = 'none';
@@ -307,6 +309,7 @@
                 /* ----- note ----- */
                 else if (item.type === 'note') {
                     const paper = document.createElement('img');
+                    paper.loading = 'lazy';
                     paper.src = resolveMainSrc(item.src);
                     paper.style.width = '100%';
                     paper.draggable = false;
@@ -325,6 +328,7 @@
                 /* ----- sticker ----- */
                 else if (item.type === 'sticker') {
                     const img = document.createElement('img');
+                    img.loading = 'lazy';
                     img.src = resolveMainSrc(item.src);
                     img.style.width = '100%';
                     img.draggable = false;

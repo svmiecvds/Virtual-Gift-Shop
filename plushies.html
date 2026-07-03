@@ -82,7 +82,7 @@ body.giftPage {
     gap: 40px;
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: auto;
     align-items: center;
 }
 
@@ -95,12 +95,9 @@ body.giftPage {
 }
 
 .flowerCard {
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    background: var(--card-bg);
     border-radius: 30px;
-    border: 2px solid #ffffff;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    border: 2px solid rgba(255, 182, 217, 0.15);
     padding: 25px;
     width: 280px;
     display: flex;
@@ -113,8 +110,8 @@ body.giftPage {
 
 .flowerCard:hover {
     transform: translateY(-8px) scale(1.03);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border-color: #ffffff;
+    border-color: rgba(255, 105, 180, 0.4);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.15);
 }
 
 .flowerImage {
@@ -133,7 +130,7 @@ body.giftPage {
     font-size: 24px;
     color: var(--heading-color);
     margin-bottom: 15px;
-    font-family: 'Pinyon Script', cursive;
+    font-family: 'Pinyon Script', cursive !important;
     text-align: center;
     text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
 }
@@ -510,17 +507,6 @@ body.giftPage {
 
 
 
-/* --- BACK TO SHOP BTN --- */
-
-
-
-    to { opacity: 1; }
-}
-
-
-    100% { transform: rotate(2deg) scale(1.02); }
-}
-
 /* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
 
 /* --- Bubbly option elements inside selection panel --- */
@@ -764,10 +750,9 @@ body.no-scroll {
 
 body.no-scroll #mainContainer {
     flex: 1;
-    min-height: 0;
+    min-height: 650px;
     padding: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
@@ -1025,7 +1010,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <div class="flowersRowTop">
                 <div class="flowerCard" id="bunnyCard">
                     <!-- Default to White Bunny -->
-                    <img src="assets/plushies/bunny-white.png" alt="White Bunny" class="flowerImage" id="bunnyImage">
+                    <img loading="lazy" src="assets/plushies/bunny-white.png" alt="White Bunny" class="flowerImage" id="bunnyImage">
                     <div class="flowerName" id="bunnyName">White Bunny</div>
                     
                     <!-- Scroll Color Options -->
@@ -1055,7 +1040,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/duck.png" alt="Duck" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/duck.png" alt="Duck" class="flowerImage">
                     <div class="flowerName">Duck</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="2">−</button>
@@ -1067,7 +1052,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/bear-pink.png" alt="Pink Bear" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/bear-pink.png" alt="Pink Bear" class="flowerImage">
                     <div class="flowerName">Pink Bear</div>
                     
                     <!-- Scroll Color Options -->
@@ -1100,7 +1085,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <div class="flowersRowBottom" style="margin-top: 40px;">
                 <div class="flowerCard">
                     <!-- Default to grey elephant -->
-                    <img src="assets/plushies/elephant-grey.png" alt="Elephant" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/elephant-grey.png" alt="Elephant" class="flowerImage">
                     <div class="flowerName">Grey Elephant</div>
                     
                     <!-- Scroll Color Options -->
@@ -1126,7 +1111,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/pig.png" alt="Pig" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/pig.png" alt="Pig" class="flowerImage">
                     <div class="flowerName">Pig</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="5">−</button>
@@ -1138,7 +1123,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/fox.png" alt="Fox" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/fox.png" alt="Fox" class="flowerImage">
                     <div class="flowerName">Fox</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="6">−</button>
@@ -1150,7 +1135,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/koala.png" alt="Koala" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/koala.png" alt="Koala" class="flowerImage">
                     <div class="flowerName">Koala</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="7">−</button>
@@ -1162,7 +1147,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/cat.png" alt="Cat" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/cat.png" alt="Cat" class="flowerImage">
                     <div class="flowerName">Cat</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="8">−</button>
@@ -1174,7 +1159,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/axolotl.png" alt="Axolotl" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/axolotl.png" alt="Axolotl" class="flowerImage">
                     <div class="flowerName">Axolotl</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="9">−</button>
@@ -1186,7 +1171,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/capybara.png" alt="Capybara" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/capybara.png" alt="Capybara" class="flowerImage">
                     <div class="flowerName">Capybara</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="10">−</button>
@@ -1198,7 +1183,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/seal.png" alt="Seal" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/seal.png" alt="Seal" class="flowerImage">
                     <div class="flowerName">Seal</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="11">−</button>
@@ -1210,7 +1195,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/penguin.png" alt="Penguin" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/penguin.png" alt="Penguin" class="flowerImage">
                     <div class="flowerName">Penguin</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="12">−</button>
@@ -1223,7 +1208,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
                 <div class="flowerCard">
                     <!-- Default to Pink Cow -->
-                    <img src="assets/plushies/cow-pink.png" alt="Pink Cow" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/cow-pink.png" alt="Pink Cow" class="flowerImage">
                     <div class="flowerName">Pink Cow</div>
                     
                     <!-- Scroll Color Options -->
@@ -1248,7 +1233,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/hamster.png" alt="Hamster" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/hamster.png" alt="Hamster" class="flowerImage">
                     <div class="flowerName">Hamster</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="14">−</button>
@@ -1260,7 +1245,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/redpanda.png" alt="Red Panda" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/redpanda.png" alt="Red Panda" class="flowerImage">
                     <div class="flowerName">Red Panda</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="15">−</button>
@@ -1272,7 +1257,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/otter.png" alt="Otter" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/otter.png" alt="Otter" class="flowerImage">
                     <div class="flowerName">Otter</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="16">−</button>
@@ -1284,7 +1269,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/panda.png" alt="Panda" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/panda.png" alt="Panda" class="flowerImage">
                     <div class="flowerName">Panda</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="17">−</button>
@@ -1296,7 +1281,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/deer.png" alt="Deer" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/deer.png" alt="Deer" class="flowerImage">
                     <div class="flowerName">Deer</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="18">−</button>
@@ -1308,7 +1293,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/monkey.png" alt="Monkey" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/monkey.png" alt="Monkey" class="flowerImage">
                     <div class="flowerName">Monkey</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="19">−</button>
@@ -1320,7 +1305,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/frog.png" alt="Frog" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/frog.png" alt="Frog" class="flowerImage">
                     <div class="flowerName">Frog</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="20">−</button>
@@ -1332,7 +1317,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/lamb.png" alt="Lamb" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/lamb.png" alt="Lamb" class="flowerImage">
                     <div class="flowerName">Lamb</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="21">−</button>
@@ -1344,7 +1329,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/giraffe.png" alt="Giraffe" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/giraffe.png" alt="Giraffe" class="flowerImage">
                     <div class="flowerName">Giraffe</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="22">−</button>
@@ -1356,7 +1341,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/puppy.png" alt="Puppy" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/puppy.png" alt="Puppy" class="flowerImage">
                     <div class="flowerName">Puppy</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="23">−</button>
@@ -1368,7 +1353,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/mouse.png" alt="Mouse" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/mouse.png" alt="Mouse" class="flowerImage">
                     <div class="flowerName">Mouse</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="24">−</button>
@@ -1380,7 +1365,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 </div>
 
                 <div class="flowerCard">
-                    <img src="assets/plushies/lion.png" alt="Lion" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/lion.png" alt="Lion" class="flowerImage">
                     <div class="flowerName">Lion</div>
                     <div class="flowerSelector">
                         <button class="minusBtn" data-plushie="25">−</button>
@@ -1393,7 +1378,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
                 <div class="flowerCard">
                     <!-- Default to black bat -->
-                    <img src="assets/plushies/bat-black.png" alt="Black Bat" class="flowerImage">
+                    <img loading="lazy" src="assets/plushies/bat-black.png" alt="Black Bat" class="flowerImage">
                     <div class="flowerName">Black Bat</div>
                     
                     <!-- Scroll Color Options -->
