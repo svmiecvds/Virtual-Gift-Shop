@@ -1151,7 +1151,7 @@ if (shareBtn) {
             try {
                 const firebaseModule = await import('./firebase-config.js');
                 const docId = await firebaseModule.saveGift(savedLayout);
-                shareUrl = window.location.origin + '/gift/' + docId;
+                shareUrl = window.location.origin + '/result.html?id=' + docId;
             } catch(e) {
                 console.error("Error saving to Firebase:", e);
                 alert("Failed to generate link. Please try again.");
