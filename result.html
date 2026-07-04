@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>A Gift For You | The Gifting Co.</title>
-    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="icon" type="image/png" href="/assets/favicon.webp">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,7 +26,7 @@
 
         body {
             font-family: 'Fredoka', sans-serif;
-            background-image: url('/assets/giftbg.png');
+            background-image: url('/assets/giftbg.webp');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -36,7 +36,7 @@
 
         @media (max-width: 768px) {
             body {
-                background-image: url('/assets/mobilegiftbg.png') !important;
+                background-image: url('/assets/mobilegiftbg.webp') !important;
                 background-attachment: scroll;
             }
         }
@@ -147,7 +147,7 @@
     <!-- Loading message -->
     <div id="loadingMsg">Loading your gift.</div>
 
-    <script type="module">
+    <script defer type="module">
         import { getGift } from './firebase-config.js';
 
         const giftScene = document.getElementById('giftScene');
@@ -217,7 +217,7 @@
             let scaleX, scaleY, offsetX, offsetY;
 
             if (isMobile) {
-                // Mobile layout: perfectly centered within the 4 bows of mobilegiftbg.png
+                // Mobile layout: perfectly centered within the 4 bows of mobilegiftbg.webp
                 // The bows on mobile are roughly at 27% and 75% of the screen height.
                 const mobileSafeLeft = window.innerWidth * 0.10;
                 const mobileSafeTop = window.innerHeight * 0.27;

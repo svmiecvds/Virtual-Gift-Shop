@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1250">
     <title>The Gifting Co.</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="preload" as="image" href="assets/notesbg.png">
+    <link rel="icon" type="image/png" href="assets/favicon.webp">
+    <link rel="preload" as="image" href="assets/notesbg.webp">
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -53,7 +53,7 @@ body,
 body.receiptPage,
 body.giftPage {
     color: var(--text-color);
-    background-image: url('assets/notesbg.png');
+    background-image: url('assets/notesbg.webp');
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -81,7 +81,7 @@ body.giftPage {
 #shelf {
     width: 1000px;
     height: 800px;
-    background: url("shelf.png");
+    background: url("shelf.webp");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -153,7 +153,7 @@ body.giftPage {
 
 /* --- NAVBAR --- */
 #storeNavbar {
-    background: url(\'assets/kisses-bg.png\') center/cover no-repeat !important;
+    background: url(\'assets/kisses-bg.webp\') center/cover no-repeat !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -672,7 +672,7 @@ body.no-scroll #mainContainer {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
 
-<script src="mobile-block.js"></script>
+<script defer src="mobile-block.js"></script>
 
 <style>
 .site-footer {
@@ -775,12 +775,12 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <!-- Colour swatches for Note -->
             <h3 style="color: var(--heading-color); margin: 0 0 10px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 28px; font-weight: normal; letter-spacing: 1px;">Note Colour</h3>
             <div id="noteColourSwatches" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;">
-                <div class="colour-swatch note-swatch swatch-active" data-src="assets/final page/note1.png" style="background:#fef3c7;" title="Yellow"></div>
-                <div class="colour-swatch note-swatch" data-src="assets/final page/note2.png" style="background:#fce7f3;" title="Pink"></div>
-                <div class="colour-swatch note-swatch" data-src="assets/final page/note6.png" style="background:#dbeafe;" title="Blue"></div>
-                <div class="colour-swatch note-swatch" data-src="assets/final page/note4.png" style="background:#dcfce7;" title="Green"></div>
-                <div class="colour-swatch note-swatch" data-src="assets/final page/note3.png" style="background:#f3e8ff;" title="Purple"></div>
-                <div class="colour-swatch note-swatch" data-src="assets/final page/note5.png" style="background:#f3f4f6;" title="White"></div>
+                <div class="colour-swatch note-swatch swatch-active" data-src="assets/final page/note1.webp" style="background:#fef3c7;" title="Yellow"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note2.webp" style="background:#fce7f3;" title="Pink"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note6.webp" style="background:#dbeafe;" title="Blue"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note4.webp" style="background:#dcfce7;" title="Green"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note3.webp" style="background:#f3e8ff;" title="Purple"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note5.webp" style="background:#f3f4f6;" title="White"></div>
             </div>
 
             <!-- Colour swatches for font -->
@@ -825,7 +825,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 
                       <div id="canvasContent" style="position: relative; height: 90%; max-width: 90%; aspect-ratio: 1 / 1; pointer-events: none;">
-                <img loading="lazy" id="mainNote" src="assets/final page/note1.png" style="display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
+                <img loading="lazy" id="mainNote" src="assets/final page/note1.webp" style="display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
                 <!-- Live text textarea overlaid on note - constrained horizontally and vertically -->
                 <textarea id="noteTextarea" placeholder="Write your message here..." style="position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); width: 62%; height: 45%; background: transparent; border: none; outline: none; resize: none; overflow: hidden; font-family: 'Pacifico', cursive; color: #B71A3D; text-align: center; pointer-events: auto; cursor: text; line-height: 1.2; padding: 0px; word-wrap: break-word; word-break: break-word;"></textarea>
                 <div id="noteText" style="display: none;"></div>
@@ -836,15 +836,15 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         <div id="rightPanel" style="width: 280px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
             <h2 style="color: var(--heading-color); margin-bottom: 15px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 36px; font-weight: normal; letter-spacing: 1px;">Stickers</h2>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker1.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker1.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker 2.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker 2.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker3.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker3.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_purple.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_purple.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_pin_red.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_pin_red.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_beige.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_beige.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_pink.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_pink.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_blue.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_blue.png" style="width: 100%; height: auto; object-fit: contain;"></div>
-                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_camera.png" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_camera.png" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker1.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker1.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker 2.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker 2.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker3.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker3.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_purple.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_purple.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_pin_red.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_pin_red.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_beige.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_beige.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_pink.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_pink.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_blue.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_blue.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_camera.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_camera.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
             </div>
 
         </div>
@@ -877,7 +877,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     </style>
 
 
-<script>
+<script defer>
     let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
     
     const mainNote = document.getElementById('mainNote');
@@ -892,7 +892,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
     let stickers = [];
     let noteData = {
-        src: 'assets/final page/note1.png',
+        src: 'assets/final page/note1.webp',
         text: '',
         font: 'Pacifico',
         color: '#B71A3D'

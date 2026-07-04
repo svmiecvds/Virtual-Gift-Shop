@@ -9,8 +9,8 @@
 <meta name="viewport" content="width=1250">
 
 <title>The Gifting Co.</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="preload" as="image" href="assets/giftbg.png">
+    <link rel="icon" type="image/png" href="assets/favicon.webp">
+    <link rel="preload" as="image" href="assets/giftbg.webp">
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
@@ -57,7 +57,7 @@ body,
 body.receiptPage,
 body.giftPage {
     color: var(--text-color);
-    background-image: url('assets/giftbg.png');
+    background-image: url('assets/giftbg.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -85,7 +85,7 @@ body.giftPage {
 #shelf {
     width: 1000px;
     height: 800px;
-    background: url("shelf.png");
+    background: url("shelf.webp");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -283,7 +283,7 @@ body.giftPage {
 
 /* --- NAVBAR --- */
 #storeNavbar {
-    background: url(\'assets/kisses-bg.png\') center/cover no-repeat !important;
+    background: url(\'assets/kisses-bg.webp\') center/cover no-repeat !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -824,7 +824,7 @@ Create Your Gift
 
 
 
-<script>
+<script defer>
 /* -------------------- */
 /* THEME TOGGLE         */
 /* -------------------- */
@@ -833,7 +833,7 @@ Create Your Gift
 
 
 </script>
-<script>
+<script defer>
 const giftScene =
 document.getElementById(
 "giftScene"

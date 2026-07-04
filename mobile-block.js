@@ -52,7 +52,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background-image: url("assets/bg_pattern.png");
+                background-image: url("assets/bg_pattern.webp");
                 background-repeat: repeat;
                 background-size: 200px;
                 background-color: #fff0f6;
@@ -121,13 +121,17 @@
     }
 
     // Also handle resize (e.g. DevTools mobile toggle)
+    var resizeTimeout;
     window.addEventListener('resize', function() {
-        var existing = document.getElementById('mobileBlockOverlay');
-        if (isMobile() && !existing) {
-            showMobileBlock();
-        } else if (!isMobile() && existing) {
-            existing.remove();
-            document.body.style.overflow = '';
-        }
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            var existing = document.getElementById('mobileBlockOverlay');
+            if (isMobile() && !existing) {
+                showMobileBlock();
+            } else if (!isMobile() && existing) {
+                existing.remove();
+                document.body.style.overflow = '';
+            }
+        }, 150);
     });
 })();

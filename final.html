@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1250">
     <title>The Gifting Co.</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="preload" as="image" href="assets/giftbg.png">
+    <link rel="icon" type="image/png" href="assets/favicon.webp">
+    <link rel="preload" as="image" href="assets/giftbg.webp">
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -49,7 +49,7 @@ body,
 body.receiptPage,
 body.giftPage {
     color: var(--text-color);
-    background-image: url('assets/giftbg.png');
+    background-image: url('assets/giftbg.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -73,7 +73,7 @@ body.giftPage {
 #shelf {
     width: 1000px;
     height: 800px;
-    background: url("shelf.png");
+    background: url("shelf.webp");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -130,7 +130,7 @@ body.giftPage {
 
 /* --- NAVBAR --- */
 #storeNavbar {
-    background: url('assets/kisses-bg.png') center/cover no-repeat !important;
+    background: url('assets/kisses-bg.webp') center/cover no-repeat !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -718,7 +718,7 @@ body.viewer-mode {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
 
 
 
@@ -824,7 +824,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
     <!-- Dynamic Warning Banner "Click on your gifts!" will be appended here by JS if voice note exists -->
 
-    <script>
+    <script defer>
 /* -------------------- */
 /* THEME TOGGLE         */
 /* -------------------- */
@@ -833,7 +833,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 
 </script>
-    <script>
+    <script defer>
 const giftScene = document.getElementById("giftScene");
 
 function resolveMainSrc(src) {
@@ -898,7 +898,7 @@ let savedLayout = [];
 // The gift.html canvas was max-width 900px, height ~55vh.
 // We need to map item positions from that canvas into the full-screen scene,
 // but keep them within the "between the bows" safe zone.
-// The background image (giftbg.png) has bows in the corners.
+// The background image (giftbg.webp) has bows in the corners.
 // Safe zone is roughly 15% inset from each edge.
 const GIFT_CANVAS_W = 900;
 const isMobile = window.innerWidth <= 768;
