@@ -777,10 +777,10 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <div id="noteColourSwatches" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;">
                 <div class="colour-swatch note-swatch swatch-active" data-src="assets/final page/note1.png" style="background:#fef3c7;" title="Yellow"></div>
                 <div class="colour-swatch note-swatch" data-src="assets/final page/note2.png" style="background:#fce7f3;" title="Pink"></div>
-                <div class="colour-swatch note-swatch" data-src="assets/final page/note3.png" style="background:#dbeafe;" title="Blue"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note6.png" style="background:#dbeafe;" title="Blue"></div>
                 <div class="colour-swatch note-swatch" data-src="assets/final page/note4.png" style="background:#dcfce7;" title="Green"></div>
-                <div class="colour-swatch note-swatch" data-src="assets/final page/note5.png" style="background:#f3e8ff;" title="Purple"></div>
-                <div class="colour-swatch note-swatch" data-src="assets/final page/note6.png" style="background:#f3f4f6;" title="White"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note3.png" style="background:#f3e8ff;" title="Purple"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note5.png" style="background:#f3f4f6;" title="White"></div>
             </div>
 
             <!-- Colour swatches for font -->
@@ -827,7 +827,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                       <div id="canvasContent" style="position: relative; height: 90%; max-width: 90%; aspect-ratio: 1 / 1; pointer-events: none;">
                 <img loading="lazy" id="mainNote" src="assets/final page/note1.png" style="display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
                 <!-- Live text textarea overlaid on note - constrained horizontally and vertically -->
-                <textarea id="noteTextarea" placeholder="Write your message here..." style="position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); width: 62%; height: 50%; background: transparent; border: none; outline: none; resize: none; overflow: hidden; font-family: 'Pacifico', cursive; font-size: 18px; color: #B71A3D; text-align: center; pointer-events: auto; cursor: text; line-height: 1.5; padding: 8px; word-wrap: break-word; word-break: break-word;"></textarea>
+                <textarea id="noteTextarea" placeholder="Write your message here..." style="position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); width: 62%; height: 45%; background: transparent; border: none; outline: none; resize: none; overflow: hidden; font-family: 'Pacifico', cursive; color: #B71A3D; text-align: center; pointer-events: auto; cursor: text; line-height: 1.2; padding: 0px; word-wrap: break-word; word-break: break-word;"></textarea>
                 <div id="noteText" style="display: none;"></div>
             </div>
         </div>
@@ -994,14 +994,28 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         
         const noteId = Math.random().toString(36).substr(2, 9);
         
-        const noteWidth = mainNote.offsetWidth;
-        const noteHeight = mainNote.offsetHeight;
-        
         const mRect = mainNote.getBoundingClientRect();
+        
+        // Calculate true rendered size due to object-fit: contain
+        const imgRatio = mainNote.naturalWidth / mainNote.naturalHeight;
+        const containerRatio = mRect.width / mRect.height;
+        
+        let renderWidth = mRect.width;
+        let renderHeight = mRect.height;
+        
+        if (imgRatio > containerRatio) {
+            renderHeight = mRect.width / imgRatio;
+        } else {
+            renderWidth = mRect.height * imgRatio;
+        }
+        
+        const noteWidth = renderWidth;
+        const noteHeight = renderHeight;
+        
         const mCenterX = mRect.left + mRect.width / 2;
         const mCenterY = mRect.top + mRect.height / 2;
         
-        // Unscaled visual top-left of mainNote
+        // Unscaled visual top-left of the actual rendered image
         const mTopLeftX = mCenterX - (noteWidth / 2);
         const mTopLeftY = mCenterY - (noteHeight / 2);
         
@@ -1019,6 +1033,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 left: (textLeft / noteWidth) * 100,
                 top: (textTop / noteHeight) * 100,
                 width: (noteTextarea.offsetWidth / noteWidth) * 100,
+                height: (noteTextarea.offsetHeight / noteHeight) * 100,
                 angle: 0,
                 scale: 1
             };
@@ -1237,6 +1252,36 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         isRotating = false;
         isResizing = false;
     });
+
+    function updateTextareaStyles() {
+        if (!mainNote || !mainNote.complete) return;
+        const mRect = mainNote.getBoundingClientRect();
+        if (mRect.width === 0) return;
+        const imgRatio = mainNote.naturalWidth / (mainNote.naturalHeight || 1);
+        const containerRatio = mRect.width / (mRect.height || 1);
+        let renderWidth = mRect.width;
+        if (imgRatio > containerRatio) {
+            // Note image is wider, height is scaled down
+            // renderWidth remains mRect.width
+        } else {
+            // Note image is taller, width is scaled down
+            renderWidth = mRect.height * imgRatio;
+        }
+        
+        // Match 7.5cqw from gift.html
+        const newFontSize = renderWidth * 0.075;
+        noteTextarea.style.fontSize = Math.max(12, newFontSize) + "px";
+    }
+
+    window.addEventListener('resize', updateTextareaStyles);
+    mainNote.addEventListener('load', updateTextareaStyles);
+    // Observe customScene resizes in case it changes dynamically
+    if (window.ResizeObserver) {
+        new ResizeObserver(updateTextareaStyles).observe(customScene);
+    } else {
+        setTimeout(updateTextareaStyles, 100);
+    }
+    updateTextareaStyles();
 
 </script>
 
