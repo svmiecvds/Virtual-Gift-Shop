@@ -900,14 +900,34 @@ let savedLayout = [];
 // but keep them within the "between the bows" safe zone.
 // The background image (giftbg.png) has bows in the corners.
 // Safe zone is roughly 15% inset from each edge.
-const GIFT_CANVAS_W = 900;  // approximate gift.html canvas width
-const GIFT_CANVAS_H = window.innerHeight * 0.55; // approximate gift.html canvas height
+const GIFT_CANVAS_W = 900;
+const isMobile = window.innerWidth <= 768;
+let scaleX, scaleY, offsetX, offsetY;
 
-// Safe zone in final.html (between the 4 bows)
-const safeLeft   = window.innerWidth  * 0.15;
-const safeTop    = window.innerHeight * 0.13;
-const safeW      = window.innerWidth  * 0.70;
-const safeH      = window.innerHeight * 0.74;
+if (isMobile) {
+    const mobileSafeLeft = window.innerWidth * 0.10;
+    const mobileSafeTop = window.innerHeight * 0.27;
+    const mobileSafeW = window.innerWidth * 0.80;
+    const mobileSafeH = window.innerHeight * 0.48;
+    const REF_H = 550;
+
+    const scale = Math.min(mobileSafeW / GIFT_CANVAS_W, mobileSafeH / REF_H);
+    scaleX = scale;
+    scaleY = scale;
+    offsetX = mobileSafeLeft + (mobileSafeW - GIFT_CANVAS_W * scale) / 2;
+    offsetY = mobileSafeTop + (mobileSafeH - REF_H * scale) / 2;
+} else {
+    const GIFT_CANVAS_H = window.innerHeight * 0.55;
+    const safeLeft = window.innerWidth * 0.15;
+    const safeTop = window.innerHeight * 0.13;
+    const safeW = window.innerWidth * 0.70;
+    const safeH = window.innerHeight * 0.74;
+
+    scaleX = safeW / GIFT_CANVAS_W;
+    scaleY = safeH / GIFT_CANVAS_H;
+    offsetX = safeLeft;
+    offsetY = safeTop;
+}
 
 savedLayout.forEach(item => {
     const wrapper = document.createElement("div");
@@ -923,12 +943,8 @@ savedLayout.forEach(item => {
     }
     const origTop = parseFloat(item.top) || 0;
 
-    // Scale from gift canvas space → safe zone in final scene
-    const scaleX = safeW / GIFT_CANVAS_W;
-    const scaleY = safeH / GIFT_CANVAS_H;
-
-    const newLeft = safeLeft + origLeft * scaleX;
-    const newTop  = safeTop  + origTop  * scaleY;
+    const newLeft = offsetX + origLeft * scaleX;
+    const newTop  = offsetY + origTop * scaleY;
 
     wrapper.style.left = newLeft + "px";
     wrapper.style.top  = newTop  + "px";

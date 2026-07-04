@@ -210,25 +210,41 @@
         /* ---------- render ---------- */
         function renderGift() {
             const isMobile = window.innerWidth <= 768;
-
-            // Original gift.html canvas reference dimensions
             const GIFT_CANVAS_W = 900;
-            // For mobile, treat the reference height as if it were a square canvas
-            // to avoid the 0.55vh desktop ratio making items tiny on portrait screens
-            const GIFT_CANVAS_H = isMobile
-                ? window.innerWidth * 0.9   // reference height = ~90% of phone width (square-ish)
-                : window.innerHeight * 0.55;
+            let scaleX, scaleY, offsetX, offsetY;
 
-            // Safe zone between the 4 bows
-            // Mobile (portrait): bows are in the corners of mobilegiftbg.png
-            // Desktop: bows are in the corners of giftbg.png
-            const safeLeft = isMobile ? window.innerWidth  * 0.05 : window.innerWidth  * 0.15;
-            const safeTop  = isMobile ? window.innerHeight * 0.12 : window.innerHeight * 0.13;
-            const safeW    = isMobile ? window.innerWidth  * 0.90 : window.innerWidth  * 0.70;
-            const safeH    = isMobile ? window.innerHeight * 0.72 : window.innerHeight * 0.74;
+            if (isMobile) {
+                // Mobile layout: perfectly centered within the 4 bows of mobilegiftbg.png
+                // The bows on mobile are roughly at 27% and 75% of the screen height.
+                const mobileSafeLeft = window.innerWidth * 0.10;
+                const mobileSafeTop = window.innerHeight * 0.27;
+                const mobileSafeW = window.innerWidth * 0.80;
+                const mobileSafeH = window.innerHeight * 0.48; // from 27% to 75%
 
-            const scaleX = safeW / GIFT_CANVAS_W;
-            const scaleY = safeH / GIFT_CANVAS_H;
+                // Fixed reference canvas height (representing desktop layout aspect ratio)
+                const REF_H = 550;
+
+                const scale = Math.min(mobileSafeW / GIFT_CANVAS_W, mobileSafeH / REF_H);
+                
+                scaleX = scale;
+                scaleY = scale;
+                
+                // Center it in the safe zone
+                offsetX = mobileSafeLeft + (mobileSafeW - GIFT_CANVAS_W * scale) / 2;
+                offsetY = mobileSafeTop + (mobileSafeH - REF_H * scale) / 2;
+            } else {
+                // Desktop layout
+                const GIFT_CANVAS_H = window.innerHeight * 0.55;
+                const safeLeft = window.innerWidth * 0.15;
+                const safeTop = window.innerHeight * 0.13;
+                const safeW = window.innerWidth * 0.70;
+                const safeH = window.innerHeight * 0.74;
+
+                scaleX = safeW / GIFT_CANVAS_W;
+                scaleY = safeH / GIFT_CANVAS_H;
+                offsetX = safeLeft;
+                offsetY = safeTop;
+            }
 
             savedLayout.forEach(item => {
                 const wrapper = document.createElement('div');
@@ -244,8 +260,8 @@
                 }
                 const origTop = parseFloat(item.top) || 0;
 
-                wrapper.style.left   = (safeLeft + origLeft * scaleX) + 'px';
-                wrapper.style.top    = (safeTop  + origTop  * scaleY) + 'px';
+                wrapper.style.left   = (offsetX + origLeft * scaleX) + 'px';
+                wrapper.style.top    = (offsetY + origTop  * scaleY) + 'px';
                 if (item.width)  wrapper.style.width  = (parseFloat(item.width)  * scaleX) + 'px';
                 if (item.height) wrapper.style.height = (parseFloat(item.height) * scaleY) + 'px';
                 wrapper.style.zIndex = item.zIndex;
