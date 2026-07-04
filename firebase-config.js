@@ -16,22 +16,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // Storage initialization removed
 
-export async function saveGift(components, audioDataUrl) {
-    // We are no longer using Firebase Storage.
-    // Instead, we will store the base64 dataURL directly in Firestore.
-    // This works because the audio recording is small (15s max, well under the 1MB Firestore limit).
-    let audioUrl = audioDataUrl || null;
-
-    // Clean components to ensure no huge dataURLs (like voiceNotes) are saved in Firestore layout
-    const cleanComponents = components.map(comp => {
-        const clean = { ...comp };
-        delete clean.voiceNote;
-        return clean;
-    });
-
+export async function saveGift(components) {
     const docRef = await addDoc(collection(db, "gifts"), {
-        components: cleanComponents,
-        audioUrl: audioUrl,
+        components: components,
         createdAt: serverTimestamp()
     });
 

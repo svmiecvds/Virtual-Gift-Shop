@@ -193,42 +193,7 @@ body.giftPage {
 
 
 
-/* --- BACK TO SHOP BTN --- */
 
-
-/* --- Pulsing red dot for active recording --- */
-.recording-active {
-    animation: recordPulse 1s infinite alternate;
-    color: #e74c3c !important;
-}
-
-@keyframes recordPulse {
-    from { opacity: 0.5; }
-    to { opacity: 1; }
-}
-
-/* --- FINAL PRESENTATION --- */
-.has-audio {
-    cursor: pointer !important;
-    position: relative;
-    transition: transform 0.3s ease;
-}
-
-.has-audio:hover {
-    transform: scale(1.05);
-}
-
-/* --- Plushie speaking / audio wave pulse animation --- */
-.plushie-speaking {
-    animation: audioShake 0.15s infinite alternate;
-    box-shadow: none !important;
-    border-radius: 50%;
-}
-
-@keyframes audioShake {
-    0% { transform: rotate(-2deg) scale(1.02); }
-    100% { transform: rotate(2deg) scale(1.02); }
-}
 
 /* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
 
@@ -871,14 +836,6 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     <script>
 const giftScene = document.getElementById("giftScene");
 
-// Audio playlist state
-let audioPlaylist = [];
-let hasAudioNote = false;
-let activeAudio = null;
-let fallbackTimeoutId = null;
-let isPlaylistPlaying = false;
-let currentPlaylistIndex = -1;
-
 function resolveMainSrc(src) {
     if (!src) return "";
     if (src.startsWith("data:")) return src;
@@ -1167,157 +1124,6 @@ savedLayout.forEach(item => {
 });
 
 
-// Playlist control functions
-function playTrack(index) {
-    if (fallbackTimeoutId) {
-        clearTimeout(fallbackTimeoutId);
-        fallbackTimeoutId = null;
-    }
-    if (activeAudio) {
-        activeAudio.pause();
-        activeAudio = null;
-    }
-
-    // Clear speaking class from all playlist items
-    audioPlaylist.forEach(track => {
-        track.img.classList.remove("plushie-speaking");
-    });
-
-    if (index < 0 || index >= audioPlaylist.length) {
-        isPlaylistPlaying = false;
-        currentPlaylistIndex = -1;
-        updateCTA();
-        return;
-    }
-
-    currentPlaylistIndex = index;
-    isPlaylistPlaying = true;
-    updateCTA();
-
-    const track = audioPlaylist[index];
-    track.img.classList.add("plushie-speaking");
-
-    activeAudio = new Audio(track.src);
-    activeAudio.play().catch(err => {
-        console.error("Playback failed", err);
-        // Automatically skip to the next track if playing fails
-        if (fallbackTimeoutId) {
-            clearTimeout(fallbackTimeoutId);
-            fallbackTimeoutId = null;
-        }
-        setTimeout(playNext, 1000);
-    });
-
-    let endedFired = false;
-    const handleEnded = () => {
-        if (endedFired) return;
-        endedFired = true;
-        if (fallbackTimeoutId) {
-            clearTimeout(fallbackTimeoutId);
-            fallbackTimeoutId = null;
-        }
-        track.img.classList.remove("plushie-speaking");
-        playNext();
-    };
-
-    activeAudio.onended = handleEnded;
-
-    if (track.duration && track.duration > 0) {
-        // Fallback in case browser does not fire 'ended' event (common WebM metadata issue)
-        fallbackTimeoutId = setTimeout(handleEnded, track.duration + 200); // 200ms buffer
-    }
-}
-
-function playNext() {
-    playTrack(currentPlaylistIndex + 1);
-}
-
-function stopPlaylist() {
-    if (fallbackTimeoutId) {
-        clearTimeout(fallbackTimeoutId);
-        fallbackTimeoutId = null;
-    }
-    if (activeAudio) {
-        activeAudio.pause();
-        activeAudio = null;
-    }
-    audioPlaylist.forEach(track => {
-        track.img.classList.remove("plushie-speaking");
-    });
-    isPlaylistPlaying = false;
-    currentPlaylistIndex = -1;
-    updateCTA();
-}
-
-function updateCTA() {
-    const cta = document.querySelector(".click-gifts-cta");
-    if (!cta) return;
-
-    let text = "";
-    if (isPlaylistPlaying) {
-        const displayIndex = currentPlaylistIndex + 1;
-        const total = audioPlaylist.length;
-        if (total > 1) {
-            text = ` Pause sequence (Playing ${displayIndex} of ${total})`;
-        } else {
-            text = ` Pause voice message`;
-        }
-    } else {
-        if (currentPlaylistIndex !== -1 && currentPlaylistIndex < audioPlaylist.length) {
-            text = ` Resume voice message`;
-        } else {
-            text = ` Click to hear a message`;
-        }
-    }
-
-    let span = cta.querySelector("span");
-    if (!span) {
-        span = document.createElement("span");
-        cta.innerHTML = "";
-        cta.appendChild(span);
-    }
-    span.innerText = text;
-}
-
-// Wire up click event listeners for playlist items
-audioPlaylist.forEach((track, index) => {
-    track.wrapper.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (isPlaylistPlaying && currentPlaylistIndex === index) {
-            stopPlaylist();
-        } else {
-            playTrack(index);
-        }
-    });
-});
-
-/* Create "Click on your gifts" CTA button if custom audio is loaded */
-if (hasAudioNote) {
-    const ctaContainer = document.createElement("div");
-    ctaContainer.style.display = "flex";
-    ctaContainer.style.justifyContent = "center";
-    ctaContainer.style.marginTop = "25px";
-    ctaContainer.style.marginBottom = "20px";
-
-    const cta = document.createElement("button");
-    cta.className = "shiny-cta click-gifts-cta";
-    
-    ctaContainer.appendChild(cta);
-    document.body.appendChild(ctaContainer);
-    
-    // Add pulsing play action
-    cta.addEventListener("click", () => {
-        if (isPlaylistPlaying) {
-            stopPlaylist();
-        } else {
-            const resumeIndex = currentPlaylistIndex !== -1 ? currentPlaylistIndex : 0;
-            playTrack(resumeIndex);
-        }
-    });
-    
-    updateCTA();
-}
-
 // In viewer mode, add a small badge at the bottom
 if (isViewerMode) {
     const badge = document.createElement('div');
@@ -1334,16 +1140,28 @@ const shareUrlInput = document.getElementById("shareUrlInput");
 const copyShareBtn = document.getElementById("copyShareBtn");
 
 if (shareBtn) {
-    shareBtn.addEventListener("click", () => {
+    shareBtn.addEventListener("click", async () => {
         let shareUrl = window.location.href;
         if (!isViewerMode) {
-            const cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
-            if (cartItems.length > 0) {
-                const compressed = LZString.compressToEncodedURIComponent(JSON.stringify(cartItems));
-                const url = new URL(window.location.href);
-                url.hash = 'gift=' + compressed;
-                shareUrl = url.toString();
+            const span = shareBtn.querySelector("span");
+            const originalText = span ? span.innerText : "Share Gift";
+            if (span) span.innerText = "Generating Link...";
+            shareBtn.style.pointerEvents = "none";
+            
+            try {
+                const firebaseModule = await import('./firebase-config.js');
+                const docId = await firebaseModule.saveGift(savedLayout);
+                shareUrl = window.location.origin + '/gift/' + docId;
+            } catch(e) {
+                console.error("Error saving to Firebase:", e);
+                alert("Failed to generate link. Please try again.");
+                if (span) span.innerText = originalText;
+                shareBtn.style.pointerEvents = "auto";
+                return;
             }
+            
+            if (span) span.innerText = originalText;
+            shareBtn.style.pointerEvents = "auto";
         }
         shareUrlInput.value = shareUrl;
         shareModal.classList.add("visible");

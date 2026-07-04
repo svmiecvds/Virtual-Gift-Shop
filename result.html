@@ -83,14 +83,6 @@
 
 
 
-        /* Audio animations */
-        .has-audio { cursor: pointer; transition: transform 0.3s ease; }
-        .has-audio:hover { transform: scale(1.05); }
-        .plushie-speaking { animation: audioShake 0.15s infinite alternate; }
-        @keyframes audioShake {
-            0%   { transform: rotate(-2deg) scale(1.02); }
-            100% { transform: rotate(2deg) scale(1.02); }
-        }
 
         /* Glass tile footer */
         .site-footer {
@@ -153,7 +145,7 @@
     <div id="loadingMsg">Loading your gift... 🎁</div>
 
     <script type="module">
-        import { getGift } from '/firebase-config.js';
+        import { getGift } from './firebase-config.js';
 
         const giftScene = document.getElementById('giftScene');
         const loadingMsg = document.getElementById('loadingMsg');
@@ -166,7 +158,7 @@
             const i = path.toLowerCase().indexOf('assets/');
             if (i !== -1) {
                 const p = path.substring(i);
-                return p.startsWith('/') ? p : '/' + p;
+                return p.startsWith('/') ? '.' + p : './' + p;
             }
             return src;
         }
@@ -177,12 +169,12 @@
             const i = path.toLowerCase().indexOf('assets/');
             if (i !== -1) {
                 const p = path.substring(i);
-                return p.startsWith('/') ? p : '/' + p;
+                return p.startsWith('/') ? '.' + p : './' + p;
             }
             const filename = path.split('/').pop();
-            if (filename.includes('custom'))  return '/assets/plushies/' + filename;
-            if (filename.includes('flower')  || filename.includes('bow') || filename.includes('holder')) return '/assets/flowers/' + filename;
-            return '/assets/' + filename;
+            if (filename.includes('custom'))  return './assets/plushies/' + filename;
+            if (filename.includes('flower')  || filename.includes('bow') || filename.includes('holder')) return './assets/flowers/' + filename;
+            return './assets/' + filename;
         }
 
         /* ---------- load gift ---------- */
@@ -200,7 +192,7 @@
             }
             try {
                 const giftData = await getGift(docId);
-                if (giftData) {
+                    if (giftData) {
                     savedLayout = giftData.components || [];
                     loadingMsg.remove();
                     renderGift();
@@ -298,13 +290,6 @@
                         });
                     }
 
-                    // Voice note
-                    if (item.voiceNote) {
-                        wrapper.classList.add('has-audio');
-                        const audio = new Audio(item.voiceNote);
-                        wrapper.addEventListener('click', () => { audio.currentTime = 0; audio.play(); });
-                        wrapper.querySelector('img').classList.add('has-audio');
-                    }
                 }
                 /* ----- note ----- */
                 else if (item.type === 'note') {
