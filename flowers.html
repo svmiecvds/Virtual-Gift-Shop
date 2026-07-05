@@ -271,7 +271,6 @@ body.giftPage {
 /* --- CARD LAYOUT SYSTEM --- */
 #flowersMainContainer, #bouquetMainContainer {
     flex: 1;
-    min-height: 650px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -786,7 +785,6 @@ margin: 0 auto;
 /* --- BOUQUET STYLES --- */
 #mainContainer {
         flex: 1;
-        min-height: 650px;
         display: flex;
         justify-content: center;
         width: 100%;
@@ -801,7 +799,6 @@ margin: 0 auto;
         width: 100%;
         max-width: 1400px;
         margin: 0 auto;
-        height: 78vh;
     }
 
     /* --- SIDE PANELS --- */
@@ -951,11 +948,12 @@ margin: 0 auto;
 
     .draggableBouquetItem:hover {
         outline: 2px dashed #B71A3D;
+        outline-offset: -10px;
     }
 
     .selectedItem {
-        outline: 3px solid var(--heading-color) !important;
-        outline-offset: 3px;
+        outline: 2px dashed var(--heading-color) !important;
+        outline-offset: -10px;
         border-radius: 4px;
         box-shadow: none;
     }
@@ -1269,6 +1267,17 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 #saveBouquet:hover {
     box-shadow: 0 4px 16px rgba(255, 105, 180, 0.25) !important;
 }
+
+.colour-swatch {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+.colour-swatch:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+.colour-swatch.swatch-active { outline: 3px solid white; outline-offset: 2px; transform: scale(1.15); }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
@@ -1295,7 +1304,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     <h1 class="storeHeader">pick a bloom.</h1>
 
     
-    <div class="toggle-container" style="text-align: center; margin-bottom: 25px; margin-top: -10px;">
+    <div class="toggle-container" style="position: relative; z-index: 10; text-align: center; margin-bottom: 5px; margin-top: -10px;">
         <div class="joint-button" style="display: inline-flex; background: white; border-radius: 50px; padding: 5px; box-shadow: 0 4px 10px rgba(183, 26, 61, 0.2);">
             <button id="showFlowersBtn" class="toggle-btn active" style="border: none; background: #fac5cf; color: #5a0035; border-radius: 50px; padding: 10px 24px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s ease;">Flowers</button>
             <button id="showBouquetBtn" class="toggle-btn" style="border: none; background: transparent; color: var(--text-color); border-radius: 50px; padding: 10px 24px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s ease;">Bouquet</button>
@@ -1615,6 +1624,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <!-- Column 2: Canvas Space (Center) -->
             <div id="canvasContainer" style="position: relative;">
                 <div id="customScene" style="overflow: visible;">
+                    <img loading="lazy" id="mainHolder" src="assets/flowers/holder_pink.webp" data-type="holder" class="draggableBouquetItem" style="display: block; position: absolute; left: 60px; top: 60px; width: 480px; height: 480px; object-fit: contain; pointer-events: none; z-index: 1;">
                     <!-- Placeholder instructions -->
                     
             <div id="itemRotateBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -1623,12 +1633,6 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <div id="itemResizeBtn" style="display: none; position: absolute; z-index: 1000; cursor: nwse-resize; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
             </div>
-<div class="canvas-placeholder" id="placeholderMsg">
-                        <span>Bouquet Canvas</span>
-                        <span style="font-size: 15px; font-family: var(--font-body); margin-top: 15px; opacity: 0.8;">
-                            Click flowers, holders, or bows on the sides to spawn them. Drag to arrange and resize!
-                        </span>
-                    </div>
                     <!-- Delete Button for Selected Item -->
                     <button id="itemDeleteBtn" style="
                         display: none;
@@ -1655,32 +1659,20 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <!-- Column 3: Spawner Tray (Bows, Holders) & Controls -->
             <div class="side-column" style="display: flex; flex-direction: column; gap: 24px; flex: 1; max-width: 320px; height: 600px;">
                 <div class="side-panel">
-                    <h2>Wraps & Bows</h2>
+                    <h3 style="color: var(--heading-color); margin: 0 0 10px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 28px; font-weight: normal; letter-spacing: 1px;">Bouquet Colour</h3>
+                    <div id="holderColourSwatches" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px;">
+                        <div class="colour-swatch holder-swatch swatch-active" data-src="assets/flowers/holder_pink.webp" style="background:#fce7f3;" title="Pink"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_green.webp" style="background:#dcfce7;" title="Green"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_lightblue.webp" style="background:#dbeafe;" title="Light Blue"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_black.webp" style="background:#333333;" title="Black"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_purple.webp" style="background:#f3e8ff;" title="Purple"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_brown.webp" style="background:#d4a373;" title="Brown"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_white.webp" style="background:#f3f4f6;" title="White"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_blue.webp" style="background:#bfdbfe;" title="Blue"></div>
+                    </div>
+
+                    <h3 style="color: var(--heading-color); margin: 0 0 10px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 28px; font-weight: normal; letter-spacing: 1px;">Bows</h3>
                     <div class="spawner-grid">
-                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_pink.webp', 'holder', '')">
-                            <img loading="lazy" src="assets/flowers/holder_pink.webp" alt="">
-                        </div>
-                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_green.webp', 'holder', '')">
-                            <img loading="lazy" src="assets/flowers/holder_green.webp" alt="">
-                        </div>
-                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_lightblue.webp', 'holder', '')">
-                            <img loading="lazy" src="assets/flowers/holder_lightblue.webp" alt="">
-                        </div>
-                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_black.webp', 'holder', '')">
-                            <img loading="lazy" src="assets/flowers/holder_black.webp" alt="">
-                        </div>
-                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_purple.webp', 'holder', '')">
-                            <img loading="lazy" src="assets/flowers/holder_purple.webp" alt="">
-                        </div>
-                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_brown.webp', 'holder', '')">
-                            <img loading="lazy" src="assets/flowers/holder_brown.webp" alt="">
-                        </div>
-                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_white.webp', 'holder', '')">
-                            <img loading="lazy" src="assets/flowers/holder_white.webp" alt="">
-                        </div>
-                        <div class="spawner-item" onclick="spawnElement('assets/flowers/holder_blue.webp', 'holder', '')">
-                            <img loading="lazy" src="assets/flowers/holder_blue.webp" alt="">
-                        </div>
                         <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_aqua.webp', 'bow', '')">
                             <img loading="lazy" src="assets/flowers/bow_aqua.webp" alt="">
                         </div>
@@ -1970,8 +1962,13 @@ const placeholderMsg = document.getElementById("placeholderMsg");
         el.onload = function() {
             if (type === 'flower' || type === 'leaf') {
                 const ratio = el.naturalHeight / (el.naturalWidth || 1);
-                const w = 100;
-                const h = 100 * ratio;
+                let w = 110;
+                let h = 110;
+                if (ratio > 1) {
+                    w = 110 / ratio;
+                } else {
+                    h = 110 * ratio;
+                }
                 el.style.width = w + "px";
                 el.style.height = h + "px";
                 el.style.left = (300 - w / 2) + "px";
@@ -2042,9 +2039,13 @@ const placeholderMsg = document.getElementById("placeholderMsg");
         };
     }
     
-    const tr = getRotatedPoint(w/2, -h/2);
-    const bl = getRotatedPoint(-w/2, h/2);
-    const br = getRotatedPoint(w/2, h/2);
+    const inset = 10;
+    const rw = Math.max(16, w - inset * 2);
+    const rh = Math.max(16, h - inset * 2);
+
+    const tr = getRotatedPoint(rw/2, -rh/2);
+    const bl = getRotatedPoint(-rw/2, rh/2);
+    const br = getRotatedPoint(rw/2, rh/2);
 
     if (deleteBtn) {
         deleteBtn.style.left = (tr.x - 12) + 'px';
@@ -2366,15 +2367,26 @@ showBouquetBtn.addEventListener('click', () => {
                     img.src = src;
                 }
             });
-            // Also preload spawner items
-            document.querySelectorAll('.spawner-item img, .box-option img, .color-option img').forEach(imgEl => {
-                if (imgEl.src) {
+            // Also preload spawner items and swatches
+            document.querySelectorAll('.spawner-item img, .box-option img, .color-option img, .holder-swatch').forEach(imgEl => {
+                const src = imgEl.src || imgEl.dataset.src;
+                if (src) {
                     const img = new Image();
-                    img.src = imgEl.src;
+                    img.src = src;
                 }
             });
         }, 500);
     });
+
+// Handle Bouquet Wrap Colour Selection
+document.querySelectorAll('.holder-swatch').forEach(swatch => {
+    swatch.addEventListener('click', () => {
+        const src = swatch.dataset.src;
+        document.getElementById('mainHolder').src = src;
+        document.querySelectorAll('.holder-swatch').forEach(s => s.classList.remove('swatch-active'));
+        swatch.classList.add('swatch-active');
+    });
+});
 
 // Color Option Switching for Flowers
 document.addEventListener("click", e => {

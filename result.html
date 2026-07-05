@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>A Gift For You | The Gifting Co.</title>
     <link rel="icon" type="image/png" href="/assets/favicon.webp">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -273,8 +276,8 @@
                 const flip     = item.flip || '1';
                 wrapper.style.transform = `rotate(${rotation}deg) scaleX(${flip})`;
 
-                /* ----- plushie ----- */
-                if (item.type === 'plushie') {
+                /* ----- plushie or flower ----- */
+                if (item.type === 'plushie' || item.type === 'flower') {
                     const img = document.createElement('img');
                     img.loading = 'lazy';
                     img.src = resolveMainSrc(item.src);
@@ -316,17 +319,61 @@
                     paper.loading = 'lazy';
                     paper.src = resolveMainSrc(item.src);
                     paper.style.width = '100%';
+                    paper.style.display = 'block';
                     paper.draggable = false;
                     wrapper.appendChild(paper);
                     wrapper.className = 'note giftEl';
 
+                    wrapper.style.containerType = "inline-size";
+
                     if (item.noteTextDetails) {
                         const textDiv = document.createElement('div');
                         textDiv.className = 'noteText';
+                        textDiv.style.position = 'absolute';
+                        textDiv.style.textAlign = 'center';
+                        textDiv.style.wordWrap = 'break-word';
+                        textDiv.style.userSelect = 'none';
+
                         textDiv.innerText = item.noteTextDetails.text;
                         textDiv.style.fontFamily = item.noteTextDetails.fontFamily;
                         textDiv.style.color = item.noteTextDetails.color;
+
+                        if (item.noteTextDetails.left !== undefined) {
+                            textDiv.style.left = item.noteTextDetails.left + "%";
+                            textDiv.style.top = item.noteTextDetails.top + "%";
+                            textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
+                            let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
+                            textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
+                            textDiv.style.height = "50%";
+                            textDiv.style.maxHeight = "50%";
+                            textDiv.style.overflow = "hidden";
+                            textDiv.style.whiteSpace = "pre-wrap";
+                            textDiv.style.wordBreak = "break-word";
+                            textDiv.style.fontSize = "7.5cqw";
+                        } else {
+                            textDiv.style.top = "12%";
+                            textDiv.style.left = "10%";
+                            textDiv.style.width = "75%";
+                            textDiv.style.height = "70%";
+                            textDiv.style.overflow = "hidden";
+                            textDiv.style.fontSize = "18px";
+                        }
+
                         wrapper.appendChild(textDiv);
+                    }
+
+                    if (item.stickers) {
+                        item.stickers.forEach(st => {
+                            const stickerImg = document.createElement("img");
+                            stickerImg.src = resolveMainSrc(st.src);
+                            stickerImg.style.position = "absolute";
+                            stickerImg.style.left = st.left + "%";
+                            stickerImg.style.top = st.top + "%";
+                            stickerImg.style.width = st.width + "%";
+                            stickerImg.style.transform = `translate(-50%, -50%) rotate(${st.angle || 0}rad) scale(${st.scale || 1})`;
+                            stickerImg.style.pointerEvents = "none";
+                            wrapper.appendChild(stickerImg);
+                        });
                     }
                 }
                 /* ----- sticker ----- */

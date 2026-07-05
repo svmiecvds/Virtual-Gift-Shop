@@ -970,7 +970,7 @@ savedLayout.forEach(item => {
     const flip = item.flip || "1";
     wrapper.style.transform = `rotate(${rotation}deg) scaleX(${flip})`;
 
-    if (item.type === "plushie") {
+    if (item.type === "plushie" || item.type === "flower") {
         const isBouquet = item.isBouquet === true || (item.src && item.src.startsWith("data:image")) || (item.image && item.image.startsWith("data:image"));
         
         // Base plushie image

@@ -790,8 +790,6 @@ body.no-scroll {
 }
 
 #customizeContainer {
-    flex: 1;
-    min-height: 850px !important;
     display: flex !important;
     justify-content: center !important;
     align-items: stretch !important;
@@ -803,6 +801,7 @@ body.no-scroll {
     position: relative;
     flex: 1;
     max-width: 500px;
+    height: auto !important;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -822,8 +821,10 @@ body.no-scroll {
 
 
 .mainPlushie {
-    max-height: 60vh !important;
+    max-height: 85% !important;
+    max-width: 85% !important;
     width: auto !important;
+    height: auto !important;
     object-fit: contain;
 }
 
