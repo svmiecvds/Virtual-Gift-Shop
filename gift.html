@@ -1092,7 +1092,13 @@ giftItems.forEach((item, itemIndex) => {
                     textDiv.style.wordBreak = "break-word";
                     textDiv.style.textAlign = "center";
                     textDiv.style.lineHeight = "1.2";
-                    textDiv.style.fontSize = "7.5cqw";
+                    // Use saved fontSize (% of note paper width) so it scales correctly with the wrapper.
+                    // Fall back to 7.5cqw only if no fontSize was saved.
+                    if (item.noteTextDetails.fontSize) {
+                        textDiv.style.fontSize = item.noteTextDetails.fontSize + "cqw";
+                    } else {
+                        textDiv.style.fontSize = "7.5cqw";
+                    }
                 }
                 
                 wrapper.appendChild(textDiv);
@@ -1363,6 +1369,7 @@ if (saveGiftBtn) {
                         top: parseFloat(textDiv.style.top) || undefined,
                         width: parseFloat(textDiv.style.width) || undefined,
                         height: parseFloat(textDiv.style.height) || undefined,
+                        fontSize: item.noteTextDetails && item.noteTextDetails.fontSize ? item.noteTextDetails.fontSize : undefined,
                         angle: textDiv.style.transform.includes('rotate') ? parseFloat(textDiv.style.transform.split('rotate(')[1]) : 0,
                         scale: textDiv.style.transform.includes('scale(') ? parseFloat(textDiv.style.transform.split('scale(')[1]) : 1
                     };

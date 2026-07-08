@@ -1034,6 +1034,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 top: (textTop / noteHeight) * 100,
                 width: (noteTextarea.offsetWidth / noteWidth) * 100,
                 height: (noteTextarea.offsetHeight / noteHeight) * 100,
+                fontSize: (parseFloat(window.getComputedStyle(noteTextarea).fontSize) / noteWidth) * 100,
                 angle: 0,
                 scale: 1
             };

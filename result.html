@@ -345,12 +345,10 @@
                             textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
                             let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
                             textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
-                            const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "45%";
-                            textDiv.style.height = savedHeight;
-                            textDiv.style.overflow = "hidden";
                             textDiv.style.whiteSpace = "pre-wrap";
                             textDiv.style.wordBreak = "break-word";
-                            textDiv.style.fontSize = "7.5cqw";
+                            textDiv.style.lineHeight = "1.2";
+                            textDiv.style.fontSize = item.noteTextDetails.fontSize ? (item.noteTextDetails.fontSize + "cqw") : "7.5cqw";
                         } else {
                             textDiv.style.top = "12%";
                             textDiv.style.left = "10%";
