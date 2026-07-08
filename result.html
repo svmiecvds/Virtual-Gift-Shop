@@ -344,8 +344,9 @@
                             textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
                             let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
                             textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
-                            textDiv.style.height = "50%";
-                            textDiv.style.maxHeight = "50%";
+                            const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "50%";
+                            textDiv.style.height = savedHeight;
+                            textDiv.style.maxHeight = savedHeight;
                             textDiv.style.overflow = "hidden";
                             textDiv.style.whiteSpace = "pre-wrap";
                             textDiv.style.wordBreak = "break-word";
