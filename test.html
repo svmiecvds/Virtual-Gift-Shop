@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .note {
+    position: relative;
+    width: 220px;
+    /* height not set */
+    /* aspect-ratio: 1 / 1; */
+    background: yellow;
+    container-type: inline-size;
+  }
+  .note img {
+    display: block;
+    width: 100%;
+  }
+  .textDiv {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%, -50%);
+    width: 62%;
+    height: 45%;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-break: break-word;
+    text-align: center;
+    line-height: 1.2;
+    font-size: 7.5cqw;
+    background: rgba(255,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+  <div class="note">
+    <!-- square image to force wrapper height to 220px -->
+    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="220" height="220" style="width:100%; aspect-ratio:1/1;">
+    <div class="textDiv">l<br>l<br>l<br>l<br>l<br>l</div>
+  </div>
+</body>
+</html>

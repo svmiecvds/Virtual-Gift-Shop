@@ -1063,9 +1063,12 @@ giftItems.forEach((item, itemIndex) => {
             paper.style.width = "100%";
             paper.style.display = "block";
             paper.draggable = false;
-            wrapper.appendChild(paper);
+            wrapper.className = "note giftEl";
             
             wrapper.style.containerType = "inline-size";
+            wrapper.style.aspectRatio = "1 / 1";
+            
+            wrapper.appendChild(paper);
 
             if (item.noteTextDetails) {
                 const textDiv = document.createElement("div");
