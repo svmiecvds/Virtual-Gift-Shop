@@ -1369,7 +1369,7 @@ if (saveGiftBtn) {
                         top: parseFloat(textDiv.style.top) || undefined,
                         width: parseFloat(textDiv.style.width) || undefined,
                         height: parseFloat(textDiv.style.height) || undefined,
-                        fontSize: item.noteTextDetails && item.noteTextDetails.fontSize ? item.noteTextDetails.fontSize : undefined,
+                        fontSize: parseFloat(textDiv.style.fontSize) || undefined,
                         angle: textDiv.style.transform.includes('rotate') ? parseFloat(textDiv.style.transform.split('rotate(')[1]) : 0,
                         scale: textDiv.style.transform.includes('scale(') ? parseFloat(textDiv.style.transform.split('scale(')[1]) : 1
                     };
