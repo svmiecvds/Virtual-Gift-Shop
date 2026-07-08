@@ -325,6 +325,7 @@
                     wrapper.className = 'note giftEl';
 
                     wrapper.style.containerType = "inline-size";
+                    wrapper.style.overflow = "hidden";
 
                     if (item.noteTextDetails) {
                         const textDiv = document.createElement('div');
@@ -344,7 +345,9 @@
                             textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
                             let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
                             textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
-                            textDiv.style.overflow = "visible";
+                            const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "45%";
+                            textDiv.style.height = savedHeight;
+                            textDiv.style.overflow = "hidden";
                             textDiv.style.whiteSpace = "pre-wrap";
                             textDiv.style.wordBreak = "break-word";
                             textDiv.style.fontSize = "7.5cqw";
