@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="color-scheme" content="light">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <title>The Gifting Co.</title>
@@ -945,22 +946,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             
         </div>
     </div>
-    <script defer>
-        /* -------------------- */
-        /* THEME TOGGLE         */
-        /* -------------------- */
-
-        (function () {
-            const saved = localStorage.getItem('theme');
-            if (saved === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-            }
-        })();
-
-        
-    </script>
+    
     <script defer>
         const orderList = document.getElementById("orderList");
         const giftButton = document.getElementById("giftButton");
