@@ -1158,7 +1158,10 @@ margin: 0 auto;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    padding: 6px;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid transparent;
@@ -1319,25 +1322,20 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             <div class="flowersRowTop">
         <div class="flowerCard">
             <img loading="lazy" src="assets/flowers/flower1.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Rose</div>
             <div class="color-scroll-container">
                 
-            <div class="color-option active" data-image="assets/flowers/flower1.webp" data-flower="1">
-                <img loading="lazy" src="assets/flowers/flower1.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option active" data-image="assets/flowers/flower1.webp" data-flower="1" style="background-color: rgb(180, 126, 115);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower4.webp" data-flower="4">
-                <img loading="lazy" src="assets/flowers/flower4.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower4.webp" data-flower="4" style="background-color: rgb(190, 148, 158);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower5.webp" data-flower="5">
-                <img loading="lazy" src="assets/flowers/flower5.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower5.webp" data-flower="5" style="background-color: rgb(209, 204, 197);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower6.webp" data-flower="6">
-                <img loading="lazy" src="assets/flowers/flower6.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower6.webp" data-flower="6" style="background-color: rgb(38, 34, 27);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower10.webp" data-flower="10">
-                <img loading="lazy" src="assets/flowers/flower10.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower10.webp" data-flower="10" style="background-color: rgb(190, 183, 142);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower14.webp" data-flower="14">
-                <img loading="lazy" src="assets/flowers/flower14.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower14.webp" data-flower="14" style="background-color: rgb(147, 195, 192);">
             </div>
             </div>
             <div class="flowerSelector">
@@ -1345,18 +1343,17 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 <span class="flowerQuantity" id="qtyFlower1">1</span>
                 <button class="plusBtn" data-flower="1">+</button>
             </div>
-            <button class="addToCartBtn shiny-cta" data-flower="1" data-image="assets/flowers/flower1.webp"><span>Add To Cart </span></button>
+            <button class="addToCartBtn shiny-cta" data-flower="1" data-name="Pink Rose" data-image="assets/flowers/flower1.webp"><span>Add To Cart </span></button>
         </div>
     
         <div class="flowerCard">
             <img loading="lazy" src="assets/flowers/flower2.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Tulip</div>
             <div class="color-scroll-container">
                 
-            <div class="color-option active" data-image="assets/flowers/flower2.webp" data-flower="2">
-                <img loading="lazy" src="assets/flowers/flower2.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option active" data-image="assets/flowers/flower2.webp" data-flower="2" style="background-color: rgb(215, 155, 153);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower11.webp" data-flower="11">
-                <img loading="lazy" src="assets/flowers/flower11.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower11.webp" data-flower="11" style="background-color: rgb(188, 187, 134);">
             </div>
             </div>
             <div class="flowerSelector">
@@ -1364,30 +1361,25 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 <span class="flowerQuantity" id="qtyFlower2">1</span>
                 <button class="plusBtn" data-flower="2">+</button>
             </div>
-            <button class="addToCartBtn shiny-cta" data-flower="2" data-image="assets/flowers/flower2.webp"><span>Add To Cart </span></button>
+            <button class="addToCartBtn shiny-cta" data-flower="2" data-name="Pink Tulip" data-image="assets/flowers/flower2.webp"><span>Add To Cart </span></button>
         </div>
     
         <div class="flowerCard">
             <img loading="lazy" src="assets/flowers/flower3.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Lily</div>
             <div class="color-scroll-container">
                 
-            <div class="color-option active" data-image="assets/flowers/flower3.webp" data-flower="3">
-                <img loading="lazy" src="assets/flowers/flower3.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option active" data-image="assets/flowers/flower3.webp" data-flower="3" style="background-color: rgb(203, 193, 207);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower7.webp" data-flower="7">
-                <img loading="lazy" src="assets/flowers/flower7.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower7.webp" data-flower="7" style="background-color: rgb(236, 228, 231);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower8.webp" data-flower="8">
-                <img loading="lazy" src="assets/flowers/flower8.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower8.webp" data-flower="8" style="background-color: rgb(208, 229, 231);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower9.webp" data-flower="9">
-                <img loading="lazy" src="assets/flowers/flower9.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower9.webp" data-flower="9" style="background-color: rgb(235, 187, 167);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower12.webp" data-flower="12">
-                <img loading="lazy" src="assets/flowers/flower12.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower12.webp" data-flower="12" style="background-color: rgb(224, 189, 184);">
             </div>
-            <div class="color-option " data-image="assets/flowers/flower13.webp" data-flower="13">
-                <img loading="lazy" src="assets/flowers/flower13.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
+            <div class="color-option " data-image="assets/flowers/flower13.webp" data-flower="13" style="background-color: rgb(211, 207, 231);">
             </div>
             </div>
             <div class="flowerSelector">
@@ -1395,91 +1387,78 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 <span class="flowerQuantity" id="qtyFlower3">1</span>
                 <button class="plusBtn" data-flower="3">+</button>
             </div>
-            <button class="addToCartBtn shiny-cta" data-flower="3" data-image="assets/flowers/flower3.webp"><span>Add To Cart </span></button>
+            <button class="addToCartBtn shiny-cta" data-flower="3" data-name="Pink Lily" data-image="assets/flowers/flower3.webp"><span>Add To Cart </span></button>
         </div>
 
         <div class="flowerCard">
             <img loading="lazy" src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Calla Lily</div>
             <div class="color-scroll-container">
-                <div class="color-option active" data-image="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp" data-flower="15">
-                    <img loading="lazy" src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.webp" data-flower="16">
-                    <img loading="lazy" src="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.webp" data-flower="17">
-                    <img loading="lazy" src="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.webp" data-flower="18">
-                    <img loading="lazy" src="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.webp" data-flower="19">
-                    <img loading="lazy" src="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
+                <div class="color-option active" data-image="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp" data-flower="15" style="background-color: rgb(48, 33, 49);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.webp" data-flower="16" style="background-color: rgb(148, 43, 59);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.webp" data-flower="17" style="background-color: rgb(245, 240, 220);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.webp" data-flower="18" style="background-color: rgb(115, 45, 85);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.webp" data-flower="19" style="background-color: rgb(55, 70, 95);">
+            </div>
             </div>
             <div class="flowerSelector">
                 <button class="minusBtn" data-flower="15">−</button>
                 <span class="flowerQuantity" id="qtyFlower15">1</span>
                 <button class="plusBtn" data-flower="15">+</button>
             </div>
-            <button class="addToCartBtn shiny-cta" data-flower="15" data-image="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp"><span>Add To Cart </span></button>
+            <button class="addToCartBtn shiny-cta" data-flower="15" data-name="Dark Purple Calla Lily" data-image="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp"><span>Add To Cart </span></button>
         </div>
         
         <div class="flowerCard">
             <img loading="lazy" src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Orchid</div>
             <div class="color-scroll-container">
-                <div class="color-option active" data-image="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp" data-flower="20">
-                    <img loading="lazy" src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.webp" data-flower="21">
-                    <img loading="lazy" src="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.webp" data-flower="22">
-                    <img loading="lazy" src="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.webp" data-flower="23">
-                    <img loading="lazy" src="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.webp" data-flower="24">
-                    <img loading="lazy" src="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
+                <div class="color-option active" data-image="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp" data-flower="20" style="background-color: rgb(241, 151, 149);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.webp" data-flower="21" style="background-color: rgb(75, 55, 74);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.webp" data-flower="22" style="background-color: rgb(241, 220, 142);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.webp" data-flower="23" style="background-color: rgb(183, 208, 229);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.webp" data-flower="24" style="background-color: rgb(247, 190, 135);">
+            </div>
             </div>
             <div class="flowerSelector">
                 <button class="minusBtn" data-flower="20">−</button>
                 <span class="flowerQuantity" id="qtyFlower20">1</span>
                 <button class="plusBtn" data-flower="20">+</button>
             </div>
-            <button class="addToCartBtn shiny-cta" data-flower="20" data-image="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp"><span>Add To Cart </span></button>
+            <button class="addToCartBtn shiny-cta" data-flower="20" data-name="Pink Orchid" data-image="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp"><span>Add To Cart </span></button>
         </div>
         
         <div class="flowerCard">
             <img loading="lazy" src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Hydrangea</div>
             <div class="color-scroll-container">
-                <div class="color-option active" data-image="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp" data-flower="25">
-                    <img loading="lazy" src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.webp" data-flower="26">
-                    <img loading="lazy" src="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.webp" data-flower="27">
-                    <img loading="lazy" src="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.webp" data-flower="28">
-                    <img loading="lazy" src="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.webp" data-flower="29">
-                    <img loading="lazy" src="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
-                <div class="color-option " data-image="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.webp" data-flower="30">
-                    <img loading="lazy" src="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.webp" style="width: 25px; height: 25px; object-fit: contain; pointer-events: none;">
-                </div>
+                <div class="color-option active" data-image="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp" data-flower="25" style="background-color: rgb(195, 223, 230);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.webp" data-flower="26" style="background-color: rgb(201, 195, 230);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.webp" data-flower="27" style="background-color: rgb(246, 244, 227);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.webp" data-flower="28" style="background-color: rgb(195, 236, 209);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.webp" data-flower="29" style="background-color: rgb(60, 60, 53);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.webp" data-flower="30" style="background-color: rgb(236, 195, 226);">
+            </div>
             </div>
             <div class="flowerSelector">
                 <button class="minusBtn" data-flower="25">−</button>
                 <span class="flowerQuantity" id="qtyFlower25">1</span>
                 <button class="plusBtn" data-flower="25">+</button>
             </div>
-            <button class="addToCartBtn shiny-cta" data-flower="25" data-image="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp"><span>Add To Cart </span></button>
+            <button class="addToCartBtn shiny-cta" data-flower="25" data-name="Cyan Hydrangea" data-image="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp"><span>Add To Cart </span></button>
         </div>
     
             </div></div>
@@ -2389,6 +2368,39 @@ document.querySelectorAll('.holder-swatch').forEach(swatch => {
 });
 
 // Color Option Switching for Flowers
+const flowerNames = {
+    "1": "Pink Rose",
+    "2": "Pink Tulip",
+    "3": "Pink Lily",
+    "4": "Pink-White Rose",
+    "5": "White Rose",
+    "6": "Black Rose",
+    "7": "White Lily",
+    "8": "Light Blue Lily",
+    "9": "Orange Lily",
+    "10": "Yellow Rose",
+    "11": "Yellow Tulip",
+    "12": "Red Lily",
+    "13": "Purple Lily",
+    "14": "Blue Rose",
+    "15": "Dark Purple Calla Lily",
+    "16": "Deep Red Calla Lily",
+    "17": "Cream Calla Lily",
+    "18": "Magenta Calla Lily",
+    "19": "Dark Blue Calla Lily",
+    "20": "Pink Orchid",
+    "21": "Dark Purple Orchid",
+    "22": "Yellow Orchid",
+    "23": "Light Blue Orchid",
+    "24": "Orange Orchid",
+    "25": "Cyan Hydrangea",
+    "26": "Light Purple Hydrangea",
+    "27": "Cream Hydrangea",
+    "28": "Light Green Hydrangea",
+    "29": "Black Hydrangea",
+    "30": "Pink Hydrangea"
+};
+
 document.addEventListener("click", e => {
     const option = e.target.closest(".color-option");
     if (!option) return;
@@ -2407,11 +2419,15 @@ document.addEventListener("click", e => {
         mainImg.src = newImage;
     }
     
+    const newName = flowerNames[fId] || card.querySelector('.flowerName').innerText;
+
+    
     // Update the Add To Cart button
     const btn = card.querySelector(".addToCartBtn");
     if (btn) {
         btn.dataset.flower = fId;
         btn.dataset.image = newImage;
+        btn.dataset.name = newName;
     }
     
     // Update quantity selector ID and data-flower for buttons
