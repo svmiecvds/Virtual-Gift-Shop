@@ -9,6 +9,7 @@
     <title>The Gifting Co.</title>
     <link rel="icon" type="image/png" href="assets/favicon.webp">
     <link rel="preload" as="image" href="assets/giftbg.webp">
+    <script src="block-mobile.js"></script>
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -56,17 +57,26 @@ body.giftPage {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-color: var(--body-bg);
-    overflow-x: hidden;
+    overflow: hidden !important;
+    width: 100vw;
+    height: 100vh;
     transition: background 0.5s ease, color 0.5s ease;
     font-family: 'Fredoka', 'Pacifico', cursive, sans-serif;
 }
 
-@media (max-width: 768px) {
-    body, body.receiptPage, body.giftPage {
-        background-image: url('assets/mobilegiftbg.webp') !important;
-        background-attachment: scroll !important;
-    }
+.checkoutTitle, .giftHeader {
+    text-align: center !important;
+    margin-top: 100px !important;
+    margin-bottom: 20px !important;
+    color: #B71A3D !important;
+    font-family: 'Pinyon Script', cursive !important;
+    font-size: 56px !important;
+    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4) !important;
+    font-weight: bold !important;
+    line-height: 1.2 !important;
 }
+
+
 
 .sidebar-panel {
     display: none;
@@ -354,24 +364,7 @@ padding: 0 15px;
     justify-content: center;
 }
 
-@media (max-width: 1024px) {
-    .carousel-slide {
-        flex: 0 0 50%;
 
-/* --- Show 2 items --- */
-}
-}
-
-@media (max-width: 768px) {
-    .carousel-slide {
-        flex: 0 0 100%;
-
-/* --- Show 1 item --- */
-}
-    .carousel-wrapper {
-        padding: 0 40px;
-    }
-}
 
 .carousel-btn {
     position: absolute;
@@ -800,12 +793,6 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 <body class="giftPage">
 
-    <!-- Share Button -->
-    <button id="shareGiftBtn" class="nav-action-btn" style="position: absolute; top: 20px; right: 20px; z-index: 999;">
-        <svg style="margin-right: 6px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-        Share
-    </button>
-
     <!-- Share Modal -->
     <div class="share-modal-overlay" id="shareModal">
         <div class="share-modal">
@@ -819,15 +806,20 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         </div>
     </div>
 
-    <!-- Title Header -->
-    <h1 class="storeHeader" style="text-align: center; position: relative; z-index: 10; margin-top: 20px; pointer-events: none;">Your Wrapped Gift Card</h1>
+    <h1 class="checkoutTitle giftHeader">Your Wrapped Gift Card</h1>
 
-    <!-- Display the stationary gift layout -->
-    <div id="giftContainer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; margin: 0; padding: 0;">
-        <div id="giftScene" style="width: 100%; height: 100%; position: relative; overflow: hidden; flex: 1;">
+    <!-- Display the stationary gift layout exactly like gift.html -->
+    <div id="giftContainer" style="display: flex; flex: 1; min-height: 0; align-items: center; gap: 20px; justify-content: center; width: 85%; max-width: 900px; margin: 0 auto; padding-top: 10px; padding-bottom: 20px; position: relative; z-index: 10;">
+        <div id="giftScene" style="flex: 1; height: 55vh; position: relative; overflow: visible;">
             <!-- Arranged elements will be reconstructed here dynamically -->
         </div>
     </div>
+
+    <!-- Share button fixed just above footer, aligned in the middle -->
+    <button id="shareGiftBtn" class="nav-action-btn" style="position: fixed; bottom: 55px; left: 50%; transform: translateX(-50%); z-index: 10001; box-shadow: 0 4px 15px rgba(183, 26, 61, 0.3);">
+        <svg style="margin-right: 6px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        Share
+    </button>
 
 
     <!-- Dynamic Warning Banner "Click on your gifts!" will be appended here by JS if voice note exists -->
@@ -894,82 +886,38 @@ let savedLayout = [];
 
 
 
-/* Reconstruct everything inside the stationary scene */
-// The gift.html canvas was max-width 900px, height ~55vh.
-// We need to map item positions from that canvas into the full-screen scene,
-// but keep them within the "between the bows" safe zone.
-// The background image (giftbg.webp) has bows in the corners.
-// Safe zone is roughly 15% inset from each edge.
-const GIFT_CANVAS_W = 900;
-const isMobile = window.innerWidth <= 768;
-let scaleX, scaleY, offsetX, offsetY;
+    // === DESKTOP PLACEMENT SNIPPET ===
+    savedLayout.forEach(item => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "giftEl";
+        wrapper.style.position = "absolute";
 
-if (isMobile) {
-    const mobileSafeLeft = window.innerWidth * 0.10;
-    const mobileSafeTop = window.innerHeight * 0.27;
-    const mobileSafeW = window.innerWidth * 0.80;
-    const mobileSafeH = window.innerHeight * 0.48;
-    const REF_H = 550;
+        const currentSceneW = giftScene.offsetWidth;
+        const currentSceneH = giftScene.offsetHeight; // 55vh
+        
+        const origSceneW = item.sceneW || 900;
+        const origSceneH = item.sceneH || 550;
 
-    const scale = Math.min(mobileSafeW / GIFT_CANVAS_W, mobileSafeH / REF_H);
-    scaleX = scale;
-    scaleY = scale;
-    offsetX = mobileSafeLeft + (mobileSafeW - GIFT_CANVAS_W * scale) / 2;
-    offsetY = mobileSafeTop + (mobileSafeH - REF_H * scale) / 2;
-} else {
-    const GIFT_CANVAS_H = window.innerHeight * 0.55;
-    const safeLeft = window.innerWidth * 0.15;
-    const safeTop = window.innerHeight * 0.13;
-    const safeW = window.innerWidth * 0.70;
-    const safeH = window.innerHeight * 0.74;
+        const scaleX = currentSceneW / origSceneW;
+        const scaleY = currentSceneH / origSceneH;
 
-    scaleX = safeW / GIFT_CANVAS_W;
-    scaleY = safeH / GIFT_CANVAS_H;
-    offsetX = safeLeft;
-    offsetY = safeTop;
-}
+        let origLeft = (item.centerOffset !== undefined) ? (origSceneW / 2 + item.centerOffset) : (parseFloat(item.left) || 0);
+        let origTop = parseFloat(item.top) || 0;
 
-savedLayout.forEach(item => {
-    const wrapper = document.createElement("div");
-    wrapper.className = "giftEl";
-    wrapper.style.position = "absolute";
+        wrapper.style.left = (origLeft * scaleX) + "px";
+        wrapper.style.top  = (origTop * scaleY) + "px";
 
-    // Compute original pixel left from centerOffset or raw left
-    let origLeft;
-    if (item.centerOffset !== undefined) {
-        origLeft = GIFT_CANVAS_W / 2 + item.centerOffset;
-    } else {
-        origLeft = parseFloat(item.left) || 0;
-    }
-    const origTop = parseFloat(item.top) || 0;
+        if (item.width) wrapper.style.width = (parseFloat(item.width) * scaleX) + "px";
+        if (item.height && item.height !== "auto") wrapper.style.height = (parseFloat(item.height) * scaleY) + "px";
+        wrapper.style.zIndex = item.zIndex;
+        wrapper.style.transform = `rotate(${item.rotation || 0}deg) scaleX(${item.flip || 1})`;
 
-    const newLeft = offsetX + origLeft * scaleX;
-    const newTop  = offsetY + origTop * scaleY;
+        renderGiftItemContents(wrapper, item, scaleX, scaleY);
+        giftScene.appendChild(wrapper);
+    });
 
-    wrapper.style.left = newLeft + "px";
-    wrapper.style.top  = newTop  + "px";
-
-    // Scale size too (use scaleX for both to maintain aspect ratio!)
-    if (item.width) {
-        const origW = parseFloat(item.width);
-        wrapper.style.width = (origW * scaleX) + "px";
-    }
-    if (item.height) {
-        const origH = parseFloat(item.height);
-        if (!isNaN(origH)) {
-            wrapper.style.height = (origH * scaleX) + "px";
-        } else if (item.height === "auto") {
-            wrapper.style.height = "auto";
-        }
-    }
-
-    wrapper.style.zIndex = item.zIndex;
-
-    // Set transform states
-    const rotation = item.rotation || "0";
-    const flip = item.flip || "1";
-    wrapper.style.transform = `rotate(${rotation}deg) scaleX(${flip})`;
-
+// Reusable function to render the actual item contents
+function renderGiftItemContents(wrapper, item, scaleX, scaleY) {
     if (item.type === "plushie" || item.type === "flower") {
         const isBouquet = item.isBouquet === true || (item.src && item.src.startsWith("data:image")) || (item.image && item.image.startsWith("data:image"));
         
@@ -1140,8 +1088,7 @@ savedLayout.forEach(item => {
         wrapper.style.userSelect = "none";
     }
 
-    giftScene.appendChild(wrapper);
-});
+}
 
 
 // In viewer mode, add a small badge at the bottom

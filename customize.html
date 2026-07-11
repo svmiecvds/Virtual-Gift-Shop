@@ -12,6 +12,7 @@
 <title>The Gifting Co.</title>
     <link rel="icon" type="image/png" href="assets/favicon.webp">
     <link rel="preload" as="image" href="assets/plushiesbg.webp">
+    <script src="block-mobile.js"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
@@ -708,24 +709,7 @@ padding: 0 15px;
     justify-content: center;
 }
 
-@media (max-width: 1024px) {
-    .carousel-slide {
-        flex: 0 0 50%;
 
-/* --- Show 2 items --- */
-}
-}
-
-@media (max-width: 768px) {
-    .carousel-slide {
-        flex: 0 0 100%;
-
-/* --- Show 1 item --- */
-}
-    .carousel-wrapper {
-        padding: 0 40px;
-    }
-}
 
 .carousel-btn {
     position: absolute;
@@ -933,7 +917,7 @@ body.no-scroll {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
 
-<script defer src="mobile-nav.js"></script>
+
 
 <style>
 .site-footer {
@@ -1008,8 +992,8 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     <!-- Baby Pink Navbar -->
         <nav id="storeNavbar">
         <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
-        <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
-            <button onclick="window.location.href='plushies.html'" style="display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; color: #ffffff; cursor: pointer; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='white'; this.style.transform='translateY(-2px)'; this.style.opacity='0.9';" onmouseout="this.style.color='#ffffff'; this.style.transform='translateY(0)'; this.style.opacity='1';">
+        <div id="customizeNavActions" style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
+            <button onclick="window.location.href='plushies.html'" style="display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; height: 38px; padding: 0 10px; color: #ffffff; cursor: pointer; text-decoration: none; white-space: nowrap; transition: all 0.3s ease;" onmouseover="this.style.color='white'; this.style.transform='translateY(-2px)'; this.style.opacity='0.9';" onmouseout="this.style.color='#ffffff'; this.style.transform='translateY(0)'; this.style.opacity='1';">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6; margin-right: 4px; flex-shrink: 0;" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
                 Go back
             </button>
@@ -1534,23 +1518,7 @@ window.location.href = "checkout.html";
     margin-top: auto !important;
 }
 
-@media (max-width: 768px) {
-    #customizeContainer {
-        flex-direction: column !important;
-        align-items: center !important;
-    }
-    #customScene, #customPanel {
-        max-width: 100% !important;
-        width: 100% !important;
-    }
-    #customScene {
-        height: 400px !important;
-    }
-    #customPanel {
-        height: auto !important;
-        max-height: none !important;
-    }
-}
+
 </style>
 
 </body>

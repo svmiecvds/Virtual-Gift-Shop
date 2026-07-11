@@ -9,6 +9,7 @@
     <title>The Gifting Co.</title>
     <link rel="icon" type="image/png" href="assets/favicon.webp">
     <link rel="preload" as="image" href="assets/flowersbg.webp">
+    <script src="block-mobile.js"></script>
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -705,24 +706,7 @@ padding: 0 15px;
     justify-content: center;
 }
 
-@media (max-width: 1024px) {
-    .carousel-slide {
-        flex: 0 0 50%;
 
-/* --- Show 2 items --- */
-}
-}
-
-@media (max-width: 768px) {
-    .carousel-slide {
-        flex: 0 0 100%;
-
-/* --- Show 1 item --- */
-}
-    .carousel-wrapper {
-        padding: 0 40px;
-    }
-}
 
 .carousel-btn {
     position: absolute;
@@ -1197,7 +1181,7 @@ margin: 0 auto;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
 
-<script defer src="mobile-nav.js"></script>
+
 
 <style>
 .site-footer {
@@ -2109,8 +2093,12 @@ document.addEventListener("mousedown", (e) => {
         
         // Use center of item for dragging so rotation doesn't offset it weirdly?
         // Let's stick to standard dragOffsetX
-        dragOffsetX = e.clientX - rect.left;
-        dragOffsetY = e.clientY - rect.top;
+        // Account for scale during initial grab offset
+        const sceneRect = customScene.getBoundingClientRect();
+        const scale = customScene.offsetWidth / sceneRect.width;
+        
+        dragOffsetX = ((e.clientX - rect.left) * scale);
+        dragOffsetY = ((e.clientY - rect.top) * scale);
         
         if (typeof highestZ !== 'undefined') {
             item.style.zIndex = highestZ++;
@@ -2159,8 +2147,12 @@ document.addEventListener("mousemove", (e) => {
     if (!selected) return;
 
     const rect = customScene.getBoundingClientRect();
-    let left = e.clientX - rect.left - dragOffsetX;
-    let top = e.clientY - rect.top - dragOffsetY;
+    
+    // Account for zoom/scale factor on mobile
+    const scale = customScene.offsetWidth / rect.width;
+    
+    let left = ((e.clientX - rect.left) * scale) - dragOffsetX;
+    let top = ((e.clientY - rect.top) * scale) - dragOffsetY;
 
     // Bounded within canvas bounds
     left = Math.max(0, Math.min(left, sceneW - selected.offsetWidth));
@@ -2445,6 +2437,7 @@ document.addEventListener("click", e => {
 </style>
 
 <style>
+
 </style>
 
 

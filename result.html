@@ -4,7 +4,7 @@
 <head>
     <meta name="color-scheme" content="light">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Gift For You | The Gifting Co.</title>
     <link rel="icon" type="image/png" href="/assets/favicon.webp">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -38,24 +38,43 @@
             background-color: #fef2f4;
         }
 
+        .giftHeader {
+            text-align: center !important;
+            margin-top: 100px !important;
+            margin-bottom: 20px !important;
+            color: #B71A3D !important;
+            font-family: 'Pinyon Script', cursive !important;
+            font-size: 56px !important;
+            text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4) !important;
+            font-weight: bold !important;
+            line-height: 1.2 !important;
+        }
+
         @media (max-width: 768px) {
             body {
                 background-image: url('/assets/mobilegiftbg.webp') !important;
-                background-attachment: scroll;
+                background-attachment: fixed !important;
+                background-size: cover !important;
+                height: 100vh !important;
+                width: 100vw !important;
+                overflow: hidden !important;
             }
-        }
-
-        /* Full-screen scene */
-        #giftScene {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            background: transparent;
-            border: none;
-            box-shadow: none;
+            #giftContainer {
+                flex-direction: column !important;
+                align-items: center !important;
+                margin-top: 10px !important;
+            }
+            #giftScene {
+                max-width: 100% !important;
+                width: 100% !important;
+                height: 45vh !important;
+            }
+            .giftHeader {
+                font-size: 32px !important;
+                margin-top: 95px !important;
+                margin-bottom: 10px !important;
+                white-space: nowrap !important;
+            }
         }
 
         /* Gift elements */
@@ -139,10 +158,14 @@
 
 <body>
     <!-- Title Header -->
-    <h1 style="font-family: 'Pinyon Script', cursive; color: #B71A3D; text-align: center; position: relative; z-index: 10; margin-top: 5vh; font-size: 3.5rem; pointer-events: none; text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);">A Gift for You.</h1>
+    <h1 class="giftHeader">A Gift for You.</h1>
 
-    <!-- Full-screen gift scene -->
-    <div id="giftScene"></div>
+    <!-- Stationary gift layout exactly like gift.html -->
+    <div id="giftContainer" style="display: flex; flex: 1; min-height: 0; align-items: center; gap: 20px; justify-content: center; width: 85%; max-width: 900px; margin: 0 auto; padding-top: 10px; padding-bottom: 20px; position: relative; z-index: 10;">
+        <div id="giftScene" style="flex: 1; height: 55vh; position: relative; overflow: visible;">
+            <!-- Arranged elements will be reconstructed here dynamically -->
+        </div>
+    </div>
 
 
     <!-- Glass tile footer -->
@@ -217,66 +240,69 @@
         /* ---------- render ---------- */
         function renderGift() {
             const isMobile = window.innerWidth <= 768;
-            const GIFT_CANVAS_W = 900;
-            let scaleX, scaleY, offsetX, offsetY;
 
             if (isMobile) {
-                // Mobile layout: perfectly centered within the 4 bows of mobilegiftbg.webp
-                // The bows on mobile are roughly at 27% and 75% of the screen height.
-                const mobileSafeLeft = window.innerWidth * 0.10;
-                const mobileSafeTop = window.innerHeight * 0.27;
-                const mobileSafeW = window.innerWidth * 0.80;
-                const mobileSafeH = window.innerHeight * 0.48; // from 27% to 75%
+                // === MOBILE PLACEMENT SNIPPET ===
+                savedLayout.forEach(item => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'giftEl';
+                    wrapper.style.position = 'absolute';
 
-                // Fixed reference canvas height (representing desktop layout aspect ratio)
-                const REF_H = 550;
+                    const currentSceneW = giftScene.offsetWidth;
+                    const currentSceneH = giftScene.offsetHeight || (window.innerHeight * 0.45); // Fixed mobile height
+                    
+                    const origSceneW = item.sceneW || window.innerWidth;
+                    const origSceneH = item.sceneH || (window.innerHeight * 0.45);
 
-                const scale = Math.min(mobileSafeW / GIFT_CANVAS_W, mobileSafeH / REF_H);
-                
-                scaleX = scale;
-                scaleY = scale;
-                
-                // Center it in the safe zone
-                offsetX = mobileSafeLeft + (mobileSafeW - GIFT_CANVAS_W * scale) / 2;
-                offsetY = mobileSafeTop + (mobileSafeH - REF_H * scale) / 2;
+                    const scaleX = currentSceneW / origSceneW;
+                    const scaleY = currentSceneH / origSceneH;
+
+                    let origLeft = (item.centerOffset !== undefined) ? (origSceneW / 2 + item.centerOffset) : (parseFloat(item.left) || 0);
+                    let origTop = parseFloat(item.top) || 0;
+
+                    wrapper.style.left = (origLeft * scaleX) + "px";
+                    wrapper.style.top  = (origTop * scaleY) + "px";
+
+                    if (item.width) wrapper.style.width = (parseFloat(item.width) * scaleX) + "px";
+                    if (item.height && item.height !== "auto") wrapper.style.height = (parseFloat(item.height) * scaleY) + "px";
+                    wrapper.style.zIndex = item.zIndex;
+                    wrapper.style.transform = `rotate(${item.rotation || 0}deg) scaleX(${item.flip || 1})`;
+
+                    renderGiftItemContents(wrapper, item, scaleX, scaleY);
+                    giftScene.appendChild(wrapper);
+                });
             } else {
-                // Desktop layout
-                const GIFT_CANVAS_H = window.innerHeight * 0.55;
-                const safeLeft = window.innerWidth * 0.15;
-                const safeTop = window.innerHeight * 0.13;
-                const safeW = window.innerWidth * 0.70;
-                const safeH = window.innerHeight * 0.74;
+                // === DESKTOP PLACEMENT SNIPPET ===
+                savedLayout.forEach(item => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'giftEl';
+                    wrapper.style.position = 'absolute';
 
-                scaleX = safeW / GIFT_CANVAS_W;
-                scaleY = safeH / GIFT_CANVAS_H;
-                offsetX = safeLeft;
-                offsetY = safeTop;
+                    const currentSceneW = giftScene.offsetWidth;
+                    const currentSceneH = giftScene.offsetHeight; // 55vh
+                    
+                    const origSceneW = item.sceneW || 900;
+                    const origSceneH = item.sceneH || 550;
+
+                    const scaleX = currentSceneW / origSceneW;
+                    const scaleY = currentSceneH / origSceneH;
+
+                    let origLeft = (item.centerOffset !== undefined) ? (origSceneW / 2 + item.centerOffset) : (parseFloat(item.left) || 0);
+                    let origTop = parseFloat(item.top) || 0;
+
+                    wrapper.style.left = (origLeft * scaleX) + "px";
+                    wrapper.style.top  = (origTop * scaleY) + "px";
+
+                    if (item.width) wrapper.style.width = (parseFloat(item.width) * scaleX) + "px";
+                    if (item.height && item.height !== "auto") wrapper.style.height = (parseFloat(item.height) * scaleY) + "px";
+                    wrapper.style.zIndex = item.zIndex;
+                    wrapper.style.transform = `rotate(${item.rotation || 0}deg) scaleX(${item.flip || 1})`;
+                    renderGiftItemContents(wrapper, item, scaleX, scaleY);
+                    giftScene.appendChild(wrapper);
+                });
             }
 
-            savedLayout.forEach(item => {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'giftEl';
-                wrapper.style.position = 'absolute';
-
-                // Compute original left
-                let origLeft;
-                if (item.centerOffset !== undefined) {
-                    origLeft = GIFT_CANVAS_W / 2 + item.centerOffset;
-                } else {
-                    origLeft = parseFloat(item.left) || 0;
-                }
-                const origTop = parseFloat(item.top) || 0;
-
-                wrapper.style.left   = (offsetX + origLeft * scaleX) + 'px';
-                wrapper.style.top    = (offsetY + origTop  * scaleY) + 'px';
-                if (item.width)  wrapper.style.width  = (parseFloat(item.width)  * scaleX) + 'px';
-                if (item.height) wrapper.style.height = (parseFloat(item.height) * scaleY) + 'px';
-                wrapper.style.zIndex = item.zIndex;
-
-                const rotation = item.rotation || '0';
-                const flip     = item.flip || '1';
-                wrapper.style.transform = `rotate(${rotation}deg) scaleX(${flip})`;
-
+            function renderGiftItemContents(wrapper, item, scaleX, scaleY) {
                 /* ----- plushie or flower ----- */
                 if (item.type === 'plushie' || item.type === 'flower') {
                     const img = document.createElement('img');
@@ -400,8 +426,7 @@
                     wrapper.style.userSelect = 'none';
                 }
 
-                giftScene.appendChild(wrapper);
-            });
+            }
         }
     </script>
 </body>

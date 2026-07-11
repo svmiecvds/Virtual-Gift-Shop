@@ -12,6 +12,7 @@
 <title>The Gifting Co.</title>
     <link rel="icon" type="image/png" href="assets/favicon.webp">
     <link rel="preload" as="image" href="assets/giftbg.webp">
+    <script src="block-mobile.js"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
@@ -64,9 +65,9 @@ body.giftPage {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-color: var(--body-bg);
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    min-height: 100vh;
+    overflow: hidden !important;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     transition: background 0.5s ease, color 0.5s ease;
@@ -74,12 +75,7 @@ body.giftPage {
     font-weight: 500;
 }
 
-@media (max-width: 768px) {
-    body, body.receiptPage, body.giftPage {
-        background-image: url('assets/mobilegiftbg.webp') !important;
-        background-attachment: scroll !important;
-    }
-}
+
 
 .sidebar-panel {
     display: none;
@@ -291,7 +287,7 @@ body.giftPage {
 
 /* --- NAVBAR --- */
 #storeNavbar {
-    background: url(\'assets/kisses-bg.webp\') center/cover no-repeat !important;
+    background: url('assets/kisses-bg.webp') center/cover no-repeat !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -341,16 +337,18 @@ body.giftPage {
 
 
 /* --- Header Text styling --- */
-.storeHeader {
-    text-align: center;
-    margin-top: 100px;
-    margin-bottom: 20px;
-    color: var(--heading-color);
-    font-family: var(--font-heading);
-    font-size: 56px;
-    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
-    font-weight: bold;
+.storeHeader, .giftHeader {
+    text-align: center !important;
+    margin-top: 100px !important;
+    margin-bottom: 20px !important;
+    color: var(--heading-color) !important;
+    font-family: var(--font-heading) !important;
+    font-size: 56px !important;
+    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4) !important;
+    font-weight: bold !important;
+    line-height: 1.2 !important;
 }
+
 
 
 
@@ -616,24 +614,7 @@ padding: 0 15px;
     justify-content: center;
 }
 
-@media (max-width: 1024px) {
-    .carousel-slide {
-        flex: 0 0 50%;
 
-/* --- Show 2 items --- */
-}
-}
-
-@media (max-width: 768px) {
-    .carousel-slide {
-        flex: 0 0 100%;
-
-/* --- Show 1 item --- */
-}
-    .carousel-wrapper {
-        padding: 0 40px;
-    }
-}
 
 .carousel-btn {
     position: absolute;
@@ -791,46 +772,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 <style>
 /* ---- Mobile Navbar for Gift Page ---- */
-@media (max-width: 768px) {
-    /* Hide everything in the gift page navbar */
-    nav#storeNavbar > *:not(#giftNavLeft):not(#giftNavRight) {
-        display: none !important;
-    }
-    nav#storeNavbar {
-        justify-content: space-between !important;
-        padding: 0 16px !important;
-    }
-    #giftNavLeft {
-        display: inline-flex !important;
-        align-items: center;
-        gap: 4px;
-        color: white;
-        font-family: 'Fredoka', sans-serif;
-        font-size: 14px;
-        font-weight: 600;
-        text-decoration: none;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-    }
-    #giftNavLeft svg { opacity: 0.7; }
-    #giftNavRight {
-        display: inline-flex !important;
-        align-items: center;
-        gap: 8px;
-    }
-    #saveGiftLayoutBtn span {
-        font-size: 12px !important;
-    }
-    #saveGiftLayoutBtn {
-        padding: 7px 12px !important;
-        height: auto !important;
-    }
-}
-@media (min-width: 769px) {
-    #giftNavLeft, #giftNavRight { display: none; }
-}
+
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
@@ -846,19 +788,12 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             Go back
         </a>
         <button id="saveGiftLayoutBtn" class="shiny-cta"><span>Save and Wrap</span></button>
-        <!-- Mobile-only: Go back (left) and Save+Wrap (right) -->
-        <a href="checkout.html" id="giftNavLeft">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            Go back
-        </a>
-        <div id="giftNavRight">
-            <button id="saveGiftLayoutBtnMobile" class="shiny-cta" onclick="document.getElementById('saveGiftLayoutBtn').click()"><span>Save &amp; Wrap</span></button>
-        </div>
+
     </nav>
 
 
 
-<h1 class="storeHeader">
+<h1 class="storeHeader giftHeader">
 
 Create Your Gift
 
@@ -867,6 +802,14 @@ Create Your Gift
 <div id="giftContainer">
 
     <div id="giftScene">
+            <!-- Invisible boundary overlay that traces the inner bow area -->
+            <div id="bowBoundary" style="
+                position: absolute;
+                pointer-events: none;
+                z-index: 0;
+                border: 2px dashed transparent;
+                box-sizing: border-box;
+            "></div>
             <div id="itemRotateBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.21l5.67-1.36"/></svg>
             </div>
@@ -887,10 +830,75 @@ Create Your Gift
 
 
 <script defer>
-const giftScene =
-document.getElementById(
-"giftScene"
-);
+const giftScene = document.getElementById("giftScene");
+const bowBoundary = document.getElementById("bowBoundary");
+
+// Position the bowBoundary to match the inner area between the four bows.
+// Desktop giftbg: bows at ~20%/79% x, ~19%/70% y of VIEWPORT (background-attachment: fixed)
+// Mobile mobilegiftbg: bows at ~13%/82% x, ~27%/84% y of VIEWPORT
+function updateBowBoundary() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const sceneRect = giftScene.getBoundingClientRect();
+
+    // Image properties for assets/giftbg.webp
+    const imgW = 1672;
+    const imgH = 941;
+    const imgRatio = imgW / imgH;
+    const winRatio = vw / vh;
+    
+    let scaledH, offsetY;
+    if (winRatio > imgRatio) {
+        // Window is wider, image width matches viewport, height is scaled up
+        scaledH = vw / imgRatio;
+        offsetY = (vh - scaledH) / 2; 
+    } else {
+        // Window is narrower, image height matches viewport
+        scaledH = vh;
+        offsetY = 0;
+    }
+
+    // Exact bow centers in the original image 
+    // (found via python image analysis: top=242px, bottom=729px)
+    const bowTopRatio = 242 / imgH;
+    const bowBottomRatio = 729 / imgH;
+
+    const absTop = offsetY + (scaledH * bowTopRatio);
+    const absBottom = offsetY + (scaledH * bowBottomRatio);
+
+    const relLeft = 0;
+    const relRight = sceneRect.width; // scene-relative right edge, symmetric to relLeft = 0
+    const relTop = absTop - sceneRect.top;
+    const relBottom = absBottom - sceneRect.top;
+
+    // Do not clamp horizontally or vertically to the scene bounds
+    // This allows dragging items anywhere across the full viewport exactly between the physical bow lines
+    const sl = relLeft;
+    const st = relTop;
+    const sr = relRight;
+    const sb = relBottom;
+
+    bowBoundary.style.left   = sl + "px";
+    bowBoundary.style.top    = st + "px";
+    bowBoundary.style.width  = (sr - sl) + "px";
+    bowBoundary.style.height = (sb - st) + "px";
+}
+
+window.addEventListener('load',   updateBowBoundary);
+window.addEventListener('resize', updateBowBoundary);
+setTimeout(updateBowBoundary, 200); // fallback after layout
+
+function getBowConstraints() {
+    const br = bowBoundary.getBoundingClientRect();
+    const sr = giftScene.getBoundingClientRect();
+    return {
+        left:   br.left - sr.left,
+        top:    br.top  - sr.top,
+        right:  br.right  - sr.left,
+        bottom: br.bottom - sr.top
+    };
+}
+
 
 function resolveAccessorySrc(src) {
     if (!src) return "";
@@ -1336,7 +1344,10 @@ document.addEventListener("mousemove", (e) => {
             selected.style.fontSize = Math.max(10, currentFS + dy/10) + "px";
             resizeStartY = e.clientY; // reset to track small movements
         } else {
-            let maxW = Math.min(sceneW - resizeStartLeft, sceneH - resizeStartTop);
+            const b = getBowConstraints();
+            let maxWByWidth = b.right - resizeStartLeft;
+            let maxWByHeight = (b.bottom - resizeStartTop) * (resizeStartW / resizeStartH);
+            let maxW = Math.min(maxWByWidth, maxWByHeight);
             let newW = resizeStartW + dx;
             newW = Math.max(30, Math.min(newW, maxW));
             
@@ -1369,13 +1380,10 @@ document.addEventListener("mousemove", (e) => {
     let newLeft = e.clientX - sceneRect.left - dragOffsetX;
     let newTop = e.clientY - sceneRect.top - dragOffsetY;
 
-    // Constrain to the inner area bounded by the four bows
-    // Approx: ~12% from each side horizontally, ~10% top, ~8% bottom
-    const bowPadX  = Math.round(sceneW * 0.12);
-    const bowPadTop = Math.round(sceneH * 0.10);
-    const bowPadBottom = Math.round(sceneH * 0.08);
-    newLeft = Math.max(bowPadX, Math.min(newLeft, sceneW - selected.offsetWidth - bowPadX));
-    newTop  = Math.max(bowPadTop, Math.min(newTop, sceneH - selected.offsetHeight - bowPadBottom));
+    // Constrain within the four-bow area
+    const b = getBowConstraints();
+    newLeft = Math.max(b.left, Math.min(newLeft, b.right  - selected.offsetWidth));
+    newTop  = Math.max(b.top,  Math.min(newTop,  b.bottom - selected.offsetHeight));
 
     selected.style.left = newLeft + "px";
     selected.style.top  = newTop  + "px";
@@ -1384,18 +1392,14 @@ document.addEventListener("mousemove", (e) => {
 
 // Touch move
 document.addEventListener("touchmove", (e) => {
-    const sceneW = giftScene.clientWidth;
-    const sceneH = giftScene.clientHeight;
     if (!selected || !isDragging) return;
     const touch = e.touches[0];
     const sceneRect = giftScene.getBoundingClientRect();
     let newLeft = touch.clientX - sceneRect.left - dragOffsetX;
     let newTop  = touch.clientY - sceneRect.top  - dragOffsetY;
-    const bowPadX  = Math.round(sceneW * 0.12);
-    const bowPadTop = Math.round(sceneH * 0.10);
-    const bowPadBottom = Math.round(sceneH * 0.08);
-    newLeft = Math.max(bowPadX, Math.min(newLeft, sceneW - selected.offsetWidth - bowPadX));
-    newTop  = Math.max(bowPadTop, Math.min(newTop, sceneH - selected.offsetHeight - bowPadBottom));
+    const b = getBowConstraints();
+    newLeft = Math.max(b.left, Math.min(newLeft, b.right  - selected.offsetWidth));
+    newTop  = Math.max(b.top,  Math.min(newTop,  b.bottom - selected.offsetHeight));
     selected.style.left = newLeft + "px";
     selected.style.top  = newTop  + "px";
     updateSelectionUI();
@@ -1521,7 +1525,9 @@ if (saveGiftBtn) {
                 canvasW: canvasW,
                 canvasH: canvasH,
                 canvasL: canvasL,
-                canvasT: canvasT
+                canvasT: canvasT,
+                sceneW: giftScene.offsetWidth,
+                sceneH: giftScene.offsetHeight
             });
         });
         
@@ -1546,32 +1552,7 @@ if (saveGiftBtn) {
     content: none !important;
     display: none !important;
 }
-@media (max-width: 768px) {
-    #giftContainer {
-        flex-direction: column !important;
-        align-items: center !important;
-    }
-    #giftScene, #customPanel {
-        max-width: 100% !important;
-        width: 100% !important;
-    }
-    #giftScene {
-        height: 400px !important;
-    }
-    #customPanel {
-        height: auto !important;
-        max-height: none !important;
-    }
-    /* Hide the shiny-cta shimmer on mobile save button */
-    #saveGiftLayoutBtnMobile > span::before {
-        content: none !important;
-        display: none !important;
-    }
-    #saveGiftLayoutBtnMobile {
-        background-color: #ffffff !important;
-        color: #900C3F !important;
-    }
-}
+
 </style>
 </body>
 </html>

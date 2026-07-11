@@ -9,6 +9,7 @@
     <title>The Gifting Co.</title>
     <link rel="icon" type="image/png" href="assets/favicon.webp">
     <link rel="preload" as="image" href="assets/notesbg.webp">
+    <script src="block-mobile.js"></script>
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -545,24 +546,7 @@ padding: 0 15px;
     justify-content: center;
 }
 
-@media (max-width: 1024px) {
-    .carousel-slide {
-        flex: 0 0 50%;
 
-/* --- Show 2 items --- */
-}
-}
-
-@media (max-width: 768px) {
-    .carousel-slide {
-        flex: 0 0 100%;
-
-/* --- Show 1 item --- */
-}
-    .carousel-wrapper {
-        padding: 0 40px;
-    }
-}
 
 .carousel-btn {
     position: absolute;
@@ -671,22 +655,7 @@ body.no-scroll #mainContainer {
     border-bottom: none !important;
 }
 
-@media (max-width: 768px) {
-    #mainContainer {
-        flex-direction: column !important;
-        align-items: center !important;
-    }
-    #leftPanel, #rightPanel {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-    }
-    #customScene {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: 400px !important;
-    }
-}
+
 </style>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -694,7 +663,7 @@ body.no-scroll #mainContainer {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
 
-<script defer src="mobile-nav.js"></script>
+
 
 <style>
 .site-footer {
