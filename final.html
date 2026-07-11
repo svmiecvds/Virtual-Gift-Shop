@@ -61,6 +61,13 @@ body.giftPage {
     font-family: 'Fredoka', 'Pacifico', cursive, sans-serif;
 }
 
+@media (max-width: 768px) {
+    body, body.receiptPage, body.giftPage {
+        background-image: url('assets/mobilegiftbg.webp') !important;
+        background-attachment: scroll !important;
+    }
+}
+
 .sidebar-panel {
     display: none;
     /* --- controlled by JS --- */
@@ -791,7 +798,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
 
-<body class="giftPage" style="overflow: hidden;">
+<body class="giftPage">
 
     <!-- Share Button -->
     <button id="shareGiftBtn" class="nav-action-btn" style="position: absolute; top: 20px; right: 20px; z-index: 999;">

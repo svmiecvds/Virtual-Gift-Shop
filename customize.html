@@ -65,6 +65,8 @@ body.giftPage {
     background-attachment: fixed;
     background-color: var(--body-bg);
     overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100vh;
     transition: background 0.5s ease, color 0.5s ease;
     font-family: var(--font-body);
     font-weight: 500;
@@ -931,7 +933,7 @@ body.no-scroll {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
 
-<script defer src="mobile-block.js"></script>
+<script defer src="mobile-nav.js"></script>
 
 <style>
 .site-footer {
@@ -1530,6 +1532,24 @@ window.location.href = "checkout.html";
 }
 #saveCustomization {
     margin-top: auto !important;
+}
+
+@media (max-width: 768px) {
+    #customizeContainer {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    #customScene, #customPanel {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    #customScene {
+        height: 400px !important;
+    }
+    #customPanel {
+        height: auto !important;
+        max-height: none !important;
+    }
 }
 </style>
 

@@ -50,7 +50,7 @@ body {
     background: url('assets/bg.webp') center/cover no-repeat fixed;
     animation: none;
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: auto;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -344,8 +344,26 @@ body {
     content: none !important;
     display: none !important;
 }
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 60px !important;
+        padding: 10px !important;
+        margin-top: 20px;
+    }
+    .hero-subtitle {
+        font-size: 24px !important;
+    }
+    .hero-btn {
+        font-size: 20px;
+        padding: 6px 30px;
+    }
+    .navBrand {
+        font-size: 28px !important;
+    }
+}
 </style>
-    <script defer src="mobile-block.js"></script>
+    <script defer src="mobile-nav.js"></script>
 
 <style>
 .site-footer {

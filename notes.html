@@ -60,7 +60,8 @@ body.giftPage {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-color: var(--body-bg);
-    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -666,6 +667,26 @@ body.no-scroll #mainContainer {
     content: none !important;
     display: none !important;
 }
+#storeNavbar {
+    border-bottom: none !important;
+}
+
+@media (max-width: 768px) {
+    #mainContainer {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    #leftPanel, #rightPanel {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    #customScene {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 400px !important;
+    }
+}
 </style>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -673,7 +694,7 @@ body.no-scroll #mainContainer {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
 
-<script defer src="mobile-block.js"></script>
+<script defer src="mobile-nav.js"></script>
 
 <style>
 .site-footer {

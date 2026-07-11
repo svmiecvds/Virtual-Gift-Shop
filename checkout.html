@@ -60,7 +60,8 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-color: var(--body-bg);
-            overflow: hidden !important;
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -823,7 +824,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
 
-<script defer src="mobile-block.js"></script>
+<script defer src="mobile-nav.js"></script>
 
 <style>
 .site-footer {
@@ -918,6 +919,34 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 }
 
 </style>
+
+<style>
+@media (max-width: 768px) {
+    /* Show the Go back + Make This A Gift group on mobile checkout */
+    nav#storeNavbar > #checkoutNavActions {
+        display: flex !important;
+        gap: 8px !important;
+        align-items: center !important;
+        margin-left: auto;
+    }
+    /* Shrink Go back text */
+    nav#storeNavbar > #checkoutNavActions > button {
+        font-size: 13px !important;
+        height: 32px !important;
+        padding: 0 6px !important;
+    }
+    /* Shrink Make This A Gift pill */
+    nav#storeNavbar > #checkoutNavActions > #giftButton {
+        font-size: 12px !important;
+        padding: 8px 12px !important;
+        height: 32px !important;
+        white-space: nowrap;
+    }
+    nav#storeNavbar > #checkoutNavActions > #giftButton span {
+        font-size: 12px !important;
+    }
+}
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
 
@@ -927,7 +956,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     <!-- Baby Pink Navbar -->
     <nav id="storeNavbar">
         <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
-        <div style="margin-left: auto; display: flex; gap: 15px; align-items: center;">
+        <div id="checkoutNavActions" style="margin-left: auto; display: flex; gap: 15px; align-items: center;">
             <button onclick="window.location.href='index.html'" style="display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; height: 38px; padding: 0 10px; color: #ffffff; cursor: pointer; text-decoration: none; white-space: nowrap; transition: all 0.3s ease;" onmouseover="this.style.color='white'; this.style.transform='translateY(-2px)'; this.style.opacity='0.9';" onmouseout="this.style.color='#ffffff'; this.style.transform='translateY(0)'; this.style.opacity='1';">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6; margin-right: 4px; flex-shrink: 0;" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
                 Go back

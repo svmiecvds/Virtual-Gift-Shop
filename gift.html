@@ -64,13 +64,21 @@ body.giftPage {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-color: var(--body-bg);
-    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     transition: background 0.5s ease, color 0.5s ease;
     font-family: var(--font-body);
     font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    body, body.receiptPage, body.giftPage {
+        background-image: url('assets/mobilegiftbg.webp') !important;
+        background-attachment: scroll !important;
+    }
 }
 
 .sidebar-panel {
@@ -780,6 +788,51 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 }
 
 </style>
+
+<style>
+/* ---- Mobile Navbar for Gift Page ---- */
+@media (max-width: 768px) {
+    /* Hide everything in the gift page navbar */
+    nav#storeNavbar > *:not(#giftNavLeft):not(#giftNavRight) {
+        display: none !important;
+    }
+    nav#storeNavbar {
+        justify-content: space-between !important;
+        padding: 0 16px !important;
+    }
+    #giftNavLeft {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 4px;
+        color: white;
+        font-family: 'Fredoka', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+    #giftNavLeft svg { opacity: 0.7; }
+    #giftNavRight {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 8px;
+    }
+    #saveGiftLayoutBtn span {
+        font-size: 12px !important;
+    }
+    #saveGiftLayoutBtn {
+        padding: 7px 12px !important;
+        height: auto !important;
+    }
+}
+@media (min-width: 769px) {
+    #giftNavLeft, #giftNavRight { display: none; }
+}
+</style>
+
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
 
@@ -793,6 +846,14 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             Go back
         </a>
         <button id="saveGiftLayoutBtn" class="shiny-cta"><span>Save and Wrap</span></button>
+        <!-- Mobile-only: Go back (left) and Save+Wrap (right) -->
+        <a href="checkout.html" id="giftNavLeft">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            Go back
+        </a>
+        <div id="giftNavRight">
+            <button id="saveGiftLayoutBtnMobile" class="shiny-cta" onclick="document.getElementById('saveGiftLayoutBtn').click()"><span>Save &amp; Wrap</span></button>
+        </div>
     </nav>
 
 
@@ -954,14 +1015,11 @@ let rotateStartAngle = 0;
 let rotateInitialElementAngle = 0;
 
 function makeDraggable(el){
+    // Mouse events
     el.addEventListener("mousedown", (e) => {
         if (e.target.closest('#itemDeleteBtn') || e.target.closest('#itemRotateBtn') || e.target.closest('#itemResizeBtn')) return;
-        
         e.stopPropagation();
-        if (selected !== el) {
-            selectElement(el);
-        }
-        
+        if (selected !== el) selectElement(el);
         isDragging = true;
         el.style.zIndex = highestZ++;
         const rect = el.getBoundingClientRect();
@@ -970,6 +1028,20 @@ function makeDraggable(el){
         e.preventDefault();
         giftScene.style.cursor = 'grabbing';
     });
+
+    // Touch events for mobile
+    el.addEventListener("touchstart", (e) => {
+        if (e.target.closest('#itemDeleteBtn') || e.target.closest('#itemRotateBtn') || e.target.closest('#itemResizeBtn')) return;
+        e.stopPropagation();
+        if (selected !== el) selectElement(el);
+        isDragging = true;
+        el.style.zIndex = highestZ++;
+        const touch = e.touches[0];
+        const rect = el.getBoundingClientRect();
+        dragOffsetX = touch.clientX - rect.left;
+        dragOffsetY = touch.clientY - rect.top;
+        e.preventDefault();
+    }, { passive: false });
 }
 
 document.addEventListener("mousedown", (e) => {
@@ -1297,17 +1369,38 @@ document.addEventListener("mousemove", (e) => {
     let newLeft = e.clientX - sceneRect.left - dragOffsetX;
     let newTop = e.clientY - sceneRect.top - dragOffsetY;
 
-    // Constrain to canvas bounds (with padding to stay inside the bows/box borders)
-    const paddingX = 10;
-    const paddingTop = 10;
-    const paddingBottom = 40;
-    newLeft = Math.max(paddingX, Math.min(newLeft, sceneW - selected.offsetWidth - paddingX));
-    newTop = Math.max(paddingTop, Math.min(newTop, sceneH - selected.offsetHeight - paddingBottom));
+    // Constrain to the inner area bounded by the four bows
+    // Approx: ~12% from each side horizontally, ~10% top, ~8% bottom
+    const bowPadX  = Math.round(sceneW * 0.12);
+    const bowPadTop = Math.round(sceneH * 0.10);
+    const bowPadBottom = Math.round(sceneH * 0.08);
+    newLeft = Math.max(bowPadX, Math.min(newLeft, sceneW - selected.offsetWidth - bowPadX));
+    newTop  = Math.max(bowPadTop, Math.min(newTop, sceneH - selected.offsetHeight - bowPadBottom));
 
     selected.style.left = newLeft + "px";
     selected.style.top  = newTop  + "px";
     updateSelectionUI();
 });
+
+// Touch move
+document.addEventListener("touchmove", (e) => {
+    const sceneW = giftScene.clientWidth;
+    const sceneH = giftScene.clientHeight;
+    if (!selected || !isDragging) return;
+    const touch = e.touches[0];
+    const sceneRect = giftScene.getBoundingClientRect();
+    let newLeft = touch.clientX - sceneRect.left - dragOffsetX;
+    let newTop  = touch.clientY - sceneRect.top  - dragOffsetY;
+    const bowPadX  = Math.round(sceneW * 0.12);
+    const bowPadTop = Math.round(sceneH * 0.10);
+    const bowPadBottom = Math.round(sceneH * 0.08);
+    newLeft = Math.max(bowPadX, Math.min(newLeft, sceneW - selected.offsetWidth - bowPadX));
+    newTop  = Math.max(bowPadTop, Math.min(newTop, sceneH - selected.offsetHeight - bowPadBottom));
+    selected.style.left = newLeft + "px";
+    selected.style.top  = newTop  + "px";
+    updateSelectionUI();
+    e.preventDefault();
+}, { passive: false });
 
 document.addEventListener("mouseup", () => {
     isResizing = false;
@@ -1318,6 +1411,12 @@ document.addEventListener("mouseup", () => {
     } else {
         giftScene.style.cursor = '';
     }
+});
+
+document.addEventListener("touchend", () => {
+    isResizing = false;
+    isRotating = false;
+    isDragging = false;
 });
 
 /* Click on scene background to deselect */
@@ -1447,9 +1546,34 @@ if (saveGiftBtn) {
     content: none !important;
     display: none !important;
 }
+@media (max-width: 768px) {
+    #giftContainer {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    #giftScene, #customPanel {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    #giftScene {
+        height: 400px !important;
+    }
+    #customPanel {
+        height: auto !important;
+        max-height: none !important;
+    }
+    /* Hide the shiny-cta shimmer on mobile save button */
+    #saveGiftLayoutBtnMobile > span::before {
+        content: none !important;
+        display: none !important;
+    }
+    #saveGiftLayoutBtnMobile {
+        background-color: #ffffff !important;
+        color: #900C3F !important;
+    }
+}
 </style>
 </body>
-
 </html>
 
 
