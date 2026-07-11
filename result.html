@@ -22,7 +22,9 @@
             --heading-color: #B71A3D;
         }
 
-        html, body {
+        html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
@@ -124,7 +126,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            height: 45px;
+            height: 32px;
             padding: 0 20px;
             font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
             font-size: 12px;

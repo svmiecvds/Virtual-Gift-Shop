@@ -47,7 +47,9 @@
     box-sizing: border-box;
 }
 
-html {
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+html_REMOVED {
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
@@ -125,7 +127,7 @@ body.giftPage {
 
 .quantitySelector button {
     width: 45px;
-    height: 45px;
+    height: 32px;
     border: none;
     border-radius: 50%;
     background: var(--btn-bg);
@@ -456,7 +458,7 @@ body.giftPage {
 
 .box-option img {
     width: 45px;
-    height: 45px;
+    height: 32px;
     object-fit: contain;
 }
 
@@ -1188,7 +1190,7 @@ margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 45px;
+    height: 32px;
     padding: 0 20px;
     font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 15px;
