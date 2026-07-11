@@ -59,21 +59,32 @@
                 width: 100vw !important;
                 overflow: hidden !important;
             }
+            /* On mobile, the giftScene fills the full viewport so we can
+               position items using absolute coords relative to the screen */
             #giftContainer {
-                flex-direction: column !important;
-                align-items: center !important;
-                margin-top: 10px !important;
+                position: fixed !important;
+                top: 0 !important; left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 0 !important;
             }
             #giftScene {
-                max-width: 100% !important;
-                width: 100% !important;
-                height: 45vh !important;
+                position: absolute !important;
+                top: 0 !important; left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                flex: none !important;
             }
             .giftHeader {
                 font-size: 32px !important;
-                margin-top: 95px !important;
+                margin-top: 20px !important;
                 margin-bottom: 10px !important;
                 white-space: nowrap !important;
+                position: relative;
+                z-index: 20;
             }
         }
 
@@ -243,32 +254,86 @@
 
             if (isMobile) {
                 // === MOBILE PLACEMENT SNIPPET ===
+                // Calculate the exact bow boundary on the mobile background (mobilegiftbg.webp = 941x1672)
+                // using the same cover-scaling math as gift.html's updateBowBoundary.
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                const imgW = 941, imgH = 1672;
+                const imgRatio = imgW / imgH;
+                const winRatio = vw / vh;
+
+                let scaledW, scaledH, offsetX, offsetY;
+                if (winRatio > imgRatio) {
+                    // Window wider than image — image fills width, height is cropped
+                    scaledW = vw;
+                    scaledH = vw / imgRatio;
+                    offsetX = 0;
+                    offsetY = (vh - scaledH) / 2;
+                } else {
+                    // Window narrower — image fills height, width is cropped
+                    scaledH = vh;
+                    scaledW = vh * imgRatio;
+                    offsetX = (vw - scaledW) / 2;
+                    offsetY = 0;
+                }
+
+                // Exact bow centers from image analysis (px in original image):
+                // Top=410, Bottom=1286, Left=148, Right=809  (image is 941x1672)
+                const bowLeft   = offsetX + scaledW * (148 / imgW);
+                const bowRight  = offsetX + scaledW * (809 / imgW);
+                const bowTop    = offsetY + scaledH * (410 / imgH);
+                const bowBottom = offsetY + scaledH * (1286 / imgH);
+
+                const bowW = bowRight - bowLeft;   // usable width between bows
+                const bowH = bowBottom - bowTop;   // usable height between bows
+                const bowCX = bowLeft + bowW / 2;  // centre X of bow zone
+                const bowCY = bowTop  + bowH / 2;  // centre Y of bow zone
+
+                // The desktop gift scene is saved with coords relative to its own scene rect.
+                // Find the bounding box of all items so we can centre them as a group.
+                let minL = Infinity, minT = Infinity, maxR = -Infinity, maxB = -Infinity;
+                savedLayout.forEach(item => {
+                    const l = parseFloat(item.left) || 0;
+                    const t = parseFloat(item.top)  || 0;
+                    const w = parseFloat(item.width) || 100;
+                    const h = parseFloat(item.height) || 100;
+                    minL = Math.min(minL, l);
+                    minT = Math.min(minT, t);
+                    maxR = Math.max(maxR, l + w);
+                    maxB = Math.max(maxB, t + h);
+                });
+                const groupW = maxR - minL || 1;
+                const groupH = maxB - minT || 1;
+
+                // Scale factor: fit the group into the bow zone (with a little padding)
+                const pad = 0.85; // use 85% of the bow zone to leave breathing room
+                const scale = Math.min((bowW * pad) / groupW, (bowH * pad) / groupH, 1);
+
+                // Offset so the scaled group is centred on the bow zone centre
+                const groupCX = (minL + maxR) / 2;
+                const groupCY = (minT + maxB) / 2;
+
                 savedLayout.forEach(item => {
                     const wrapper = document.createElement('div');
                     wrapper.className = 'giftEl';
                     wrapper.style.position = 'absolute';
 
-                    const currentSceneW = giftScene.offsetWidth;
-                    const currentSceneH = giftScene.offsetHeight || (window.innerHeight * 0.45); // Fixed mobile height
-                    
-                    const origSceneW = item.sceneW || window.innerWidth;
-                    const origSceneH = item.sceneH || (window.innerHeight * 0.45);
+                    const origL = parseFloat(item.left)  || 0;
+                    const origT = parseFloat(item.top)   || 0;
 
-                    const scaleX = currentSceneW / origSceneW;
-                    const scaleY = currentSceneH / origSceneH;
+                    // Translate relative to group centre, scale, then shift to bow centre
+                    const newLeft = bowCX + (origL - groupCX) * scale;
+                    const newTop  = bowCY + (origT - groupCY) * scale;
 
-                    let origLeft = (item.centerOffset !== undefined) ? (origSceneW / 2 + item.centerOffset) : (parseFloat(item.left) || 0);
-                    let origTop = parseFloat(item.top) || 0;
+                    wrapper.style.left = newLeft + 'px';
+                    wrapper.style.top  = newTop  + 'px';
 
-                    wrapper.style.left = (origLeft * scaleX) + "px";
-                    wrapper.style.top  = (origTop * scaleY) + "px";
-
-                    if (item.width) wrapper.style.width = (parseFloat(item.width) * scaleX) + "px";
-                    if (item.height && item.height !== "auto") wrapper.style.height = (parseFloat(item.height) * scaleY) + "px";
+                    if (item.width)  wrapper.style.width  = (parseFloat(item.width)  * scale) + 'px';
+                    if (item.height && item.height !== 'auto') wrapper.style.height = (parseFloat(item.height) * scale) + 'px';
                     wrapper.style.zIndex = item.zIndex;
                     wrapper.style.transform = `rotate(${item.rotation || 0}deg) scaleX(${item.flip || 1})`;
 
-                    renderGiftItemContents(wrapper, item, scaleX, scaleY);
+                    renderGiftItemContents(wrapper, item, scale, scale);
                     giftScene.appendChild(wrapper);
                 });
             } else {
