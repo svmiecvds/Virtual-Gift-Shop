@@ -728,11 +728,12 @@ body.viewer-mode {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     height: 45px;
     padding: 0 20px;
     font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 12px;
-    color: var(--text-color);
+    color: rgba(255, 255, 255, 0.9);
     width: 100%;
     box-sizing: border-box;
     position: fixed;
@@ -740,19 +741,20 @@ body.viewer-mode {
     left: 0;
     z-index: 9999;
     pointer-events: none;
-    background: rgba(252, 224, 229, 0.85);
-    backdrop-filter: blur(8px);
-    border-top: 1px solid rgba(183, 26, 61, 0.2);
+    background: #900C3F;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     transition: all 0.3s ease;
+    letter-spacing: 0.3px;
 }
 
 .site-footer a {
-    color: var(--heading-color);
+    color: #ffffff;
     text-decoration: none;
     font-weight: 600;
-    border-bottom: 1px dotted var(--heading-color);
-    transition: opacity 0.2s ease, color 0.3s ease;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.6);
+    transition: opacity 0.2s ease;
     pointer-events: auto;
+    margin: 0 2px;
 }
 .site-footer a:hover {
     opacity: 0.7;
@@ -1179,11 +1181,12 @@ window.addEventListener("click", (e) => {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     height: 45px;
     padding: 0 20px;
     font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 12px;
-    color: rgba(255, 220, 235, 0.85);
+    color: rgba(255, 255, 255, 0.9);
     width: 100%;
     box-sizing: border-box;
     position: fixed;
@@ -1191,24 +1194,31 @@ window.addEventListener("click", (e) => {
     left: 0;
     z-index: 9999;
     pointer-events: none;
-    background: rgba(40, 5, 20, 0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: #900C3F;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     transition: all 0.3s ease;
+    letter-spacing: 0.3px;
 }
 .site-footer a {
-    color: rgba(255, 200, 220, 0.95);
+    color: #ffffff;
     text-decoration: none;
     font-weight: 600;
-    border-bottom: 1px dotted rgba(255, 200, 220, 0.6);
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.6);
     transition: opacity 0.2s ease;
     pointer-events: auto;
+    margin: 0 2px;
 }
 .site-footer a:hover { opacity: 0.7; }
 </style>
 
-<footer class="site-footer">&copy; 2026 | &#9825; designed by <a href="https://www.instagram.com/artwsomi?igsh=bHRpb2Z6aWo1ZjFi" target="_blank" rel="noopener noreferrer">@somi</a> &amp; <a href="https://www.instagram.com/ayush.824?igsh=MW01NTU3MHMzaDJ1bQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">@byayushdas</a></footer>
+<footer class="site-footer">
+    <span>&copy; 2026</span>
+    <span>|</span>
+    <span>&#9825; designed by</span>
+    <a href="https://www.instagram.com/artwsomi?igsh=bHRpb2Z6aWo1ZjFi" target="_blank" rel="noopener noreferrer">@somi</a>
+    <span>&amp;</span>
+    <a href="https://www.instagram.com/ayush.824?igsh=MW01NTU3MHMzaDJ1bQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">@byayushdas</a>
+</footer>
 
 </body>
 
