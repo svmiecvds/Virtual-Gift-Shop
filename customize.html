@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="color-scheme" content="light">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Gifting Co.</title>
+    <link rel="icon" type="image/png" href="assets/favicon.webp">
+    <link rel="preload" as="image" href="assets/plushiesbg.webp">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="block-mobile.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- THEME VARIABLES --- */
+:root {
+    --bg-gradient: linear-gradient(135deg, #fce0e5 0%, #fac5cf 40%, #fac5cf 100%);
+    --body-bg: #fef2f4;
+    --panel-bg: #fce0e5;
+    --popup-bg: #fce0e5;
+    --receipt-bg: #fef2f4;
+    --card-bg: #ffffff;
+    --text-color: #B71A3D;
+    --heading-color: #B71A3D;
+    --btn-bg: #ffffff;
+    --btn-text: #B71A3D;
+    --cart-btn-bg: #B71A3D;
+    --cart-btn-shadow: #B71A3D;
+    --glow-color: #B71A3D;
+    --glow-soft: #fac5cf;
+    --toast-bg: #B71A3D;
+    --receipt-shadow: #fac5cf;
+    --shelf-overlay: rgba(255,255,255,0.0);
+    --font-body: 'Quicksand', sans-serif;
+    --font-heading: 'Pinyon Script', cursive;
+    --font-ui: 'Fredoka', sans-serif;
+    --font-nav: 'Inter', sans-serif;
+}
+
+
+
+/* --- BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+html_REMOVED {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body,
+body.receiptPage,
+body.giftPage {
+    color: var(--text-color);
+    background-image: url('assets/plushiesbg.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: var(--body-bg);
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100vh;
+    transition: background 0.5s ease, color 0.5s ease;
+    font-family: var(--font-body);
+    font-weight: 500;
+}
+
+.sidebar-panel {
+    display: none;
+    /* --- controlled by JS --- */
+    background: var(--popup-bg);
+    padding: 25px;
+    border-radius: 25px;
+    text-align: center;
+    transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+
+#shelf {
+    width: 1000px;
+    height: 800px;
+    background: url("shelf.webp");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    margin: 0 auto;
+
+/* --- Shelf stays strictly center aligned --- */
+}
+
+.character {
+    position: absolute;
+    width: 170px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.character:hover {
+    transform: scale(1.05);
+}
+
+/* --- CHECKOUT BUTTON --- */
+
+
+/* --- CUSTOMIZE PAGE --- */
+#customizeContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 30px 20px;
+}
+
+#customScene {
+    position: relative;
+    width: 700px;
+    height: 700px;
+    background: var(--card-bg);
+    border-radius: 28px;
+    overflow: visible;
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+
+
+.mainPlushie {
+    position: absolute;
+    width: 280px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#customPanel {
+    width: 280px;
+    height: auto !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: var(--panel-bg);
+    padding: 24px;
+    border-radius: 24px;
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+
+
+#customPanel h2 {
+    text-align: center;
+    margin-bottom: 16px;
+    font-family: 'Pinyon Script', cursive !important;
+    font-weight: normal !important;
+    font-size: 36px !important;
+    color: var(--heading-color);
+    letter-spacing: 1px;
+}
+
+.accessoriesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+    margin-bottom: 16px;
+}
+
+.accessoryTemplate {
+    width: 100% !important;
+    height: 72px !important;
+    margin: 0 !important;
+    object-fit: contain;
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 6px;
+    cursor: grab;
+    transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+    border: 2px solid rgba(255, 182, 217, 0.2);
+}
+
+
+
+.accessoryTemplate:hover {
+    transform: scale(1.06) translateY(-2px);
+}
+
+.accessoryTemplate:active {
+    cursor: grabbing;
+    transform: scale(0.97);
+}
+
+.selectedAccessory {
+    outline: 2.5px solid var(--heading-color) !important;
+    outline-offset: 2px;
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+.draggableAccessory {
+    cursor: inherit;
+    z-index: 10;
+    transition: outline 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* --- Customize Action Buttons --- */
+#deleteItem,
+#bringFront,
+#sendBack,
+#increaseSize,
+#decreaseSize {
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-ui);
+    border-radius: 16px;
+    cursor: pointer;
+    background: var(--btn-bg);
+    color: var(--text-color);
+    border: 1.5px solid rgba(255, 182, 217, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.3s ease;
+}
+
+
+
+#deleteItem:hover,
+#bringFront:hover,
+#sendBack:hover,
+#increaseSize:hover,
+#decreaseSize:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(183, 26, 61, 0.2);
+}
+.orderRow{
+
+display:flex;
+
+justify-content:
+space-between;
+
+align-items:center;
+
+margin:10px 0;
+
+}
+
+.removeBtn{
+
+background:#fac5cf;
+
+border:none;
+
+padding:8px 12px;
+
+border-radius:20px;
+
+cursor:pointer;
+
+}
+.checkoutButtons{
+    text-align:center;
+    margin-top:30px;
+}
+
+.cuteButton {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 16px;
+    background: var(--btn-bg);
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-ui);
+    cursor: pointer;
+    border: 1.5px solid rgba(255, 182, 217, 0.25);
+    margin: 6px;
+    transition: transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+
+
+.cuteButton:hover {
+    transform: translateY(-1px);
+}
+.productsContainer{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:30px;
+margin-top:30px;
+}
+
+.product{
+width:90px;
+height:auto;
+}
+
+.orderRow{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:10px 0;
+}
+
+.removeBtn{
+background:none;
+border:none;
+cursor:pointer;
+font-size:20px;
+}
+.plushieContainer{
+
+position:relative;
+
+width:250px;
+
+height:250px;
+
+display:inline-block;
+
+margin:20px;
+
+}
+
+.checkoutAccessory{
+
+position:absolute;
+
+pointer-events:none;
+
+z-index:10;
+
+}
+
+.product{
+
+width:250px;
+
+height:auto;
+
+}
+
+/* --- Highlight selected gift element --- */
+.gifSelected {
+    outline: 3px solid #B71A3D !important;
+    outline-offset: 3px;
+}
+
+/* --- Gift text element --- */
+.giftText {
+    min-width: 80px;
+    font-size: 22px;
+    color: var(--heading-color);
+    user-select: none;
+    cursor: move;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* --- CUSTOM ALIGNMENTS --- */
+.checkoutTitle, .customizeTitle {
+    text-align: center !important;
+    font-family: var(--font-heading);
+    color: var(--heading-color);
+    margin-top: 100px;
+    margin-bottom: 25px;
+    font-size: 50px;
+    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
+    font-weight: bold;
+}
+
+
+
+/* --- NAVBAR --- */
+#storeNavbar {
+    background: url(\'assets/kisses-bg.webp\') center/cover no-repeat !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 228, 241, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    z-index: 999;
+    border-bottom: 3px solid #fac5cf;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
+    padding: 10px 30px;
+    box-sizing: border-box;
+}
+
+
+
+.navLink {
+    font-size: 16px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+.navLink:hover {
+    color: white;
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.navLink.active {
+    color: white;
+    font-weight: 800;
+    border-bottom: 3px solid var(--heading-color);
+    padding-bottom: 2px;
+}
+
+
+
+/* --- Header Text styling --- */
+.storeHeader {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    color: var(--heading-color);
+    font-family: var(--font-heading);
+    font-size: 56px;
+    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
+    font-weight: bold;
+}
+
+
+
+/* --- BACK TO SHOP BTN --- */
+
+/* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
+
+/* --- Bubbly option elements inside selection panel --- */
+.box-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    background: var(--btn-bg);
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    width: 100%;
+}
+
+.box-option:hover {
+    transform: translateY(-3px) scale(1.02);
+    border-color: #B71A3D;
+    box-shadow: 0 5px 12px rgba(183, 26, 61, 0.2);
+}
+
+.box-option.active {
+    background: #fac5cf;
+    border-color: #B71A3D;
+    box-shadow: none;
+}
+
+.box-option img {
+    width: 45px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.box-option span {
+    font-size: 16px;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.box-option.active span {
+    color: #5a0035;
+}
+
+
+
+
+
+
+
+/* --- Customization Buttons Placed Side-by-Side --- */
+.buttons-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.buttons-row button {
+    flex: 1;
+    margin: 0 !important;
+    padding: 10px 6px !important;
+    font-size: 13px !important;
+    border-radius: 14px !important;
+    border: 1.5px solid rgba(255, 182, 217, 0.25) !important;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: var(--font-ui);
+    background: var(--btn-bg) !important;
+    color: var(--text-color) !important;
+    transition: transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+
+
+.buttons-row button:hover {
+    transform: translateY(-1px);
+}
+
+#saveCustomization {
+    background: var(--bg-pink) !important;
+    color: var(--btn-text-color) !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+#saveCustomization:hover {
+    box-shadow: 0 4px 16px rgba(255, 105, 180, 0.25) !important;
+}
+.draggableTreat {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    cursor: move;
+    z-index: 10;
+    transition: transform 0.1s ease;
+}
+
+/* --- PEARL STARDUST BUTTON DESIGN --- */
+:root {
+    --bg-pink: #fac5cf;
+    --hover-glow: rgba(250, 197, 207, 0.6);
+    --hover-glow-soft: rgba(183, 26, 61, 0.8);
+    --btn-text-color: #5a0035;
+}
+
+
+
+.shiny-cta {
+    outline: none;
+    cursor: pointer;
+    border: 0;
+    position: relative;
+    border-radius: 100px;
+    background-color: var(--bg-pink);
+    transition: all 0.2s ease;
+    box-shadow: 
+      inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.4),
+      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+      inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.3),
+      0 10px 15px -3px rgba(255, 105, 180, 0.3),
+      0 4px 6px -2px rgba(255, 105, 180, 0.05);
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 10px 24px;
+}
+
+.shiny-cta::before {
+    content: "";
+    position: absolute;
+    left: -15%;
+    right: -15%;
+    bottom: 25%;
+    top: -100%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.25);
+    transition: all 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.shiny-cta::after {
+    content: "";
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 12%;
+    bottom: 40%;
+    border-radius: 22px 22px 0 0;
+    box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.6);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transition: all 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.shiny-cta span {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: var(--btn-text-color);
+    transition: all 0.2s ease;
+    transform: translateY(2%);
+}
+
+.shiny-cta > span::before {
+    content: "✧";
+    transition: all 0.2s ease;
+}
+
+.shiny-cta:hover > span::before {
+    content: "✦";
+}
+
+.shiny-cta:hover {
+    box-shadow:
+      inset 0 0.3rem 0.5rem var(--hover-glow),
+      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+      0 12px 20px rgba(255, 105, 180, 0.4),
+      0 4px 8px rgba(255, 105, 180, 0.1);
+}
+
+.shiny-cta:hover::before {
+    transform: translateY(-5%);
+}
+
+.shiny-cta:hover::after {
+    opacity: 0.4;
+    transform: translateY(5%);
+}
+
+.shiny-cta:hover span {
+    transform: translateY(-4%);
+}
+
+.shiny-cta:active {
+    transform: translateY(2px);
+    box-shadow:
+      inset 0 0.3rem 0.5rem var(--hover-glow),
+      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.5),
+      0 6px 10px rgba(183, 26, 61, 0.2);
+}
+
+
+
+@keyframes gradient-angle {
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes breathe {
+  from, to {
+    scale: 1;
+  }
+  50% {
+    scale: 1.2;
+  }
+}
+
+.carousel-track-container {
+    overflow: hidden;
+    width: 100%;
+    padding: 15px 0;
+    /* --- extra padding for box shadows --- */
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-slide {
+    flex: 0 0 calc(100% / 3);
+
+/* --- Show 3 items --- */
+padding: 0 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fafafa;
+    border: 1px solid #e4e4e7;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    color: #52525b;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+
+
+.carousel-btn:hover:not(:disabled) {
+    background: #f4f4f5;
+    color: #18181b;
+}
+
+
+
+.carousel-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.carousel-prev {
+    left: 0;
+}
+
+.carousel-next {
+    right: 0;
+}
+
+.carousel-slide .flowerCard {
+    width: 100%;
+
+/* --- Take up the slide width --- */
+max-width: 320px;
+
+/* --- Don't get too crazy large --- */
+margin: 0 auto;
+}
+
+/* --- LAYOUT OVERRIDES --- */
+body.no-scroll {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.customizeTitle {
+    margin-top: 80px !important;
+    margin-bottom: 10px !important;
+    flex-shrink: 0;
+}
+
+#customizeContainer {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    gap: 24px !important;
+    padding: 10px 20px !important;
+}
+
+#customScene {
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+    height: auto !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-top: 2px solid rgba(255, 255, 255, 0.8) !important;
+    border-left: 2px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 
+        inset 0 4px 10px rgba(255, 255, 255, 0.6),
+        inset 0 -4px 10px rgba(255, 182, 193, 0.2) !important;
+    border-radius: 24px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.4s ease, border-color 0.4s ease !important;
+}
+
+
+
+.mainPlushie {
+    max-height: 85% !important;
+    max-width: 85% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain;
+}
+
+#customPanel, .customPanel-style {
+    flex: 1;
+    max-width: 320px;
+    background-color: rgba(144, 12, 63, 0.15) !important;
+    border-radius: 24px !important;
+    padding: 22px !important;
+    display: flex;
+    flex-direction: column;
+    max-height: 70vh;
+    overflow-y: auto;
+    transition: background 0.4s ease, border-color 0.4s ease !important;
+}
+
+
+
+/* --- Custom scrollbar for panels --- */
+#customPanel::-webkit-scrollbar,
+.customPanel-style::-webkit-scrollbar {
+    width: 6px;
+}
+
+#customPanel::-webkit-scrollbar-track,
+.customPanel-style::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#customPanel::-webkit-scrollbar-thumb,
+.customPanel-style::-webkit-scrollbar-thumb {
+    background: #900C3F;
+    border-radius: 10px;
+}
+
+
+
+/* Overridden accessoryTemplate styles removed for grid layout */
+
+/* --- NAV BRAND CENTERING --- */
+.navBrand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 28px;
+    color: white !important;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.3s ease;
+}
+
+.navBrand:hover {
+    transform: translateX(-50%) scale(1.08);
+    text-shadow: none;
+}
+
+.canvas-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    color: #df244e;
+    font-family: var(--font-heading);
+    font-size: 26px;
+    line-height: 1.5;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* --- NAVBAR BRAND OVERRIDE --- */
+.navBrand, a.navBrand {
+    font-family: 'Pinyon Script', cursive !important;
+    color: white !important;
+    font-size: 38px !important;
+    text-shadow: none !important;
+}
+
+
+
+/* NAVBAR OVERRIDE */
+#storeNavbar {
+    background: #900C3F !important; /* dark cherry red */
+}
+.navBrand, a.navBrand, .navBrand:hover {
+    color: white !important;
+}
+
+#cartButton, #saveCustomization, #saveGiftLayoutBtn, #giftButton {
+    background-color: #ffffff !important;
+}
+#cartButton > span::before, #saveCustomization > span::before, #saveGiftLayoutBtn > span::before, #giftButton > span::before {
+    content: none !important;
+    display: none !important;
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
+
+
+
+<style>
+.site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: 0 20px;
+    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    color: var(--text-color);
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: rgba(252, 224, 229, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(183, 26, 61, 0.2);
+    transition: all 0.3s ease;
+}
+
+.site-footer a {
+    color: var(--heading-color);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dotted var(--heading-color);
+    transition: opacity 0.2s ease, color 0.3s ease;
+    pointer-events: auto;
+}
+.site-footer a:hover {
+    opacity: 0.7;
+}
+
+
+</style>
+
+<style>
+/* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
+[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
+    border: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-action-btn, .shiny-cta, .navLink {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+.flowerCard {
+    height: 100% !important;
+}
+
+.flowerSelector {
+    margin-top: auto !important;
+}
+
+.flowerCard .customizeBtn {
+    margin-top: 0 !important;
+}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+</head>
+
+<body class="no-scroll">
+
+    <!-- Baby Pink Navbar -->
+        <nav id="storeNavbar">
+        <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
+        <div id="customizeNavActions" style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
+            <button onclick="window.location.href='plushies.html'" style="display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; height: 38px; padding: 0 10px; color: #ffffff; cursor: pointer; text-decoration: none; white-space: nowrap; transition: all 0.3s ease;" onmouseover="this.style.color='white'; this.style.transform='translateY(-2px)'; this.style.opacity='0.9';" onmouseout="this.style.color='#ffffff'; this.style.transform='translateY(0)'; this.style.opacity='1';">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6; margin-right: 4px; flex-shrink: 0;" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                Go back
+            </button>
+            <button id="saveCustomization" class="shiny-cta" style="padding: 8px 16px; font-size: 14px;">
+                <span>Save Changes</span>
+            </button>
+        </div>
+    </nav>
+
+    
+
+<h1 class="customizeTitle">
+
+Customize Your Plushie.
+
+</h1>
+
+<div id="customizeContainer">
+
+    <div id="customScene">
+        
+            <div id="itemRotateBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.21l5.67-1.36"/></svg>
+            </div>
+            <div id="itemResizeBtn" style="display: none; position: absolute; z-index: 1000; cursor: nwse-resize; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </div>
+<div id="itemDeleteBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+        </div>
+       <img loading="lazy"
+id="mainPlushie"
+draggable="false"
+src=""
+class="mainPlushie"
+>
+
+    </div>
+
+    <div id="customPanel">
+
+        <h2>Accessories</h2>
+        <hr style="margin: 10px 0 15px 0; border: none; border-top: 1px solid var(--text-color); opacity: 0.2;">
+
+        <div class="accessoriesGrid">
+            <img loading="lazy" src="assets/plushies/custom1.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom2.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom3.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom4.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom5.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom6.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom7.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom8.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom9.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom10.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom11.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom12.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom13.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom14.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom15.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom16.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom17.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom18.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom19.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom20.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom21.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom22.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom23.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom24.webp" class="accessoryTemplate" draggable="true">
+            <img loading="lazy" src="assets/plushies/custom25.webp" class="accessoryTemplate" draggable="true">
+        </div>
+
+        <hr style="border: none; border-top: 1.5px solid rgba(255, 182, 217, 0.25); margin: 16px 0;">
+
+
+
+
+    </div>
+
+
+<script defer>
+const customScene =
+document.getElementById(
+"customScene"
+);
+
+const mainPlushie =
+document.getElementById(
+"mainPlushie"
+);
+
+const placeholderMsg = document.getElementById("placeholderMsg");
+
+let selectedItem = null;
+let selected = null;
+
+/* -------------------- */
+/* LOAD PLUSHIE         */
+/* -------------------- */
+
+// Helper to extract relative assets path
+function getRelativePath(absoluteUrl) {
+    if (!absoluteUrl) return "";
+    let normalized = absoluteUrl.replace(/\\/g, "/");
+    const match = normalized.match(/assets\//i);
+    if (match) {
+        return normalized.substring(match.index);
+    }
+    return normalized;
+}
+
+// Helper to create an accessory image
+function createAccessory(src, leftPx, topPx, widthPx) {
+    if (placeholderMsg) {
+        placeholderMsg.style.opacity = "0";
+        setTimeout(() => {
+            if (placeholderMsg) placeholderMsg.style.display = "none";
+        }, 300);
+    }
+
+    const accessory = document.createElement("img");
+    accessory.src = src;
+    accessory.className = "draggableAccessory";
+    accessory.draggable = false;
+    accessory.style.position = "absolute";
+    accessory.style.width = widthPx + "px";
+    accessory.style.left = leftPx + "px";
+    accessory.style.top = topPx + "px";
+
+    customScene.appendChild(accessory);
+    
+    // Auto-select the newly created accessory
+    selectAccessory(accessory);
+    return accessory;
+}
+
+
+function getRotatedPos(cx, cy, rx, ry, angle) {
+    const rad = angle * Math.PI / 180;
+    const dx = rx - cx;
+    const dy = ry - cy;
+    return {
+        x: cx + dx * Math.cos(rad) - dy * Math.sin(rad),
+        y: cy + dx * Math.sin(rad) + dy * Math.cos(rad)
+    };
+}function updateSelectionUI() {
+    const deleteBtn = document.getElementById('itemDeleteBtn');
+    const resizeBtn = document.getElementById('itemResizeBtn');
+    const rotateBtn = document.getElementById('itemRotateBtn');
+    
+    if (!selectedItem) {
+        if (deleteBtn) deleteBtn.style.display = 'none';
+        if (resizeBtn) resizeBtn.style.display = 'none';
+        if (rotateBtn) rotateBtn.style.display = 'none';
+        return;
+    }
+    
+    const l = parseFloat(selectedItem.style.left) || 0;
+    const t = parseFloat(selectedItem.style.top)  || 0;
+    const w = selectedItem.offsetWidth;
+    const h = selectedItem.offsetHeight;
+
+    const cx = l + w / 2;
+    const cy = t + h / 2;
+    
+    const angle = parseFloat(selectedItem.dataset.rotation) || 0;
+    const rad = angle * Math.PI / 180;
+    const flip = parseInt(selectedItem.dataset.flip) || 1;
+    
+    function getRotatedPoint(dx, dy) {
+        let rx = dx * Math.cos(rad) - dy * Math.sin(rad);
+        let ry = dx * Math.sin(rad) + dy * Math.cos(rad);
+        rx *= flip;
+        return {
+            x: cx + rx,
+            y: cy + ry
+        };
+    }
+    
+    const tr = getRotatedPoint(w/2, -h/2);
+    const bl = getRotatedPoint(-w/2, h/2);
+    const br = getRotatedPoint(w/2, h/2);
+
+    if (deleteBtn) {
+        deleteBtn.style.left = (tr.x - 12) + 'px';
+        deleteBtn.style.top  = (tr.y - 12) + 'px';
+        deleteBtn.style.display = 'block';
+    }
+    
+    if (rotateBtn) {
+        rotateBtn.style.left = (bl.x - 12) + 'px';
+        rotateBtn.style.top  = (bl.y - 12) + 'px';
+        rotateBtn.style.display = 'block';
+    }
+    
+    if (resizeBtn) {
+        resizeBtn.style.left = (br.x - 12) + 'px';
+        resizeBtn.style.top  = (br.y - 12) + 'px';
+        resizeBtn.style.display = 'block';
+    }
+}
+
+function selectAccessory(element) {
+    selectedItem = element;
+    document.querySelectorAll(".draggableAccessory").forEach(item => {
+        item.classList.remove("selectedAccessory");
+        item.style.outline = "none";
+    });
+    const deleteBtn = document.getElementById('itemDeleteBtn');
+    if (element) {
+        element.classList.add("selectedAccessory");
+        element.style.outline = "2px dashed #B71A3D";
+        updateSelectionUI();
+    } else {
+        deleteBtn.style.display = 'none';
+        customScene.style.cursor = '';
+    }
+}
+
+const currentPlushie = JSON.parse(sessionStorage.getItem("currentPlushie"));
+if (!currentPlushie) {
+    window.location.href = "index.html";
+}
+
+if(currentPlushie){
+    mainPlushie.src = currentPlushie.image;
+    // Starts fresh with a blank canvas for this customization session
+}
+
+/* -------------------- */
+/* ADD ACCESSORIES      */
+/* -------------------- */
+
+document.querySelectorAll(".accessoryTemplate").forEach(item => {
+    item.addEventListener("click", () => {
+        const rect = customScene.getBoundingClientRect();
+        const plushieRect = mainPlushie.getBoundingClientRect();
+        
+        const plushieW = mainPlushie.offsetWidth || 280;
+        const plushieH = mainPlushie.offsetHeight || 280;
+        
+        // Make it a tad bit smaller (40% of plushie size)
+        const width = plushieW * 0.40;
+        
+        // Center it on the plushie
+        const left = (plushieRect.left - rect.left) + (plushieW - width) / 2;
+        const top = (plushieRect.top - rect.top) + (plushieH - width) / 2;
+        
+        createAccessory(item.src, left, top, width);
+    });
+
+    // Support drag start from the sidebar templates
+    item.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", item.src);
+    });
+});
+
+// Setup drag and drop events on customScene
+customScene.addEventListener("dragover", (e) => {
+    e.preventDefault();
+});
+
+customScene.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const src = e.dataTransfer.getData("text/plain");
+    if (src) {
+        const rect = customScene.getBoundingClientRect();
+        
+        // Calculate dropped coordinates relative to customScene
+        const dropX = e.clientX - rect.left;
+        const dropY = e.clientY - rect.top;
+        
+        // Default sticker size (e.g. 40% of the plushie size, fallback to 112)
+        const defaultWidth = (mainPlushie.offsetWidth ? mainPlushie.offsetWidth * 0.40 : 112);
+        
+        // Center the accessory at drop coordinates
+        const left = dropX - defaultWidth / 2;
+        const top = dropY - defaultWidth / 2;
+        
+        createAccessory(src, left, top, defaultWidth);
+    }
+});
+
+/* -------------------- */
+/* SELECT & DRAG PLACED */
+/* -------------------- */
+
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+let highestZ = 100;
+let isResizing = false;
+let isRotating = false;
+let resizeStartX = 0, resizeStartY = 0;
+let resizeStartW = 0, resizeStartH = 0;
+let resizeStartLeft = 0, resizeStartTop = 0;
+let rotateStartAngle = 0;
+let rotateInitialElementAngle = 0;
+
+document.addEventListener("mousedown", (e) => {
+    if (e.target.closest('#itemDeleteBtn')) return;
+    
+    if (e.target.closest('#itemResizeBtn') && selectedItem) {
+        e.stopPropagation(); e.preventDefault();
+        isResizing = true;
+        resizeStartX = e.clientX;
+        resizeStartY = e.clientY;
+        resizeStartW = selectedItem.offsetWidth;
+        resizeStartH = selectedItem.offsetHeight;
+        resizeStartLeft = parseFloat(selectedItem.style.left) || 0;
+        resizeStartTop = parseFloat(selectedItem.style.top) || 0;
+        return;
+    }
+    
+    if (e.target.closest('#itemRotateBtn') && selectedItem) {
+        e.stopPropagation(); e.preventDefault();
+        isRotating = true;
+        
+        const rect = selectedItem.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        rotateStartAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+        rotateInitialElementAngle = parseFloat(selectedItem.dataset.rotation) || 0;
+        return;
+    }
+
+    const item = e.target.closest(".draggableAccessory");
+    if (item && customScene.contains(item)) {
+        if (!selectedItem || selectedItem !== item) {
+            selectAccessory(item);
+        }
+
+        selected = item;
+        const rect = item.getBoundingClientRect();
+        
+        dragOffsetX = e.clientX - rect.left;
+        dragOffsetY = e.clientY - rect.top;
+        
+        if (typeof highestZ !== 'undefined') {
+            item.style.zIndex = highestZ++;
+        }
+        e.preventDefault();
+        customScene.style.cursor = 'grabbing';
+    } else {
+        // Deselect if clicking outside of the customScene or customization panels
+        if (!e.target.closest('#customScene') && !e.target.closest('#customPanel')) {
+            selectAccessory(null);
+        }
+    }
+});
+
+document.addEventListener("mousemove", (e) => {
+    const sceneW = customScene.clientWidth;
+    const sceneH = customScene.clientHeight;
+
+    if (isResizing && selectedItem) {
+        const dx = e.clientX - resizeStartX;
+        
+        let maxW = Math.min(sceneW - resizeStartLeft, sceneH - resizeStartTop);
+        let newW = resizeStartW + dx;
+        newW = Math.max(30, Math.min(newW, maxW));
+        
+        selectedItem.style.width = newW + "px";
+        selectedItem.style.height = (newW * (resizeStartH / resizeStartW)) + "px";
+        updateSelectionUI();
+        return;
+    }
+    
+    if (isRotating && selectedItem) {
+        const rect = selectedItem.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const currentAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+        
+        let angleDiff = currentAngle - rotateStartAngle;
+        let newAngle = rotateInitialElementAngle + angleDiff;
+        
+        selectedItem.dataset.rotation = newAngle;
+        let flipStr = selectedItem.dataset.flip === "-1" ? "scaleX(-1) " : "";
+        selectedItem.style.transform = flipStr + "rotate(" + newAngle + "deg)";
+        updateSelectionUI();
+        return;
+    }
+
+    if (!selected) return;
+
+    const rect = customScene.getBoundingClientRect();
+    let left = e.clientX - rect.left - dragOffsetX;
+    let top = e.clientY - rect.top - dragOffsetY;
+
+    left = Math.max(0, Math.min(left, sceneW - selected.offsetWidth));
+    top = Math.max(0, Math.min(top, sceneH - selected.offsetHeight));
+
+    selected.style.left = left + "px";
+    selected.style.top = top + "px";
+    updateSelectionUI();
+});
+
+document.addEventListener("mouseup", () => {
+    selected = null;
+    isResizing = false;
+    isRotating = false;
+    if (selectedItem) {
+        customScene.style.cursor = 'grab';
+    } else {
+        customScene.style.cursor = '';
+    }
+});
+
+customScene.addEventListener("mousedown", (e) => {
+    if (e.target === customScene || e.target.id === 'mainPlushie' || e.target.closest('.canvas-placeholder')) {
+        selectAccessory(null);
+    }
+});
+
+document.getElementById("itemDeleteBtn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (selectedItem) {
+        selectedItem.remove();
+        selectAccessory(null);
+        if (document.querySelectorAll(".draggableAccessory").length === 0) {
+            if (placeholderMsg) {
+                placeholderMsg.style.display = "flex";
+                setTimeout(() => {
+                    if (placeholderMsg) placeholderMsg.style.opacity = "1";
+                }, 50);
+            }
+        }
+    }
+});
+
+
+
+/* -------------------- */
+/* SAVE                 */
+/* -------------------- */
+
+document
+.getElementById(
+"saveCustomization"
+)
+.addEventListener(
+"click",
+() => {
+
+const accessories = [];
+const sceneRect = customScene.getBoundingClientRect();
+const plushieRect = mainPlushie.getBoundingClientRect();
+const plushieW = plushieRect.width || 280;
+const plushieH = plushieRect.height || 280;
+
+const plushieLeftRel = plushieRect.left - sceneRect.left;
+const plushieTopRel = plushieRect.top - sceneRect.top;
+
+document
+.querySelectorAll(
+".draggableAccessory"
+)
+.forEach(item => {
+    const itemLeft = parseFloat(item.style.left) || 0;
+    const itemTop = parseFloat(item.style.top) || 0;
+    const itemWidth = item.offsetWidth; // unrotated width
+    
+    // Calculate coordinates relative to plushieRect
+    const relLeft = (itemLeft - plushieLeftRel) / plushieW;
+    const relTop = (itemTop - plushieTopRel) / plushieH;
+    const relWidth = itemWidth / plushieW;
+    
+    // Virtualize coordinates to a 700x700 canvas with plushie centered at (210, 210) and size 280x280
+    const rawLeft = 210 + relLeft * 280;
+    const rawTop = 210 + relTop * 280;
+    const rawWidth = relWidth * 280;
+
+    accessories.push({
+        image: getRelativePath(item.src),
+        left: rawLeft + "px",
+        top: rawTop + "px",
+        width: rawWidth + "px",
+        rotation: item.dataset.rotation || "0",
+        flip: item.dataset.flip || "1"
+    });
+});
+
+/* Build the customized plushie object with unique ID */
+const customizedPlushie = {
+    customId: "plushie_" + Date.now(),
+    name: currentPlushie.name.startsWith("Customized ") ? currentPlushie.name : "Customized " + currentPlushie.name,
+    image: currentPlushie.image,
+    quantity: currentPlushie.quantity || 1,
+    accessories: accessories
+};
+
+/* Load existing cart items and append this new customized item */
+let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+cart.push(customizedPlushie);
+
+/* Save to cart */
+sessionStorage.setItem("cart", JSON.stringify(cart));
+
+alert("Customization Saved & Added to Cart!");
+window.location.href = "checkout.html";
+});
+
+
+
+</script>
+    
+
+<style>
+#storeNavbar {
+    border-bottom: none !important;
+}
+</style>
+
+<style>
+#customPanel {
+    height: 700px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+}
+#saveCustomization {
+    margin-top: auto !important;
+}
+
+
+</style>
+
+</body>
+
+</html>
+
+

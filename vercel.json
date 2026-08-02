@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/gift/:id", "destination": "/result.html?id=:id" }
+  ]
+}

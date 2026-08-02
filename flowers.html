@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="color-scheme" content="light">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gifting Co.</title>
+    <link rel="icon" type="image/png" href="assets/favicon.webp">
+    <link rel="preload" as="image" href="assets/flowersbg.webp">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="block-mobile.js"></script>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- THEME VARIABLES --- */
+:root {
+    --bg-gradient: linear-gradient(135deg, #fce0e5 0%, #fac5cf 40%, #fac5cf 100%);
+    --body-bg: #fef2f4;
+    --panel-bg: #fce0e5;
+    --popup-bg: #fce0e5;
+    --receipt-bg: #fef2f4;
+    --card-bg: #ffffff;
+    --text-color: #B71A3D;
+    --heading-color: #B71A3D;
+    --btn-bg: #ffffff;
+    --btn-text: #B71A3D;
+    --cart-btn-bg: #B71A3D;
+    --cart-btn-shadow: #B71A3D;
+    --glow-color: #B71A3D;
+    --glow-soft: #fac5cf;
+    --toast-bg: #B71A3D;
+    --receipt-shadow: #fac5cf;
+    --shelf-overlay: rgba(255,255,255,0.0);
+    --font-body: 'Quicksand', sans-serif;
+    --font-heading: 'Pinyon Script', cursive;
+    --font-ui: 'Fredoka', sans-serif;
+    --font-nav: 'Inter', sans-serif;
+}
+
+
+
+/* --- BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+html_REMOVED {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body,
+body.receiptPage,
+body.giftPage {
+    color: var(--text-color);
+    background-image: url('assets/flowersbg.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: var(--body-bg);
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.5s ease, color 0.5s ease;
+    font-family: var(--font-body);
+    font-weight: 500;
+}
+
+.sidebar-panel {
+    display: none;
+    /* --- controlled by JS --- */
+    background: var(--popup-bg);
+    padding: 25px;
+    border-radius: 25px;
+    text-align: center;
+    transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+
+#shelf {
+    width: 1000px;
+    height: 800px;
+    background: url("shelf.webp");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    margin: auto;
+
+/* --- Shelf stays strictly center aligned --- */
+}
+
+.character {
+    position: absolute;
+    width: 170px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.character:hover {
+    transform: scale(1.05);
+}
+
+/* --- CHECKOUT BUTTON --- */
+
+
+/* --- QUANTITY POPUP --- */
+#quantityPopup h2 {
+    color: var(--heading-color);
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.quantitySelector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.quantitySelector button {
+    width: 45px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    cursor: pointer;
+    font-size: 22px;
+    font-family: var(--font-ui);
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+#quantityValue {
+    font-size: 26px;
+    color: var(--heading-color);
+    font-weight: bold;
+}
+
+#addToCartBtn {
+    border: none;
+    border-radius: 50px;
+    padding: 12px 24px;
+    cursor: pointer;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    font-size: 15px;
+    width: 100%;
+    font-family: var(--font-ui);
+    transition: transform .25s, background 0.5s ease, color 0.5s ease;
+}
+
+#addToCartBtn:hover {
+    transform: scale(1.03);
+}
+
+/* --- TOAST --- */
+#toast {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--toast-bg);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: none;
+    z-index: 9999;
+    transition: background 0.5s ease;
+}
+
+/* --- Highlight selected gift element --- */
+.gifSelected {
+    outline: 3px solid #B71A3D !important;
+    outline-offset: 3px;
+}
+
+/* --- Gift text element --- */
+.giftText {
+    min-width: 80px;
+    font-size: 22px;
+    color: var(--heading-color);
+    user-select: none;
+    cursor: move;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* --- CUSTOM ALIGNMENTS --- */
+.checkoutTitle, .customizeTitle {
+    text-align: center !important;
+    font-family: var(--font-heading);
+    color: var(--heading-color);
+    margin-top: 100px;
+    margin-bottom: 25px;
+    font-size: 50px;
+    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
+    font-weight: bold;
+}
+
+
+
+/* --- NAVBAR --- */
+#storeNavbar {
+    background: url('assets/kisses-bg.webp') center/cover no-repeat !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 228, 241, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    z-index: 999;
+    border-bottom: 3px solid #fac5cf;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
+    padding: 10px 30px;
+    box-sizing: border-box;
+}
+
+
+
+.navLink {
+    font-size: 16px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+.navLink:hover {
+    color: white;
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.navLink.active {
+    color: white;
+    font-weight: 800;
+    border-bottom: 3px solid var(--heading-color);
+    padding-bottom: 2px;
+}
+
+
+
+/* --- Header Text styling --- */
+.storeHeader {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    color: var(--heading-color);
+    font-family: var(--font-heading);
+    font-size: 56px;
+    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
+    font-weight: bold;
+}
+
+
+
+/* --- CARD LAYOUT SYSTEM --- */
+#flowersMainContainer, #bouquetMainContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.flowers-layout, .plushies-layout {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    align-items: center;
+}
+
+.flowersRowTop, .flowersRowBottom {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    width: 100%;
+}
+
+.flowerCard {
+    background: var(--card-bg);
+    border-radius: 30px;
+    border: 2px solid rgba(255, 182, 217, 0.15);
+    padding: 25px;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
+    position: relative;
+}
+
+.flowerCard:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: rgba(255, 105, 180, 0.4);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.15);
+}
+
+.flowerImage {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    transition: transform 0.5s ease;
+}
+
+.flowerCard:hover .flowerImage {
+    transform: rotate(5deg) scale(1.05);
+}
+
+.flowerName {
+    font-size: 24px;
+    color: var(--heading-color);
+    margin-bottom: 15px;
+    font-family: 'Pinyon Script', cursive !important;
+    text-align: center;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+}
+
+
+
+.flowerSelector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    background: rgba(255, 182, 193, 0.15);
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 2px dashed #fac5cf;
+}
+
+
+
+.flowerSelector button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    cursor: pointer;
+    font-size: 20px;
+    font-family: var(--font-ui);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.flowerSelector button:hover {
+    transform: scale(1.15);
+    background: var(--cart-btn-bg);
+    color: white;
+}
+
+.flowerSelector button:active {
+    transform: scale(0.95);
+}
+
+.flowerQuantity {
+    font-size: 20px;
+    color: var(--heading-color);
+    font-weight: 600;
+    font-family: var(--font-ui);
+    min-width: 25px;
+    text-align: center;
+}
+
+.flowerCard .addToCartBtn, .flowerCard .customizeBtn {
+    border: none;
+    border-radius: 50px;
+    padding: 12px 24px;
+    cursor: pointer;
+    background: var(--btn-bg);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.flowerCard .customizeBtn {
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.flowerCard .addToCartBtn:hover, .flowerCard .customizeBtn:hover {
+    transform: scale(1.05);
+    background: #fce0e5;
+}
+
+.flowerCard .addToCartBtn:active, .flowerCard .customizeBtn:active {
+    transform: scale(0.98);
+}
+
+/* --- BACK TO SHOP BTN --- */
+
+
+
+
+/* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
+
+/* --- Bubbly option elements inside selection panel --- */
+.box-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    background: var(--btn-bg);
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    width: 100%;
+}
+
+.box-option:hover {
+    transform: translateY(-3px) scale(1.02);
+    border-color: #B71A3D;
+    box-shadow: 0 5px 12px rgba(183, 26, 61, 0.2);
+}
+
+.box-option.active {
+    background: #fac5cf;
+    border-color: #B71A3D;
+    box-shadow: none;
+}
+
+.box-option img {
+    width: 45px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.box-option span {
+    font-size: 16px;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.box-option.active span {
+    color: #5a0035;
+}
+
+
+
+
+
+
+
+/* --- Customization Buttons Placed Side-by-Side --- */
+.buttons-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.buttons-row button {
+    flex: 1;
+    margin: 0 !important;
+    padding: 12px 6px !important;
+    font-size: 14px !important;
+    border-radius: 25px !important;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background: #fce0e5;
+    color: #5a0035;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+}
+
+.buttons-row button:hover {
+    transform: scale(1.05);
+}
+
+#saveCustomization {
+    background: #fac5cf !important;
+    color: #5a0035 !important;
+    box-shadow: 0 0 10px pink !important;
+}
+
+#saveCustomization:hover {
+    box-shadow: none !important;
+}
+.draggableTreat {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    cursor: inherit;
+    z-index: 10;
+    transition: transform 0.1s ease;
+}
+
+.draggableBouquetItem {
+    cursor: inherit;
+    transition: outline 0.1s ease;
+}
+
+/* --- PEARL STARDUST BUTTON DESIGN --- */
+:root {
+    --bg-pink: #fac5cf;
+    --hover-glow: rgba(250, 197, 207, 0.6);
+    --hover-glow-soft: rgba(183, 26, 61, 0.8);
+    --btn-text-color: #5a0035;
+}
+
+
+
+.shiny-cta {
+    outline: none;
+    cursor: pointer;
+    border: 0;
+    position: relative;
+    border-radius: 100px;
+    background-color: var(--bg-pink);
+    transition: all 0.2s ease;
+    box-shadow: 
+      inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.4),
+      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+      inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.3),
+      0 10px 15px -3px rgba(255, 105, 180, 0.3),
+      0 4px 6px -2px rgba(255, 105, 180, 0.05);
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 10px 24px;
+}
+
+.shiny-cta::before {
+    content: "";
+    position: absolute;
+    left: -15%;
+    right: -15%;
+    bottom: 25%;
+    top: -100%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.25);
+    transition: all 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.shiny-cta::after {
+    content: "";
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 12%;
+    bottom: 40%;
+    border-radius: 22px 22px 0 0;
+    box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.6);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transition: all 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.shiny-cta span {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: var(--btn-text-color);
+    transition: all 0.2s ease;
+    transform: translateY(2%);
+}
+
+.shiny-cta > span::before {
+    content: "✧";
+    transition: all 0.2s ease;
+}
+
+.shiny-cta:hover > span::before {
+    content: "✦";
+}
+
+.shiny-cta:hover {
+    box-shadow:
+      inset 0 0.3rem 0.5rem var(--hover-glow),
+      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+      0 12px 20px rgba(255, 105, 180, 0.4),
+      0 4px 8px rgba(255, 105, 180, 0.1);
+}
+
+.shiny-cta:hover::before {
+    transform: translateY(-5%);
+}
+
+.shiny-cta:hover::after {
+    opacity: 0.4;
+    transform: translateY(5%);
+}
+
+.shiny-cta:hover span {
+    transform: translateY(-4%);
+}
+
+.shiny-cta:active {
+    transform: translateY(2px);
+    box-shadow:
+      inset 0 0.3rem 0.5rem var(--hover-glow),
+      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.5),
+      0 6px 10px rgba(183, 26, 61, 0.2);
+}
+
+/* --- CAROUSEL STYLES (NO-SCROLL LAYOUT) --- */
+body.no-scroll {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.no-scroll #mainContainer {
+    flex: 1;
+    min-height: 650px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+body.no-scroll .storeHeader {
+    margin-top: 80px;
+    margin-bottom: 0px;
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.plushies-layout, .flowers-layout {
+    width: 100%;
+}
+
+.carousel-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 60px;
+    height: auto;
+    overflow: hidden;
+}
+
+.carousel-track-container {
+    overflow: visible;
+    width: 100%;
+    padding: 15px 0;
+
+/* --- extra padding for box shadows --- */
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-slide {
+    flex: 0 0 calc(100% / 3.3);
+
+/* --- Show ~3 items with a peek of the next --- */
+padding: 0 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fafafa;
+    border: 1px solid #e4e4e7;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    color: #52525b;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+
+
+.carousel-btn:hover:not(:disabled) {
+    background: #f4f4f5;
+    color: #18181b;
+}
+
+
+
+.carousel-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.carousel-prev {
+    left: 0;
+}
+
+.carousel-next {
+    right: 0;
+}
+
+.carousel-slide .flowerCard {
+    width: 100%;
+
+/* --- Take up the slide width --- */
+max-width: 320px;
+
+/* --- Don't get too crazy large --- */
+margin: 0 auto;
+}
+
+/* --- NAV BRAND CENTERING --- */
+.navBrand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 28px;
+    color: white !important;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.3s ease;
+}
+
+.navBrand:hover {
+    transform: translateX(-50%) scale(1.08);
+    text-shadow: none;
+}
+/* --- BOUQUET STYLES --- */
+#mainContainer {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .bouquet-layout {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        gap: 24px;
+        padding: 10px 20px;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* --- SIDE PANELS --- */
+    .side-panel {
+    width: 280px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: rgba(144, 12, 63, 0.15) !important;
+    padding: 24px;
+    border-radius: 24px;
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+    
+
+    .side-panel h2 {
+        text-align: center;
+        margin-bottom: 15px;
+        font-family: 'Pinyon Script', cursive !important;
+        font-weight: normal !important;
+        font-size: 36px !important;
+        color: var(--heading-color);
+        letter-spacing: 1px;
+        border-bottom: 2px dashed rgba(144, 12, 63, 0.4);
+        padding-bottom: 8px;
+    }
+
+    .side-panel::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .side-panel::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .side-panel::-webkit-scrollbar-thumb {
+        background: #900C3F;
+        border-radius: 10px;
+    }
+
+    
+
+    /* --- SPAWNER GRID --- */
+    .spawner-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .spawner-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--card-bg);
+        border-radius: 16px;
+        padding: 10px;
+        border: 2px solid rgba(255, 182, 217, 0.15);
+        cursor: pointer;
+        transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.25s;
+        text-align: center;
+    }
+
+    
+
+    .spawner-item:hover {
+        transform: scale(1.05) translateY(-2px);
+        border-color: rgba(255, 105, 180, 0.4);
+        box-shadow: 0 4px 12px rgba(255, 105, 180, 0.15);
+    }
+
+    .spawner-item img {
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
+        margin-bottom: 6px;
+    }
+
+    .spawner-item span {
+        font-size: 11px;
+        font-family: var(--font-ui);
+        font-weight: 600;
+        color: var(--text-color);
+        line-height: 1.2;
+    }
+
+    /* --- CANVAS AREA --- */
+    #canvasContainer {
+        flex: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #customScene {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        border-top: 2px solid rgba(255, 255, 255, 0.8) !important;
+        border-left: 2px solid rgba(255, 255, 255, 0.8) !important;
+        box-shadow: 
+            inset 0 4px 10px rgba(255, 255, 255, 0.6),
+            inset 0 -4px 10px rgba(255, 182, 193, 0.2) !important;
+        overflow: hidden;
+        transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    
+
+    .canvas-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        text-align: center;
+        color: #df244e;
+        font-family: var(--font-heading);
+        font-size: 26px;
+        line-height: 1.5;
+        pointer-events: none;
+        z-index: 1;
+        transition: opacity 0.3s ease;
+    }
+
+    /* --- DRAGGABLE ITEMS --- */
+    .draggableBouquetItem {
+        position: absolute;
+        cursor: move;
+        z-index: 10;
+        transition: outline 0.1s ease;
+    }
+
+    .draggableBouquetItem:hover {
+        outline: 2px dashed #B71A3D;
+        outline-offset: -10px;
+    }
+
+    .selectedItem {
+        outline: 2px dashed var(--heading-color) !important;
+        outline-offset: -10px;
+        border-radius: 4px;
+        box-shadow: none;
+    }
+
+    /* --- CONTROL BUTTONS --- */
+    .buttons-row {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .buttons-row button,
+    .control-btn {
+        flex: 1;
+        border: none;
+        padding: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: var(--font-ui);
+        border-radius: 12px;
+        cursor: pointer;
+        background: var(--btn-bg);
+        color: var(--text-color);
+        border: 1.5px solid rgba(255, 182, 217, 0.25);
+        box-shadow: 0 2px 6px rgba(255, 182, 193, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s, background 0.3s;
+    }
+
+    
+
+    .buttons-row button:hover,
+    .control-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(255, 105, 180, 0.18);
+    }
+
+    .buttons-row button:active,
+    .control-btn:active {
+        transform: scale(0.97);
+    }
+
+    /* --- PEARL CTA BUTTON --- */
+    .shiny-cta {
+        outline: none;
+        cursor: pointer;
+        border: 0;
+        position: relative;
+        border-radius: 100px;
+        background-color: var(--bg-pink);
+        transition: all 0.2s ease;
+        box-shadow: 
+          inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.4),
+          inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+          inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.3),
+          0 10px 15px -3px rgba(255, 105, 180, 0.3),
+          0 4px 6px -2px rgba(255, 105, 180, 0.05);
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        padding: 10px 24px;
+    }
+
+    .shiny-cta::before {
+        content: "";
+        position: absolute;
+        left: -15%;
+        right: -15%;
+        bottom: 25%;
+        top: -100%;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.25);
+        transition: all 0.3s ease;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .shiny-cta::after {
+        content: "";
+        position: absolute;
+        left: 6%;
+        right: 6%;
+        top: 12%;
+        bottom: 40%;
+        border-radius: 22px 22px 0 0;
+        box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.6);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        transition: all 0.3s ease;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .shiny-cta span {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+        font-family: 'Fredoka', sans-serif;
+        font-weight: 600;
+        color: var(--btn-text-color);
+        transition: all 0.2s ease;
+        transform: translateY(2%);
+    }
+
+
+
+    
+
+    .shiny-cta > span::before {
+        content: "✧";
+        transition: all 0.2s ease;
+    }
+
+    .shiny-cta:hover > span::before {
+        content: "✦";
+    }
+
+    .shiny-cta:hover {
+        box-shadow:
+          inset 0 0.3rem 0.5rem var(--hover-glow),
+          inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+          0 12px 20px rgba(255, 105, 180, 0.4),
+          0 4px 8px rgba(255, 105, 180, 0.1);
+    }
+
+    .shiny-cta:hover::before {
+        transform: translateY(-5%);
+    }
+
+    .shiny-cta:hover::after {
+        opacity: 0.4;
+        transform: translateY(5%);
+    }
+
+    .shiny-cta:hover span {
+        transform: translateY(-4%);
+    }
+
+    .shiny-cta:active {
+        transform: translateY(2px);
+        box-shadow:
+          inset 0 0.3rem 0.5rem var(--hover-glow),
+          inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.5),
+          0 6px 10px rgba(183, 26, 61, 0.2);
+    }
+
+    /* --- TOAST NOTIFICATION --- */
+    #toast {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--toast-bg);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 50px;
+        box-shadow: none;
+        z-index: 9999;
+        font-family: var(--font-ui);
+        font-weight: 600;
+        text-align: center;
+    }
+
+/* --- NAVBAR BRAND OVERRIDE --- */
+.navBrand, a.navBrand {
+    font-family: 'Pinyon Script', cursive !important;
+    color: white !important;
+    font-size: 38px !important;
+    text-shadow: none !important;
+}
+
+
+
+/* NAVBAR OVERRIDE */
+#storeNavbar {
+    background: #900C3F !important; /* dark cherry red */
+}
+.navBrand, a.navBrand, .navBrand:hover {
+    color: white !important;
+}
+
+.color-scroll-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.color-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: rgba(255, 182, 193, 0.15);
+    transition: all 0.3s ease;
+}
+
+.color-option:hover {
+    background: rgba(255, 182, 193, 0.3);
+    border-color: #fac5cf;
+}
+
+.color-option.active {
+    background: #fac5cf;
+    border-color: #B71A3D;
+}
+
+
+#cartButton, #saveCustomization, #saveGiftLayoutBtn, #giftButton {
+    background-color: #ffffff !important;
+}
+#cartButton > span::before, #saveCustomization > span::before, #saveGiftLayoutBtn > span::before, #giftButton > span::before {
+    content: none !important;
+    display: none !important;
+}
+
+</style>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
+
+
+
+<style>
+.site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: 0 20px;
+    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    color: var(--text-color);
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: rgba(252, 224, 229, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(183, 26, 61, 0.2);
+    transition: all 0.3s ease;
+}
+
+.site-footer a {
+    color: var(--heading-color);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dotted var(--heading-color);
+    transition: opacity 0.2s ease, color 0.3s ease;
+    pointer-events: auto;
+}
+.site-footer a:hover {
+    opacity: 0.7;
+}
+
+
+</style>
+
+<style>
+/* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
+[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
+    border: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-action-btn, .shiny-cta, .navLink {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+.flowerCard {
+    height: 100% !important;
+}
+
+.flowerSelector {
+    margin-top: auto !important;
+}
+
+.flowerCard .customizeBtn {
+    margin-top: 0 !important;
+}
+
+#saveBouquet {
+    background: var(--bg-pink) !important;
+    color: var(--btn-text-color) !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+#saveBouquet:hover {
+    box-shadow: 0 4px 16px rgba(255, 105, 180, 0.25) !important;
+}
+
+.colour-swatch {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+.colour-swatch:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+.colour-swatch.swatch-active { outline: 3px solid white; outline-offset: 2px; transform: scale(1.15); }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+</head>
+
+<body class="no-scroll">
+
+    <!-- Baby Pink Navbar -->
+    <nav id="storeNavbar">
+        <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
+        <a href="plushies.html" class="navLink">Plushies</a>
+        <a href="flowers.html" class="navLink active">Flowers</a>
+        <a href="notes.html" class="navLink">Notes</a>
+        <div id="cartButton" class="shiny-cta" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding-left: 14px; padding-right: 14px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <span style="margin: 0; padding: 0;">Cart (<span id="cartCount">0</span>)</span>
+        </div>
+        <button id="saveBouquet" class="shiny-cta" style="display: none; padding: 8px 16px; font-size: 14px;"><span>Save Changes</span></button>
+    </nav>
+
+    
+    
+
+    <!-- Header Text -->
+    <h1 class="storeHeader">pick a bloom.</h1>
+
+    
+    <div class="toggle-container" style="position: relative; z-index: 10; text-align: center; margin-bottom: 5px; margin-top: -10px;">
+        <div class="joint-button" style="display: inline-flex; background: white; border-radius: 50px; padding: 5px; box-shadow: 0 4px 10px rgba(183, 26, 61, 0.2);">
+            <button id="showFlowersBtn" class="toggle-btn active" style="border: none; background: #fac5cf; color: #5a0035; border-radius: 50px; padding: 10px 24px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s ease;">Flowers</button>
+            <button id="showBouquetBtn" class="toggle-btn" style="border: none; background: transparent; color: var(--text-color); border-radius: 50px; padding: 10px 24px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s ease;">Bouquet</button>
+        </div>
+    </div>
+
+
+    <!-- Flowers main layout -->
+    <div id="flowersMainContainer">
+    <div id="mainContainer">
+        <div class="flowers-layout">
+            <div class="flowersRowTop">
+        <div class="flowerCard">
+            <img loading="lazy" src="assets/flowers/flower1.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Rose</div>
+            <div class="color-scroll-container">
+                
+            <div class="color-option active" data-image="assets/flowers/flower1.webp" data-flower="1" style="background-color: rgb(180, 126, 115);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower4.webp" data-flower="4" style="background-color: rgb(190, 148, 158);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower5.webp" data-flower="5" style="background-color: rgb(209, 204, 197);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower6.webp" data-flower="6" style="background-color: rgb(38, 34, 27);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower10.webp" data-flower="10" style="background-color: rgb(190, 183, 142);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower14.webp" data-flower="14" style="background-color: rgb(147, 195, 192);">
+            </div>
+            </div>
+            <div class="flowerSelector">
+                <button class="minusBtn" data-flower="1">−</button>
+                <span class="flowerQuantity" id="qtyFlower1">1</span>
+                <button class="plusBtn" data-flower="1">+</button>
+            </div>
+            <button class="addToCartBtn shiny-cta" data-flower="1" data-name="Pink Rose" data-image="assets/flowers/flower1.webp"><span>Add To Cart </span></button>
+        </div>
+    
+        <div class="flowerCard">
+            <img loading="lazy" src="assets/flowers/flower2.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Tulip</div>
+            <div class="color-scroll-container">
+                
+            <div class="color-option active" data-image="assets/flowers/flower2.webp" data-flower="2" style="background-color: rgb(215, 155, 153);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower11.webp" data-flower="11" style="background-color: rgb(188, 187, 134);">
+            </div>
+            </div>
+            <div class="flowerSelector">
+                <button class="minusBtn" data-flower="2">−</button>
+                <span class="flowerQuantity" id="qtyFlower2">1</span>
+                <button class="plusBtn" data-flower="2">+</button>
+            </div>
+            <button class="addToCartBtn shiny-cta" data-flower="2" data-name="Pink Tulip" data-image="assets/flowers/flower2.webp"><span>Add To Cart </span></button>
+        </div>
+    
+        <div class="flowerCard">
+            <img loading="lazy" src="assets/flowers/flower3.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Lily</div>
+            <div class="color-scroll-container">
+                
+            <div class="color-option active" data-image="assets/flowers/flower3.webp" data-flower="3" style="background-color: rgb(203, 193, 207);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower7.webp" data-flower="7" style="background-color: rgb(236, 228, 231);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower8.webp" data-flower="8" style="background-color: rgb(208, 229, 231);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower9.webp" data-flower="9" style="background-color: rgb(235, 187, 167);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower12.webp" data-flower="12" style="background-color: rgb(224, 189, 184);">
+            </div>
+            <div class="color-option " data-image="assets/flowers/flower13.webp" data-flower="13" style="background-color: rgb(211, 207, 231);">
+            </div>
+            </div>
+            <div class="flowerSelector">
+                <button class="minusBtn" data-flower="3">−</button>
+                <span class="flowerQuantity" id="qtyFlower3">1</span>
+                <button class="plusBtn" data-flower="3">+</button>
+            </div>
+            <button class="addToCartBtn shiny-cta" data-flower="3" data-name="Pink Lily" data-image="assets/flowers/flower3.webp"><span>Add To Cart </span></button>
+        </div>
+
+        <div class="flowerCard">
+            <img loading="lazy" src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Calla Lily</div>
+            <div class="color-scroll-container">
+                <div class="color-option active" data-image="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp" data-flower="15" style="background-color: rgb(48, 33, 49);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.webp" data-flower="16" style="background-color: rgb(148, 43, 59);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.webp" data-flower="17" style="background-color: rgb(245, 240, 220);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.webp" data-flower="18" style="background-color: rgb(115, 45, 85);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.webp" data-flower="19" style="background-color: rgb(55, 70, 95);">
+            </div>
+            </div>
+            <div class="flowerSelector">
+                <button class="minusBtn" data-flower="15">−</button>
+                <span class="flowerQuantity" id="qtyFlower15">1</span>
+                <button class="plusBtn" data-flower="15">+</button>
+            </div>
+            <button class="addToCartBtn shiny-cta" data-flower="15" data-name="Dark Purple Calla Lily" data-image="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp"><span>Add To Cart </span></button>
+        </div>
+        
+        <div class="flowerCard">
+            <img loading="lazy" src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Orchid</div>
+            <div class="color-scroll-container">
+                <div class="color-option active" data-image="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp" data-flower="20" style="background-color: rgb(241, 151, 149);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.webp" data-flower="21" style="background-color: rgb(75, 55, 74);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.webp" data-flower="22" style="background-color: rgb(241, 220, 142);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.webp" data-flower="23" style="background-color: rgb(183, 208, 229);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.webp" data-flower="24" style="background-color: rgb(247, 190, 135);">
+            </div>
+            </div>
+            <div class="flowerSelector">
+                <button class="minusBtn" data-flower="20">−</button>
+                <span class="flowerQuantity" id="qtyFlower20">1</span>
+                <button class="plusBtn" data-flower="20">+</button>
+            </div>
+            <button class="addToCartBtn shiny-cta" data-flower="20" data-name="Pink Orchid" data-image="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp"><span>Add To Cart </span></button>
+        </div>
+        
+        <div class="flowerCard">
+            <img loading="lazy" src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp" class="flowerImage" style="max-height: 150px; object-fit: contain;">
+            <div class="flowerName">Hydrangea</div>
+            <div class="color-scroll-container">
+                <div class="color-option active" data-image="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp" data-flower="25" style="background-color: rgb(195, 223, 230);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.webp" data-flower="26" style="background-color: rgb(201, 195, 230);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.webp" data-flower="27" style="background-color: rgb(246, 244, 227);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.webp" data-flower="28" style="background-color: rgb(195, 236, 209);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.webp" data-flower="29" style="background-color: rgb(60, 60, 53);">
+            </div>
+                <div class="color-option " data-image="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.webp" data-flower="30" style="background-color: rgb(236, 195, 226);">
+            </div>
+            </div>
+            <div class="flowerSelector">
+                <button class="minusBtn" data-flower="25">−</button>
+                <span class="flowerQuantity" id="qtyFlower25">1</span>
+                <button class="plusBtn" data-flower="25">+</button>
+            </div>
+            <button class="addToCartBtn shiny-cta" data-flower="25" data-name="Cyan Hydrangea" data-image="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp"><span>Add To Cart </span></button>
+        </div>
+    
+            </div></div>
+
+        </div>
+</div>
+<div id="bouquetMainContainer" style="display: none; width: 100%;">
+<div class="bouquet-layout">
+            
+            <!-- Column 1: Spawner Tray (Flowers and Leaves) -->
+            <div class="side-column" style="display: flex; flex-direction: column; gap: 24px; flex: 1; max-width: 320px; height: 600px;">
+                <div class="side-panel">
+                    <h2>Flowers</h2>
+                    <div class="spawner-grid">
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower1.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower1.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower2.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower2.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower3.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower3.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower4.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower4.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower5.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower5.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower6.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower6.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower7.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower7.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower8.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower8.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower9.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower9.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower10.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower10.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower11.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower11.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower12.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower12.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower13.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower13.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/flower14.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/flower14.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/552377fe-79cc-40c5-bb52-ca933443e462.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/9e0a3a23-4177-4615-9434-918565a85938.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/b6cbab3c-0ef0-4c07-979c-cc527cbdc00a.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/c4610009-5e11-4a29-85f1-6bd23fe2ab7a.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/ec218340-d38e-44cd-a71c-6d09ba5c16a6.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/41dd4db7-6acd-451e-bde1-e1d6ed23aac4.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/914367f1-8cb5-481e-b098-966e85109afc.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/c14659de-b03c-4d92-951d-13bd9c681cc7.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/e715837b-752d-4c22-9573-874e9915be1b.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/f97334ac-eee4-4dce-b93d-d1178f5c3020.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/1784d09f-b01f-4f66-ae9f-6df7db463120.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/2941697b-2139-4934-81bb-fe6515ec25af.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/7e88df79-612e-42e8-8a87-ace7ae36c20b.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/b2fed67f-cc3c-4c23-8a18-910599dbe073.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/c41e88aa-63fd-4b01-a4cf-e9ccc37be72d.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.webp', 'flower', '')">
+                        <img loading="lazy" src="assets/flowers/e96af5e1-fc32-492c-b20f-647854934101.webp" alt="">
+                    </div>
+                    </div>
+                </div>
+
+                <div class="side-panel">
+                    <h2>Leaves</h2>
+                    <div class="spawner-grid">
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves1.webp', 'leaf', '')">
+                        <img loading="lazy" src="assets/flowers/leaves1.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves2.webp', 'leaf', '')">
+                        <img loading="lazy" src="assets/flowers/leaves2.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves3.webp', 'leaf', '')">
+                        <img loading="lazy" src="assets/flowers/leaves3.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves4.webp', 'leaf', '')">
+                        <img loading="lazy" src="assets/flowers/leaves4.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves5.webp', 'leaf', '')">
+                        <img loading="lazy" src="assets/flowers/leaves5.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves6.webp', 'leaf', '')">
+                        <img loading="lazy" src="assets/flowers/leaves6.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves7.webp', 'leaf', '')">
+                        <img loading="lazy" src="assets/flowers/leaves7.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves8.webp', 'leaf', '')">
+                        <img loading="lazy" src="assets/flowers/leaves8.webp" alt="">
+                    </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/leaves9.webp', 'leaf', '')">
+                        <img loading="lazy" src="assets/flowers/leaves9.webp" alt="">
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Canvas Space (Center) -->
+            <div id="canvasContainer" style="position: relative;">
+                <div id="customScene" style="overflow: visible;">
+                    <img loading="lazy" id="mainHolder" src="assets/flowers/holder_pink.webp" data-type="holder" class="draggableBouquetItem" style="display: block; position: absolute; left: 60px; top: 60px; width: 480px; height: 480px; object-fit: contain; pointer-events: none; z-index: 1;">
+                    <!-- Placeholder instructions -->
+                    
+            <div id="itemRotateBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.21l5.67-1.36"/></svg>
+            </div>
+            <div id="itemResizeBtn" style="display: none; position: absolute; z-index: 1000; cursor: nwse-resize; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </div>
+                    <!-- Delete Button for Selected Item -->
+                    <button id="itemDeleteBtn" style="
+                        display: none;
+                        position: absolute;
+                        width: 24px;
+                        height: 24px;
+                        background: white;
+                        border: 2px solid #B71A3D;
+                        border-radius: 50%;
+                        color: #B71A3D;
+                        font-weight: bold;
+                        font-size: 14px;
+                        line-height: 1;
+                        cursor: pointer;
+                        z-index: 999;
+                        padding: 0;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                        align-items: center;
+                        justify-content: center;
+                    ">×</button>
+                </div>
+            </div>
+
+            <!-- Column 3: Spawner Tray (Bows, Holders) & Controls -->
+            <div class="side-column" style="display: flex; flex-direction: column; gap: 24px; flex: 1; max-width: 320px; height: 600px;">
+                <div class="side-panel">
+                    <h3 style="color: var(--heading-color); margin: 0 0 10px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 28px; font-weight: normal; letter-spacing: 1px;">Bouquet Colour</h3>
+                    <div id="holderColourSwatches" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px;">
+                        <div class="colour-swatch holder-swatch swatch-active" data-src="assets/flowers/holder_pink.webp" style="background:#fce7f3;" title="Pink"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_green.webp" style="background:#dcfce7;" title="Green"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_lightblue.webp" style="background:#dbeafe;" title="Light Blue"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_black.webp" style="background:#333333;" title="Black"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_purple.webp" style="background:#f3e8ff;" title="Purple"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_brown.webp" style="background:#d4a373;" title="Brown"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_white.webp" style="background:#f3f4f6;" title="White"></div>
+                        <div class="colour-swatch holder-swatch" data-src="assets/flowers/holder_blue.webp" style="background:#bfdbfe;" title="Blue"></div>
+                    </div>
+
+                    <h3 style="color: var(--heading-color); margin: 0 0 10px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 28px; font-weight: normal; letter-spacing: 1px;">Bows</h3>
+                    <div class="spawner-grid">
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_aqua.webp', 'bow', '')">
+                            <img loading="lazy" src="assets/flowers/bow_aqua.webp" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_blue.webp', 'bow', '')">
+                            <img loading="lazy" src="assets/flowers/bow_blue.webp" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_purple.webp', 'bow', '')">
+                            <img loading="lazy" src="assets/flowers/bow_purple.webp" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_green.webp', 'bow', '')">
+                            <img loading="lazy" src="assets/flowers/bow_green.webp" alt="">
+                        </div>
+                        <div class="spawner-item" onclick="spawnElement('assets/flowers/bow_pink.webp', 'bow', '')">
+                            <img loading="lazy" src="assets/flowers/bow_pink.webp" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+    <div id="toast">
+        Added To Cart 
+    </div>
+
+    
+    <script defer>
+// Cart state
+let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+function getCartCount() {
+    const cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+    return cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
+}
+
+// DOM Elements
+const cartCount = document.getElementById("cartCount");
+const toast = document.getElementById("toast");
+const cartButton = document.getElementById("cartButton");
+
+// Set initial cart count
+cartCount.innerText = getCartCount();
+
+// Track select quantities for 5 flowers locally
+
+
+// Local quantity state for items on this page
+const localQtys = {};
+
+function updateQtyDisplay(flowerId) {
+    const qtySpan = document.getElementById(`qtyFlower${flowerId}`);
+    if (qtySpan) {
+        qtySpan.innerText = localQtys[flowerId] || 1;
+    }
+}
+// Initialize on load
+setTimeout(() => {
+    for (let i = 1; i <= 35; i++) updateQtyDisplay(i);
+}, 100);
+
+// Plus Buttons
+document.querySelectorAll(".plusBtn").forEach(button => {
+    button.addEventListener("click", () => {
+        const flowerId = button.dataset.flower;
+        localQtys[flowerId] = (localQtys[flowerId] || 1) + 1;
+        updateQtyDisplay(flowerId);
+    });
+});
+
+// Minus Buttons
+document.querySelectorAll(".minusBtn").forEach(button => {
+    button.addEventListener("click", () => {
+        const flowerId = button.dataset.flower;
+        if ((localQtys[flowerId] || 1) > 1) {
+            localQtys[flowerId]--;
+            updateQtyDisplay(flowerId);
+        }
+    });
+});
+
+// Add to Cart
+document.querySelectorAll(".addToCartBtn").forEach(button => {
+    button.addEventListener("click", () => {
+        const flowerId = button.dataset.flower;
+        const itemName = button.dataset.name || "Flower";
+        const itemImage = button.dataset.image;
+        const qtyToAdd = localQtys[flowerId] || 1;
+
+        let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+        
+        // Push to cart
+        let existingItem = cart.find(item => item.name === itemName && !item.customId);
+        if (existingItem) {
+            existingItem.quantity += qtyToAdd;
+        } else {
+            cart.push({
+                name: itemName,
+                image: itemImage,
+                quantity: qtyToAdd
+            });
+        }
+
+        // Save
+        sessionStorage.setItem("cart", JSON.stringify(cart));
+
+        // Update count
+        cartCount.innerText = getCartCount();
+
+        // Reset display and internal count for this card
+        localQtys[flowerId] = 1;
+        updateQtyDisplay(flowerId);
+
+        // Toast
+        toast.innerText = "Added To Cart";
+        toast.style.display = "block";
+        setTimeout(() => {
+            toast.style.display = "none";
+        }, 2000);
+    });
+
+});
+
+// Redirect to checkout
+cartButton.addEventListener("click", () => {
+    window.location = "checkout.html";
+});
+
+</script>
+
+    <script defer>
+document.addEventListener('DOMContentLoaded', () => {
+    // We will dynamically construct the carousel to preserve the existing flowerCard HTML.
+    const layouts = document.querySelectorAll('.plushies-layout, .flowers-layout');
+    
+    layouts.forEach(layout => {
+        // Collect all cards
+        const cards = Array.from(layout.querySelectorAll('.flowerCard'));
+        if (cards.length === 0) return;
+        
+        // Clear layout and build carousel structure
+        layout.innerHTML = '';
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = 'carousel-wrapper';
+        
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'carousel-btn carousel-prev';
+        prevBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>';
+        
+        const trackContainer = document.createElement('div');
+        trackContainer.className = 'carousel-track-container';
+        
+        const track = document.createElement('div');
+        track.className = 'carousel-track';
+        
+        cards.forEach(card => {
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            slide.appendChild(card);
+            track.appendChild(slide);
+        });
+        
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'carousel-btn carousel-next';
+        nextBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>';
+        
+        trackContainer.appendChild(track);
+        wrapper.appendChild(prevBtn);
+        wrapper.appendChild(trackContainer);
+        wrapper.appendChild(nextBtn);
+        
+        layout.appendChild(wrapper);
+        
+        // --- Carousel Logic ---
+        let currentIndex = 0;
+        let slideInterval;
+        
+        function updateCarousel() {
+            const slides = Array.from(track.children);
+            if (slides.length === 0) return;
+            
+            // To show 3 items at once, slide width is calculated by container
+            const slideWidth = slides[0].getBoundingClientRect().width;
+            
+            // We move exactly by one slide width
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            
+            const containerWidth = trackContainer.getBoundingClientRect().width;
+            const visibleSlides = Math.round(containerWidth / slideWidth) || 1;
+            const maxIndex = Math.max(0, slides.length - visibleSlides);
+            
+            // Fix index if resizing
+            if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
+                track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            }
+            
+            prevBtn.disabled = currentIndex <= 0;
+            nextBtn.disabled = currentIndex >= maxIndex;
+        }
+        
+        function nextSlide() {
+            const containerWidth = trackContainer.getBoundingClientRect().width;
+            const slideWidth = track.children[0].getBoundingClientRect().width;
+            const visibleSlides = Math.round(containerWidth / slideWidth) || 1;
+            const maxIndex = Math.max(0, track.children.length - visibleSlides);
+            
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+            } else {
+                currentIndex = 0; // Loop back
+            }
+            updateCarousel();
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) currentIndex--;
+            updateCarousel();
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+        });
+        
+        // Auto Slideshow removed
+        
+        window.addEventListener('resize', updateCarousel);
+        
+        // Initial setup
+        setTimeout(() => {
+            updateCarousel();
+        }, 100);
+    });
+});
+
+</script>
+    
+<script defer>
+
+const customScene = document.getElementById("customScene");
+const placeholderMsg = document.getElementById("placeholderMsg");
+
+    let selectedItem = null;
+    let selected = null;
+    let highestZ = 10;
+
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    /* -------------------- */
+    /* SPAWNER LOGIC        */
+    /* -------------------- */
+    function spawnElement(src, type, name) {
+        // Hide placeholder
+        if (placeholderMsg) {
+            placeholderMsg.style.opacity = "0";
+            setTimeout(() => {
+                if (placeholderMsg) placeholderMsg.style.display = "none";
+            }, 300);
+        }
+
+        const el = document.createElement("img");
+        
+        // Base dimensions: bouquet wrap holder should be larger by default
+        let defaultDim = 120;
+        if (type === 'holder') {
+            // Remove any existing holder so only one can be selected at a time
+            const existingHolders = document.querySelectorAll("#customScene .draggableBouquetItem[data-type='holder']");
+            existingHolders.forEach(h => h.remove());
+            
+            defaultDim = 200;
+        } else if (type === 'bow') {
+            defaultDim = 90;
+        }
+
+        el.onload = function() {
+            if (type === 'flower' || type === 'leaf') {
+                const ratio = el.naturalHeight / (el.naturalWidth || 1);
+                let w = 110;
+                let h = 110;
+                if (ratio > 1) {
+                    w = 110 / ratio;
+                } else {
+                    h = 110 * ratio;
+                }
+                el.style.width = w + "px";
+                el.style.height = h + "px";
+                el.style.left = (300 - w / 2) + "px";
+                el.style.top = (300 - h / 2) + "px";
+            }
+        };
+
+        el.src = src;
+        el.className = "draggableAccessory draggableBouquetItem";
+        el.style.position = "absolute";
+        
+        if (type !== 'flower' && type !== 'leaf') {
+            el.style.width = defaultDim + "px";
+            el.style.height = defaultDim + "px";
+            
+            // Center the element
+            el.style.left = (300 - defaultDim / 2) + "px";
+            el.style.top = (300 - defaultDim / 2) + "px";
+        }
+        
+        el.style.zIndex = highestZ++;
+        el.draggable = false;
+        
+        // Track state
+        el.dataset.rotation = "0";
+        el.dataset.flip = "1";
+        el.dataset.type = type;
+        el.dataset.name = name;
+
+        customScene.appendChild(el);
+        selectElement(el);
+    }
+
+    /* -------------------- */
+    /* SELECTION LOGIC      */
+    /* -------------------- */
+    function updateSelectionUI() {
+    const deleteBtn = document.getElementById('itemDeleteBtn');
+    const rotateBtn = document.getElementById('itemRotateBtn');
+    const resizeBtn = document.getElementById('itemResizeBtn');
+    
+    if (!selectedItem) {
+        if (deleteBtn) deleteBtn.style.display = 'none';
+        if (rotateBtn) rotateBtn.style.display = 'none';
+        if (resizeBtn) resizeBtn.style.display = 'none';
+        return;
+    }
+
+    const l = parseFloat(selectedItem.style.left) || 0;
+    const t = parseFloat(selectedItem.style.top)  || 0;
+    const w = selectedItem.offsetWidth;
+    const h = selectedItem.offsetHeight;
+
+    const cx = l + w / 2;
+    const cy = t + h / 2;
+    
+    const angle = parseFloat(selectedItem.dataset.rotation) || 0;
+    const rad = angle * Math.PI / 180;
+    const flip = parseInt(selectedItem.dataset.flip) || 1;
+    
+    function getRotatedPoint(dx, dy) {
+        let rx = dx * Math.cos(rad) - dy * Math.sin(rad);
+        let ry = dx * Math.sin(rad) + dy * Math.cos(rad);
+        rx *= flip;
+        return {
+            x: cx + rx,
+            y: cy + ry
+        };
+    }
+    
+    const inset = 10;
+    const rw = Math.max(16, w - inset * 2);
+    const rh = Math.max(16, h - inset * 2);
+
+    const tr = getRotatedPoint(rw/2, -rh/2);
+    const bl = getRotatedPoint(-rw/2, rh/2);
+    const br = getRotatedPoint(rw/2, rh/2);
+
+    if (deleteBtn) {
+        deleteBtn.style.left = (tr.x - 12) + 'px';
+        deleteBtn.style.top  = (tr.y - 12) + 'px';
+        deleteBtn.style.display = 'flex';
+    }
+    
+    if (rotateBtn) {
+        rotateBtn.style.left = (bl.x - 12) + 'px';
+        rotateBtn.style.top  = (bl.y - 12) + 'px';
+        rotateBtn.style.display = 'flex';
+    }
+    
+    if (resizeBtn) {
+        resizeBtn.style.left = (br.x - 12) + 'px';
+        resizeBtn.style.top  = (br.y - 12) + 'px';
+        resizeBtn.style.display = 'flex';
+    }
+}
+
+function selectElement(el) {
+    selectedItem = el;
+    document.querySelectorAll(".draggableBouquetItem, .draggablePlushieItem, .draggableAccessory").forEach(item => {
+        item.classList.remove("selectedItem", "selectedAccessory");
+        item.style.outline = "none";
+    });
+    
+    if (el) {
+        el.classList.add("selectedItem");
+        if(el.classList.contains("draggableAccessory")) el.classList.add("selectedAccessory");
+        el.style.outline = "2px dashed #B71A3D";
+        updateSelectionUI();
+    } else {
+        updateSelectionUI();
+        customScene.style.cursor = '';
+    }
+}
+
+// Fallback for selectAccessory inside customize.html
+function selectAccessory(el) {
+    selectElement(el);
+}
+
+let isResizing = false;
+let isRotating = false;
+let resizeStartX = 0, resizeStartY = 0;
+let resizeStartW = 0, resizeStartH = 0;
+let resizeStartLeft = 0, resizeStartTop = 0;
+let rotateStartAngle = 0;
+let rotateInitialElementAngle = 0;
+
+document.addEventListener("mousedown", (e) => {
+    if (e.target.closest('#itemDeleteBtn')) return;
+    
+    if (e.target.closest('#itemResizeBtn') && selectedItem) {
+        e.stopPropagation(); e.preventDefault();
+        isResizing = true;
+        resizeStartX = e.clientX;
+        resizeStartY = e.clientY;
+        resizeStartW = selectedItem.offsetWidth;
+        resizeStartH = selectedItem.offsetHeight;
+        resizeStartLeft = parseFloat(selectedItem.style.left) || 0;
+        resizeStartTop = parseFloat(selectedItem.style.top) || 0;
+        return;
+    }
+    
+    if (e.target.closest('#itemRotateBtn') && selectedItem) {
+        e.stopPropagation(); e.preventDefault();
+        isRotating = true;
+        
+        const rect = selectedItem.getBoundingClientRect();
+        // Calculate center of actual element on screen
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        rotateStartAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+        rotateInitialElementAngle = parseFloat(selectedItem.dataset.rotation) || 0;
+        return;
+    }
+
+    const item = e.target.closest(".draggableBouquetItem, .draggablePlushieItem, .draggableAccessory");
+    if (item && customScene.contains(item)) {
+        if (!selectedItem || selectedItem !== item) {
+            selectElement(item);
+        }
+
+        selected = item;
+        const rect = item.getBoundingClientRect();
+        
+        // Use center of item for dragging so rotation doesn't offset it weirdly?
+        // Let's stick to standard dragOffsetX
+        // Account for scale during initial grab offset
+        const sceneRect = customScene.getBoundingClientRect();
+        const scale = customScene.offsetWidth / sceneRect.width;
+        
+        dragOffsetX = ((e.clientX - rect.left) * scale);
+        dragOffsetY = ((e.clientY - rect.top) * scale);
+        
+        if (typeof highestZ !== 'undefined') {
+            item.style.zIndex = highestZ++;
+        } else {
+            // if highestZ is not defined, we can just use 100
+            item.style.zIndex = parseInt(item.style.zIndex || "100") + 1;
+        }
+        e.preventDefault();
+        customScene.style.cursor = 'grabbing';
+    }
+});
+
+document.addEventListener("mousemove", (e) => {
+    const sceneW = customScene.clientWidth;
+    const sceneH = customScene.clientHeight;
+
+    if (isResizing && selectedItem) {
+        const dx = e.clientX - resizeStartX;
+        
+        let maxW = Math.min(sceneW - resizeStartLeft, sceneH - resizeStartTop);
+        let newW = resizeStartW + dx;
+        newW = Math.max(30, Math.min(newW, maxW));
+        
+        selectedItem.style.width = newW + "px";
+        selectedItem.style.height = (newW * (resizeStartH / resizeStartW)) + "px";
+        updateSelectionUI();
+        return;
+    }
+    
+    if (isRotating && selectedItem) {
+        const rect = selectedItem.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const currentAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+        
+        let angleDiff = currentAngle - rotateStartAngle;
+        let newAngle = rotateInitialElementAngle + angleDiff;
+        
+        selectedItem.dataset.rotation = newAngle;
+        let flipStr = selectedItem.dataset.flip === "-1" ? "scaleX(-1) " : "";
+        selectedItem.style.transform = flipStr + "rotate(" + newAngle + "deg)";
+        updateSelectionUI();
+        return;
+    }
+
+    if (!selected) return;
+
+    const rect = customScene.getBoundingClientRect();
+    
+    // Account for zoom/scale factor on mobile
+    const scale = customScene.offsetWidth / rect.width;
+    
+    let left = ((e.clientX - rect.left) * scale) - dragOffsetX;
+    let top = ((e.clientY - rect.top) * scale) - dragOffsetY;
+
+    // Bounded within canvas bounds
+    left = Math.max(0, Math.min(left, sceneW - selected.offsetWidth));
+    top = Math.max(0, Math.min(top, sceneH - selected.offsetHeight));
+
+    selected.style.left = left + "px";
+    selected.style.top = top + "px";
+    updateSelectionUI();
+});
+
+document.addEventListener("mouseup", () => {
+    selected = null;
+    isResizing = false;
+    isRotating = false;
+    if (selectedItem) {
+        customScene.style.cursor = 'grab';
+    } else {
+        customScene.style.cursor = '';
+    }
+});
+
+customScene.addEventListener("mousedown", (e) => {
+    // Make sure we only deselect if clicking customScene directly or the mainPlushie or placeholder
+    if (e.target === customScene || e.target.id === 'mainPlushie' || e.target.closest('.canvas-placeholder')) {
+        selectElement(null);
+    }
+});
+
+
+
+    document.getElementById("itemDeleteBtn").addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (selectedItem) {
+            selectedItem.remove();
+            selectElement(null);
+            
+            // Show placeholder if empty
+            if (document.querySelectorAll(".draggableBouquetItem").length === 0) {
+                if (placeholderMsg) {
+                    placeholderMsg.style.display = "flex";
+                    setTimeout(() => {
+                        if (placeholderMsg) placeholderMsg.style.opacity = "1";
+                    }, 50);
+                }
+            }
+        }
+    });
+
+    /* -------------------- */
+    /* SAVE TO CART         */
+    /* -------------------- */
+    document.getElementById("saveBouquet").addEventListener("click", () => {
+        const items = document.querySelectorAll("#customScene .draggableBouquetItem");
+        if (items.length === 0) {
+            alert("Your bouquet is empty! Please spawn some flowers and wraps first.");
+            return;
+        }
+
+        const hasHolder = Array.from(items).some(item => item.dataset.type === 'holder');
+        if (!hasHolder) {
+            alert("Please select a bouquet wrap (holder) before saving!");
+            return;
+        }
+
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        items.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            const sceneRect = customScene.getBoundingClientRect();
+            const left = rect.left - sceneRect.left;
+            const top = rect.top - sceneRect.top;
+            if (left < minX) minX = left;
+            if (top < minY) minY = top;
+            if (left + rect.width > maxX) maxX = left + rect.width;
+            if (top + rect.height > maxY) maxY = top + rect.height;
+        });
+
+        if (minX === Infinity) { minX = 0; minY = 0; maxX = 600; maxY = 600; }
+        
+        minX = Math.max(0, minX - 10);
+        minY = Math.max(0, minY - 10);
+        maxX = Math.min(customScene.clientWidth, maxX + 10);
+        maxY = Math.min(customScene.clientHeight, maxY + 10);
+
+        const bbWidth = maxX - minX;
+        const bbHeight = maxY - minY;
+
+        const accessories = [];
+        
+        items.forEach(item => {
+            const realLeft = parseFloat(item.style.left) || 0;
+            const realTop = parseFloat(item.style.top) || 0;
+
+            accessories.push({
+                image: "assets/flowers/" + item.src.split("/").pop(),
+                left: realLeft + "px",
+                top: realTop + "px",
+                width: item.style.width,
+                height: item.style.height || (item.offsetHeight + "px"),
+                rotation: item.dataset.rotation || "0",
+                flip: item.dataset.flip || "1"
+            });
+        });
+
+        // Search if there's a holder to use as thumbnail, otherwise default to holder.webp or first item
+        const holderItem = Array.from(items).find(i => i.dataset.type === 'holder');
+        const thumbnailSrc = holderItem ? "assets/flowers/" + holderItem.src.split("/").pop() : "assets/flowers/holder_white.webp";
+
+        // Create transparent pixel SVG background image Data URL
+        const transparentImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1' height='1'></svg>";
+
+        const bouquetItem = {
+            customId: "bouquet_" + Date.now(),
+            name: "Custom Bouquet",
+            image: transparentImg,
+            quantity: 1,
+            accessories: accessories,
+            canvasW: bbWidth,
+            canvasH: bbHeight,
+            canvasL: minX,
+            canvasT: minY
+        };
+
+        // Add to cart
+        let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+        cart.push(bouquetItem);
+        sessionStorage.setItem("cart", JSON.stringify(cart));
+        window.location.href = "checkout.html";
+    });
+
+// Toggle Logic
+const showFlowersBtn = document.getElementById('showFlowersBtn');
+const showBouquetBtn = document.getElementById('showBouquetBtn');
+const flowersMainContainer = document.getElementById('flowersMainContainer');
+const bouquetMainContainer = document.getElementById('bouquetMainContainer');
+const storeHeader = document.querySelector('.storeHeader');
+const cartBtnNav = document.getElementById('cartButton');
+const saveBouquetNav = document.getElementById('saveBouquet');
+
+showFlowersBtn.addEventListener('click', () => {
+    showFlowersBtn.style.background = '#fac5cf';
+    showFlowersBtn.style.color = '#5a0035';
+    showBouquetBtn.style.background = 'transparent';
+    showBouquetBtn.style.color = 'var(--text-color)';
+    
+    flowersMainContainer.style.display = 'flex';
+    bouquetMainContainer.style.display = 'none';
+    storeHeader.innerText = 'pick a bloom.';
+
+    if(cartBtnNav) cartBtnNav.style.display = 'inline-flex';
+    if(saveBouquetNav) saveBouquetNav.style.display = 'none';
+});
+
+showBouquetBtn.addEventListener('click', () => {
+    showBouquetBtn.style.background = '#fac5cf';
+    showBouquetBtn.style.color = '#5a0035';
+    showFlowersBtn.style.background = 'transparent';
+    showFlowersBtn.style.color = 'var(--text-color)';
+    
+    flowersMainContainer.style.display = 'none';
+    bouquetMainContainer.style.display = 'flex';
+    storeHeader.innerText = 'build a custom bouquet';
+
+    if(cartBtnNav) cartBtnNav.style.display = 'none';
+    if(saveBouquetNav) saveBouquetNav.style.display = 'inline-flex';
+});
+
+</script>
+<script defer>
+    // Preload alternative options dynamically to prevent delay on change
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const preloadElements = document.querySelectorAll('[data-image]');
+            preloadElements.forEach(el => {
+                const src = el.getAttribute('data-image');
+                if (src) {
+                    const img = new Image();
+                    img.src = src;
+                }
+            });
+            // Also preload spawner items and swatches
+            document.querySelectorAll('.spawner-item img, .box-option img, .color-option img, .holder-swatch').forEach(imgEl => {
+                const src = imgEl.src || imgEl.dataset.src;
+                if (src) {
+                    const img = new Image();
+                    img.src = src;
+                }
+            });
+        }, 500);
+    });
+
+// Handle Bouquet Wrap Colour Selection
+document.querySelectorAll('.holder-swatch').forEach(swatch => {
+    swatch.addEventListener('click', () => {
+        const src = swatch.dataset.src;
+        document.getElementById('mainHolder').src = src;
+        document.querySelectorAll('.holder-swatch').forEach(s => s.classList.remove('swatch-active'));
+        swatch.classList.add('swatch-active');
+    });
+});
+
+// Color Option Switching for Flowers
+const flowerNames = {
+    "1": "Pink Rose",
+    "2": "Pink Tulip",
+    "3": "Pink Lily",
+    "4": "Pink-White Rose",
+    "5": "White Rose",
+    "6": "Black Rose",
+    "7": "White Lily",
+    "8": "Light Blue Lily",
+    "9": "Orange Lily",
+    "10": "Yellow Rose",
+    "11": "Yellow Tulip",
+    "12": "Red Lily",
+    "13": "Purple Lily",
+    "14": "Blue Rose",
+    "15": "Dark Purple Calla Lily",
+    "16": "Deep Red Calla Lily",
+    "17": "Cream Calla Lily",
+    "18": "Magenta Calla Lily",
+    "19": "Dark Blue Calla Lily",
+    "20": "Pink Orchid",
+    "21": "Dark Purple Orchid",
+    "22": "Yellow Orchid",
+    "23": "Light Blue Orchid",
+    "24": "Orange Orchid",
+    "25": "Cyan Hydrangea",
+    "26": "Light Purple Hydrangea",
+    "27": "Cream Hydrangea",
+    "28": "Light Green Hydrangea",
+    "29": "Black Hydrangea",
+    "30": "Pink Hydrangea"
+};
+
+document.addEventListener("click", e => {
+    const option = e.target.closest(".color-option");
+    if (!option) return;
+    
+    const card = option.closest(".flowerCard");
+    if (!card) return;
+    
+    card.querySelectorAll(".color-option").forEach(opt => opt.classList.remove("active"));
+    option.classList.add("active");
+    
+    const newImage = option.dataset.image;
+    const fId = option.dataset.flower;
+    
+    const mainImg = card.querySelector(".flowerImage");
+    if (mainImg) {
+        mainImg.src = newImage;
+    }
+    
+    const newName = flowerNames[fId] || card.querySelector('.flowerName').innerText;
+
+    
+    // Update the Add To Cart button
+    const btn = card.querySelector(".addToCartBtn");
+    if (btn) {
+        btn.dataset.flower = fId;
+        btn.dataset.image = newImage;
+        btn.dataset.name = newName;
+    }
+    
+    // Update quantity selector ID and data-flower for buttons
+    const minusBtn = card.querySelector(".minusBtn");
+    const plusBtn = card.querySelector(".plusBtn");
+    const qtySpan = card.querySelector(".flowerQuantity");
+    
+    if (minusBtn) minusBtn.dataset.flower = fId;
+    if (plusBtn) plusBtn.dataset.flower = fId;
+    if (qtySpan) qtySpan.id = "qtyFlower" + fId;
+    
+    // If the qty span value is not 1, maybe reset it? (Optional, let's keep current behavior)
+});
+
+</script>
+
+<style>
+#storeNavbar {
+    border-bottom: none !important;
+}
+</style>
+
+<style>
+
+</style>
+
+
+<style>
+.side-panel h2 {
+    text-align: center !important;
+    margin-bottom: 16px !important;
+    font-family: 'Pinyon Script', cursive !important;
+    font-weight: normal !important;
+    font-size: 36px !important;
+    color: var(--heading-color) !important;
+    letter-spacing: 1px !important;
+}
+</style>
+
+</body>
+
+</html>
+
+
+

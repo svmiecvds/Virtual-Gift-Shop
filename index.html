@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="color-scheme" content="light">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to The Gifting Co.</title>
+    <link rel="icon" type="image/png" href="assets/favicon.webp">
+    <link rel="preload" as="image" href="assets/bg.webp">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="block-mobile.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Pacifico&family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+/* --- THEME VARIABLES --- */
+:root {
+    --bg-gradient: linear-gradient(135deg, #fce0e5 0%, #fac5cf 40%, #fac5cf 100%);
+    --body-bg: #fef2f4;
+    --panel-bg: #fce0e5;
+    --popup-bg: #fce0e5;
+    --card-bg: rgba(255, 255, 255, 0.6);
+    --card-border: #fac5cf;
+    --card-hover-border: #B71A3D;
+    --text-color: #B71A3D;
+    --heading-color: #B71A3D;
+    --hero-gradient: linear-gradient(90deg, #B71A3D, #df244e);
+    --btn-bg: #ffffff;
+    --btn-text: #B71A3D;
+    --glow-color: #B71A3D;
+    --glow-soft: #fac5cf;
+    --nav-bg: rgba(252, 224, 229, 0.85);
+    --nav-border: #fac5cf;
+    --font-body: 'Outfit', sans-serif;
+    --font-heading: 'Pinyon Script', cursive;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    transition: background-color 0.6s ease, color 0.6s ease;
+    scrollbar-width: none; /* Firefox */
+}
+html::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+body {
+    color: var(--text-color);
+    background: url('assets/bg.webp') center/cover no-repeat fixed;
+    animation: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.6s ease, color 0.6s ease;
+    font-family: var(--font-body);
+    font-weight: 400;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- NAVBAR (Logo Only) --- */
+#storeNavbar {
+    background: url(\'assets/kisses-bg.webp\') center/cover no-repeat !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    border-bottom: 2px solid var(--nav-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    padding: 10px 30px;
+    box-sizing: border-box;
+    transition: background 0.6s ease, border-color 0.6s ease;
+}
+
+.navBrand {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    color: white !important;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.3s ease;
+}
+
+.navBrand:hover {
+    transform: scale(1.08);
+    text-shadow: none;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 20px 60px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 72px;
+    color: white;
+    transform: scaleX(1.15);
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 20px 30px;
+    line-height: 1.5;
+    animation: fadeInDown 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+.hero-subtitle {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 38px;
+    font-weight: 700;
+    max-width: 650px;
+    margin-bottom: 60px;
+    color: rgba(255, 240, 245, 0.95);
+    letter-spacing: 1px;
+    line-height: 1.4;
+    animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both;
+}
+
+.categories {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    perspective: 1000px;
+}
+
+.category-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 40px;
+    padding: 40px 30px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease, background 0.6s ease;
+    animation: zoomIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.category-card:nth-child(1) { animation-delay: 0.3s; }
+.category-card:nth-child(2) { animation-delay: 0.4s; }
+.category-card:nth-child(3) { animation-delay: 0.5s; }
+
+.category-card:hover {
+    transform: translateY(-15px) scale(1.03);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+
+
+.category-icon {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 30px;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
+}
+
+.category-card:hover .category-icon {
+    transform: translateY(-15px) scale(1.15) rotate(5deg);
+}
+
+.category-title {
+    font-size: 32px;
+    color: var(--heading-color);
+    font-family: var(--font-heading);
+    margin-bottom: 15px;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.category-desc {
+    color: var(--text-color);
+    font-size: 16px;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+.floating-element {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.8;
+    animation: float 8s ease-in-out infinite;
+    filter: drop-shadow(0 20px 30px rgba(183, 26, 61, 0.2));
+}
+
+
+
+.float-1 { top: 15%; left: 8%; width: 70px; animation-delay: 0s; }
+.float-2 { top: 25%; right: 12%; width: 90px; animation-delay: 1.5s; animation-duration: 9s; }
+.float-3 { bottom: 15%; left: 12%; width: 80px; animation-delay: 3s; animation-duration: 7s; }
+.float-4 { bottom: 25%; right: 8%; width: 60px; animation-delay: 4.5s; animation-duration: 6s; }
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(8deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* --- RADIATING HEARTS BUTTON --- */
+.hero-btn-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 40px;
+}
+
+.hero-btn {
+    position: relative;
+    padding: 8px 40px;
+    font-size: 28px;
+    font-weight: 400;
+    font-family: var(--font-heading);
+    background: #900C3F;
+    border: 1px solid #ffffff;
+    color: white !important;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    z-index: 2;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.15) !important;
+}
+
+.hero-btn:hover {
+    transform: scale(1.06);
+    background: #700a31;
+    border-color: #700a31;
+}
+
+.radiating-hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.heart-particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 26px;
+    color: rgba(255, 160, 200, 1);
+    opacity: 0;
+    animation: radiate 2.5s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+
+.heart-particle:nth-child(1) { animation-delay: 0s; --angle: 0deg; }
+.heart-particle:nth-child(2) { animation-delay: 0.3s; --angle: 45deg; }
+.heart-particle:nth-child(3) { animation-delay: 0.6s; --angle: 90deg; }
+.heart-particle:nth-child(4) { animation-delay: 0.9s; --angle: 135deg; }
+.heart-particle:nth-child(5) { animation-delay: 1.2s; --angle: 180deg; }
+.heart-particle:nth-child(6) { animation-delay: 1.5s; --angle: 225deg; }
+.heart-particle:nth-child(7) { animation-delay: 1.8s; --angle: 270deg; }
+.heart-particle:nth-child(8) { animation-delay: 2.1s; --angle: 315deg; }
+
+@keyframes radiate {
+    0% {
+        transform: translate(-50%, -50%) rotate(var(--angle)) translateY(0px) rotate(calc(-1 * var(--angle))) scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-120px) rotate(calc(-1 * var(--angle))) scale(1.5);
+        opacity: 0;
+    }
+}
+    
+/* --- NAVBAR BRAND OVERRIDE --- */
+.navBrand, a.navBrand {
+    font-family: 'Pinyon Script', cursive !important;
+    color: white !important;
+    font-size: 38px !important;
+    text-shadow: none !important;
+}
+
+
+
+/* NAVBAR OVERRIDE */
+#storeNavbar {
+    background: #900C3F !important; /* dark cherry red */
+}
+.navBrand, a.navBrand, .navBrand:hover {
+    color: white !important;
+}
+
+#cartButton, #saveCustomization, #saveGiftLayoutBtn, #giftButton {
+    background-color: #ffffff !important;
+}
+#cartButton > span::before, #saveCustomization > span::before, #saveGiftLayoutBtn > span::before, #giftButton > span::before {
+    content: none !important;
+    display: none !important;
+}
+
+</style>
+
+<style>
+.site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 20px;
+    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: #900C3F;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+}
+
+.site-footer a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.6);
+    transition: opacity 0.2s ease;
+    pointer-events: auto;
+    margin: 0 2px;
+}
+.site-footer a:hover {
+    opacity: 0.7;
+}
+
+
+</style>
+
+<style>
+/* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
+[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
+    border: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-action-btn, .shiny-cta, .navLink {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+.flowerCard {
+    height: 100% !important;
+}
+
+.flowerSelector {
+    margin-top: auto !important;
+}
+
+.flowerCard .customizeBtn {
+    margin-top: 0 !important;
+}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+
+    <!-- Main Hero Section -->
+    <main class="hero" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh;">
+        <h1 class="hero-title" style="font-size: 130px; margin-bottom: 10px;">The Gifting Co.</h1>
+        <p class="hero-subtitle" style="color: white !important;">digital gifts for your loved ones</p>
+        
+        <div class="hero-btn-container">
+            <div class="radiating-hearts">
+                <div class="heart-particle">❤</div>
+                <div class="heart-particle">❤</div>
+                <div class="heart-particle">❤</div>
+                <div class="heart-particle">❤</div>
+                <div class="heart-particle">❤</div>
+                <div class="heart-particle">❤</div>
+                <div class="heart-particle">❤</div>
+                <div class="heart-particle">❤</div>
+            </div>
+            <a href="plushies.html" class="hero-btn">Start Gifting</a>
+        </div>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        &copy; 2026 | &#9825; designed by <a href="https://www.instagram.com/artwsomi?igsh=bHRpb2Z6aWo1ZjFi" target="_blank" rel="noopener noreferrer">@somi</a> &amp; <a href="https://www.instagram.com/byayushdas" target="_blank" rel="noopener noreferrer">@byayushdas</a>
+    </footer>
+
+<style>
+#storeNavbar {
+    border-bottom: none !important;
+}
+</style>
+</body>
+</html>
+
+
+

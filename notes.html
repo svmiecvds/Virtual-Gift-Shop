@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="color-scheme" content="light">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gifting Co.</title>
+    <link rel="icon" type="image/png" href="assets/favicon.webp">
+    <link rel="preload" as="image" href="assets/notesbg.webp">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="block-mobile.js"></script>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- THEME VARIABLES --- */
+:root {
+    --bg-gradient: linear-gradient(135deg, #fce0e5 0%, #fac5cf 40%, #fac5cf 100%);
+    --body-bg: #fef2f4;
+    --panel-bg: #fce0e5;
+    --popup-bg: #fce0e5;
+    --receipt-bg: #fef2f4;
+    --card-bg: #ffffff;
+    --text-color: #B71A3D;
+    --heading-color: #B71A3D;
+    --btn-bg: #ffffff;
+    --btn-text: #B71A3D;
+    --cart-btn-bg: #B71A3D;
+    --cart-btn-shadow: #B71A3D;
+    --glow-color: #B71A3D;
+    --glow-soft: #fac5cf;
+    --toast-bg: #B71A3D;
+    --receipt-shadow: #fac5cf;
+    --shelf-overlay: rgba(255,255,255,0.0);
+    --font-body: 'Quicksand', sans-serif;
+    --font-heading: 'Pinyon Script', cursive;
+    --font-ui: 'Fredoka', sans-serif;
+    --font-nav: 'Inter', sans-serif;
+}
+
+
+
+/* --- BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+html_REMOVED {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body,
+body.receiptPage,
+body.giftPage {
+    color: var(--text-color);
+    background-image: url('assets/notesbg.webp');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: var(--body-bg);
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.5s ease, color 0.5s ease;
+    font-family: var(--font-body);
+    font-weight: 500;
+}
+
+.sidebar-panel {
+    display: none;
+    /* --- controlled by JS --- */
+    background: var(--popup-bg);
+    padding: 25px;
+    border-radius: 25px;
+    text-align: center;
+    transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+
+#shelf {
+    width: 1000px;
+    height: 800px;
+    background: url("shelf.webp");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    margin: 0 auto;
+
+/* --- Shelf stays strictly center aligned --- */
+}
+
+.character {
+    position: absolute;
+    width: 170px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.character:hover {
+    transform: scale(1.05);
+}
+
+/* --- CHECKOUT BUTTON --- */
+
+
+/* --- TOAST --- */
+#toast {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--toast-bg);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    z-index: 9999;
+    transition: background 0.5s ease;
+}
+
+/* --- Highlight selected gift element --- */
+.gifSelected {
+    outline: 3px solid #B71A3D !important;
+    outline-offset: 3px;
+}
+
+/* --- Gift text element --- */
+.giftText {
+    min-width: 80px;
+    font-size: 22px;
+    color: var(--heading-color);
+    user-select: none;
+    cursor: move;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* --- CUSTOM ALIGNMENTS --- */
+.checkoutTitle, .customizeTitle {
+    text-align: center !important;
+    font-family: var(--font-heading);
+    color: var(--heading-color);
+    margin-top: 100px;
+    margin-bottom: 25px;
+    font-size: 50px;
+    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
+    font-weight: bold;
+}
+
+
+
+/* --- NAVBAR --- */
+#storeNavbar {
+    background: url(\'assets/kisses-bg.webp\') center/cover no-repeat !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 228, 241, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    z-index: 999;
+    border-bottom: none;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
+    padding: 10px 30px;
+    box-sizing: border-box;
+}
+
+
+
+.navLink {
+    font-size: 16px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+.navLink:hover {
+    color: white;
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.navLink.active {
+    color: white;
+    font-weight: 800;
+    border-bottom: 3px solid var(--heading-color);
+    padding-bottom: 2px;
+}
+
+
+
+/* --- Header Text styling --- */
+.storeHeader {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    color: var(--heading-color);
+    font-family: var(--font-heading);
+    font-size: 56px;
+    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
+    font-weight: bold;
+}
+
+
+
+/* --- BACK TO SHOP BTN --- */
+
+
+
+.spawner-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    justify-items: center;
+}
+
+/* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
+
+#mainBox {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.canvas-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    color: #df244e;
+    font-family: var(--font-heading);
+    font-size: 26px;
+    line-height: 1.5;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* --- Bubbly option elements inside selection panel --- */
+.box-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    background: var(--btn-bg);
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    width: 100%;
+}
+
+.box-option:hover {
+    transform: translateY(-3px) scale(1.02);
+    border-color: #B71A3D;
+    box-shadow: 0 5px 12px rgba(183, 26, 61, 0.2);
+}
+
+.box-option.active {
+    background: #fac5cf;
+    border-color: #B71A3D;
+    box-shadow: none;
+}
+
+.box-option img {
+    width: 45px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.box-option span {
+    font-size: 16px;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.box-option.active span {
+    color: #5a0035;
+}
+
+
+
+
+
+
+
+/* --- Customization Buttons Placed Side-by-Side --- */
+.buttons-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.buttons-row button {
+    flex: 1;
+    margin: 0 !important;
+    padding: 12px 6px !important;
+    font-size: 14px !important;
+    border-radius: 25px !important;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background: #ffffff;
+    color: #5a0035;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+}
+
+.buttons-row button:hover {
+    transform: scale(1.05);
+}
+.draggableTreat {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    cursor: move;
+    z-index: 10;
+    transition: transform 0.1s ease;
+}
+
+/* --- PEARL STARDUST BUTTON DESIGN --- */
+:root {
+    --bg-pink: #fac5cf;
+    --hover-glow: rgba(250, 197, 207, 0.6);
+    --hover-glow-soft: rgba(183, 26, 61, 0.8);
+    --btn-text-color: #5a0035;
+}
+
+
+
+.shiny-cta {
+    outline: none;
+    cursor: pointer;
+    border: 0;
+    position: relative;
+    border-radius: 100px;
+    background-color: var(--bg-pink);
+    transition: all 0.2s ease;
+    box-shadow: 
+      inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.4),
+      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+      inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.3),
+      0 10px 15px -3px rgba(255, 105, 180, 0.3),
+      0 4px 6px -2px rgba(255, 105, 180, 0.05);
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 10px 24px;
+}
+
+.shiny-cta::before {
+    content: "";
+    position: absolute;
+    left: -15%;
+    right: -15%;
+    bottom: 25%;
+    top: -100%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.25);
+    transition: all 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.shiny-cta::after {
+    content: "";
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 12%;
+    bottom: 40%;
+    border-radius: 22px 22px 0 0;
+    box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.6);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transition: all 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.shiny-cta span {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: var(--btn-text-color);
+    transition: all 0.2s ease;
+    transform: translateY(2%);
+}
+
+.shiny-cta > span::before {
+    content: "✧";
+    transition: all 0.2s ease;
+}
+
+.shiny-cta:hover > span::before {
+    content: "✦";
+}
+
+.shiny-cta:hover {
+    box-shadow:
+      inset 0 0.3rem 0.5rem var(--hover-glow),
+      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+      0 12px 20px rgba(255, 105, 180, 0.4),
+      0 4px 8px rgba(255, 105, 180, 0.1);
+}
+
+.shiny-cta:hover::before {
+    transform: translateY(-5%);
+}
+
+.shiny-cta:hover::after {
+    opacity: 0.4;
+    transform: translateY(5%);
+}
+
+.shiny-cta:hover span {
+    transform: translateY(-4%);
+}
+
+.shiny-cta:active {
+    transform: translateY(2px);
+    box-shadow:
+      inset 0 0.3rem 0.5rem var(--hover-glow),
+      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.5),
+      0 6px 10px rgba(183, 26, 61, 0.2);
+}
+
+
+
+@keyframes gradient-angle {
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes breathe {
+  from, to {
+    scale: 1;
+  }
+  50% {
+    scale: 1.2;
+  }
+}
+
+/* --- CAROUSEL STYLES (NO-SCROLL LAYOUT) --- */
+body.no-scroll {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.no-scroll #mainContainer {
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.no-scroll .storeHeader {
+    margin-top: 80px;
+    margin-bottom: 0px;
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.plushies-layout, .flowers-layout {
+    width: 100%;
+}
+
+.carousel-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 60px;
+    height: auto;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+    width: 100%;
+    padding: 15px 0;
+
+/* --- extra padding for box shadows --- */
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-slide {
+    flex: 0 0 calc(100% / 3);
+
+/* --- Show 3 items --- */
+padding: 0 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fafafa;
+    border: 1px solid #e4e4e7;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    color: #52525b;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+
+
+.carousel-btn:hover:not(:disabled) {
+    background: #f4f4f5;
+    color: #18181b;
+}
+
+
+
+.carousel-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.carousel-prev {
+    left: 0;
+}
+
+.carousel-next {
+    right: 0;
+}
+
+.carousel-slide .flowerCard {
+    width: 100%;
+
+/* --- Take up the slide width --- */
+max-width: 320px;
+
+/* --- Don't get too crazy large --- */
+margin: 0 auto;
+}
+
+
+body.no-scroll {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+body.no-scroll #mainContainer {
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- NAV BRAND CENTERING --- */
+.navBrand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 28px;
+    color: white !important;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.3s ease;
+}
+
+.navBrand:hover {
+    transform: translateX(-50%) scale(1.08);
+    text-shadow: none;
+}
+
+/* --- NAVBAR BRAND OVERRIDE --- */
+.navBrand, a.navBrand {
+    font-family: 'Pinyon Script', cursive !important;
+    color: white !important;
+    font-size: 38px !important;
+    text-shadow: none !important;
+}
+
+
+
+/* NAVBAR OVERRIDE */
+#storeNavbar {
+    background: #900C3F !important; /* dark cherry red */
+}
+.navBrand, a.navBrand, .navBrand:hover {
+    color: white !important;
+}
+
+#cartButton, #saveCustomization, #saveGiftLayoutBtn, #giftButton {
+    background-color: #ffffff !important;
+}
+#cartButton > span::before, #saveCustomization > span::before, #saveGiftLayoutBtn > span::before, #giftButton > span::before {
+    content: none !important;
+    display: none !important;
+}
+#storeNavbar {
+    border-bottom: none !important;
+}
+
+
+</style>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
+
+
+
+<style>
+.site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: 0 20px;
+    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    color: var(--text-color);
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: rgba(252, 224, 229, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(183, 26, 61, 0.2);
+    transition: all 0.3s ease;
+}
+
+.site-footer a {
+    color: var(--heading-color);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dotted var(--heading-color);
+    transition: opacity 0.2s ease, color 0.3s ease;
+    pointer-events: auto;
+}
+.site-footer a:hover {
+    opacity: 0.7;
+}
+
+
+</style>
+
+<style>
+/* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
+[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
+    border: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-action-btn, .shiny-cta, .navLink {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+.flowerCard {
+    height: 100% !important;
+}
+
+.flowerSelector {
+    margin-top: auto !important;
+}
+
+.flowerCard .customizeBtn {
+    margin-top: 0 !important;
+}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+</head>
+
+
+<body class="giftPage no-scroll">
+
+    <style>
+    #saveCustomization {
+        background-color: #ffffff !important;
+    }
+    #saveCustomization > span::before {
+        content: none !important;
+        display: none !important;
+    }
+    </style>
+    <!-- Baby Pink Navbar -->
+    <nav id="storeNavbar">
+        <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
+        <a href="plushies.html" class="navLink">Plushies</a>
+        <a href="flowers.html" class="navLink">Flowers</a>
+        <a href="notes.html" class="navLink active">Notes</a>
+        <button id="saveCustomization" class="shiny-cta" style="padding: 8px 16px; font-size: 14px;">
+            <span>Save Changes</span>
+        </button>
+    </nav>
+
+    <!-- Header Text -->
+    <h1 class="storeHeader">write a Note.</h1>
+
+    <div id="mainContainer" style="display: flex; gap: 20px; justify-content: center; align-items: stretch; width: 100%; max-width: 1200px; margin: 20px auto 40px auto; min-height: 600px; padding-bottom: 20px;">
+        
+        <!-- Left Panel: Notes -->
+        <div id="leftPanel" style="width: 280px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
+            <!-- Colour swatches for Note -->
+            <h3 style="color: var(--heading-color); margin: 0 0 10px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 28px; font-weight: normal; letter-spacing: 1px;">Note Colour</h3>
+            <div id="noteColourSwatches" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;">
+                <div class="colour-swatch note-swatch swatch-active" data-src="assets/final page/note1.webp" style="background:#fef3c7;" title="Yellow"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note2.webp" style="background:#fce7f3;" title="Pink"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note6.webp" style="background:#dbeafe;" title="Blue"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note4.webp" style="background:#dcfce7;" title="Green"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note3.webp" style="background:#f3e8ff;" title="Purple"></div>
+                <div class="colour-swatch note-swatch" data-src="assets/final page/note5.webp" style="background:#f3f4f6;" title="White"></div>
+            </div>
+
+            <!-- Colour swatches for font -->
+            <h3 style="color: var(--heading-color); margin: 25px 0 10px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 28px; font-weight: normal; letter-spacing: 1px;">Font Colour</h3>
+            <div id="colourSwatches" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+                <div class="colour-swatch font-swatch swatch-active" data-color="#B71A3D" style="background:#B71A3D;" title="Crimson"></div>
+                <div class="colour-swatch font-swatch" data-color="#1a1a1a" style="background:#1a1a1a;" title="Black"></div>
+                <div class="colour-swatch font-swatch" data-color="#ffffff" style="background:#ffffff; border: 1.5px solid #ccc;" title="White"></div>
+                <div class="colour-swatch font-swatch" data-color="#F97316" style="background:#F97316;" title="Orange"></div>
+                <div class="colour-swatch font-swatch" data-color="#EAB308" style="background:#EAB308;" title="Yellow"></div>
+                <div class="colour-swatch font-swatch" data-color="#22C55E" style="background:#22C55E;" title="Green"></div>
+                <div class="colour-swatch font-swatch" data-color="#3B82F6" style="background:#3B82F6;" title="Blue"></div>
+                <div class="colour-swatch font-swatch" data-color="#8B5CF6" style="background:#8B5CF6;" title="Purple"></div>
+                <div class="colour-swatch font-swatch" data-color="#EC4899" style="background:#EC4899;" title="Pink"></div>
+                <div class="colour-swatch font-swatch" data-color="#14B8A6" style="background:#14B8A6;" title="Teal"></div>
+            </div>
+        </div>
+
+        <!-- Center Panel: Canvas -->
+        <div id="customScene" style="position: relative; flex: 1; width: 100%; max-width: 600px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%) !important; backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4) !important; border-radius: 40px; display: flex; align-items: center; justify-content: center; overflow: visible; box-shadow: inset 0 4px 10px rgba(255, 255, 255, 0.6), inset 0 -4px 10px rgba(255, 182, 193, 0.2) !important;">
+            <div id="itemDeleteBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            </div>
+
+            <div id="itemRotateBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.21l5.67-1.36"/></svg>
+            </div>
+            <div id="itemResizeBtn" style="display: none; position: absolute; z-index: 1000; cursor: nwse-resize; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </div>
+
+            
+            <div class="canvas-placeholder" id="placeholderMsg" style="display: none;">
+                <span style="font-family: var(--font-heading); font-size: 30px; color: var(--heading-color);">Write a note for someone</span>
+                <span style="font-size: 15px; font-family: var(--font-body); margin-top: 15px; opacity: 0.8;">
+                    Select a note to start. Then add custom text and stickers!
+                </span>
+            </div>
+            
+            <!-- Hidden native colour input -->
+            <input type="color" id="textColorPicker" value="#B71A3D" style="position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;">
+
+
+                      <div id="canvasContent" style="position: relative; height: 90%; max-width: 90%; aspect-ratio: 1 / 1; pointer-events: none;">
+                <img loading="lazy" id="mainNote" src="assets/final page/note1.webp" style="display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
+                <!-- Live text textarea overlaid on note - constrained horizontally and vertically -->
+                <textarea id="noteTextarea" placeholder="Write your message here..." style="position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); width: 62%; height: 45%; background: transparent; border: none; outline: none; resize: none; overflow: hidden; font-family: 'Pacifico', cursive; color: #B71A3D; text-align: center; pointer-events: auto; cursor: text; line-height: 1.2; padding: 0px; word-wrap: break-word; word-break: break-word;"></textarea>
+                <div id="noteText" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Stickers -->
+        <div id="rightPanel" style="width: 280px; flex-shrink: 0; background: rgba(144, 12, 63, 0.15) !important; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; overflow-y: auto;">
+            <h2 style="color: var(--heading-color); margin-bottom: 15px; text-align: center; font-family: 'Pinyon Script', cursive; font-size: 36px; font-weight: normal; letter-spacing: 1px;">Stickers</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker1.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker1.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker 2.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker 2.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker3.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker3.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_purple.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_purple.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_pin_red.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_pin_red.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_beige.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_beige.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_pink.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_pink.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_clip_blue.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_clip_blue.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+                <div class="box-option stickerTemplate" data-src="assets/final page/sticker_camera.webp" style="justify-content: center; padding: 10px;"><img loading="lazy" src="assets/final page/sticker_camera.webp" style="width: 100%; height: auto; object-fit: contain;"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Colour popover is now inline above the canvas; no modal needed -->
+
+    <!-- Toast Notification -->
+    <div id="toast" style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--toast-bg); color: white; padding: 15px 25px; border-radius: 50px; z-index: 9999; font-family: var(--font-ui); font-weight: 600;">
+        Note saved to cart!
+    </div>
+    
+    <style>
+        #leftPanel::-webkit-scrollbar, #rightPanel::-webkit-scrollbar { width: 6px; }
+        #leftPanel::-webkit-scrollbar-track, #rightPanel::-webkit-scrollbar-track { background: transparent; }
+        #leftPanel::-webkit-scrollbar-thumb, #rightPanel::-webkit-scrollbar-thumb { background: #900C3F; border-radius: 10px; }
+        .draggableSticker { position: absolute; width: 60px; height: auto; cursor: move; pointer-events: auto; }
+        .canvas-selected { outline: 2px dashed #B71A3D; outline-offset: 4px; }
+        .colour-swatch {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+        }
+        .colour-swatch:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+        .colour-swatch.swatch-active { outline: 3px solid white; outline-offset: 2px; transform: scale(1.15); }
+    </style>
+
+
+<script defer>
+    let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    
+    const mainNote = document.getElementById('mainNote');
+    const placeholderMsg = document.getElementById('placeholderMsg');
+
+    const noteText = document.getElementById('noteText');
+    const canvasContent = document.getElementById('canvasContent');
+    const customScene = document.getElementById('customScene');
+    const itemDeleteBtn = document.getElementById('itemDeleteBtn');
+    const itemRotateBtn = document.getElementById('itemRotateBtn');
+    const itemResizeBtn = document.getElementById('itemResizeBtn');
+
+    let stickers = [];
+    let noteData = {
+        src: 'assets/final page/note1.webp',
+        text: '',
+        font: 'Pacifico',
+        color: '#B71A3D'
+    };
+    
+    const cartCountEl = document.getElementById('cartCount');
+    if (cartCountEl) cartCountEl.innerText = cart.length;
+    
+    let selectedElement = null;
+
+    // Note Colour swatches
+    document.querySelectorAll('.note-swatch').forEach(swatch => {
+        swatch.addEventListener('click', () => {
+            const src = swatch.dataset.src;
+            noteData.src = src;
+            mainNote.src = src;
+            document.querySelectorAll('.note-swatch').forEach(s => s.classList.remove('swatch-active'));
+            swatch.classList.add('swatch-active');
+            
+            // Remove placeholder if present
+            if (placeholderMsg.style.display !== 'none') {
+                placeholderMsg.style.display = 'none';
+                document.getElementById('noteTextarea').focus();
+            }
+        });
+    });
+
+    // Sticker Selection
+    document.querySelectorAll('.stickerTemplate').forEach(el => {
+        el.addEventListener('click', () => {
+            if (!noteData.src) {
+                alert("Please select a note first to place stickers on!");
+                return;
+            }
+            const img = document.createElement('img');
+            img.loading = 'lazy';
+            img.src = el.dataset.src;
+            img.className = 'draggableSticker';
+            img.style.left = '50%';
+            img.style.top = '50%';
+            
+            img.dataset.angle = 0;
+            img.dataset.scale = 1;
+            img.style.transform = `translate(-50%, -50%) rotate(0rad) scale(1)`;
+            
+            canvasContent.appendChild(img);
+            stickers.push(img);
+            selectElement(img);
+        });
+    });
+
+    const noteTextarea = document.getElementById('noteTextarea');
+    const textColorPicker = document.getElementById('textColorPicker');
+    const colorPopover = document.getElementById('colorPopover');
+
+    // Set initial Pacifico font & colour on textarea
+    noteTextarea.style.fontFamily = "'Pacifico', cursive";
+    noteTextarea.style.color = noteData.color;
+
+    // Live typing — text appears directly on the note and stops if it exceeds page limits
+    let lastValidNoteText = noteTextarea.value;
+    noteTextarea.addEventListener('input', () => {
+        if (noteTextarea.scrollHeight > noteTextarea.clientHeight || noteTextarea.scrollWidth > noteTextarea.clientWidth) {
+            noteTextarea.value = lastValidNoteText; // Revert to prevent vertical/horizontal overflow
+        } else {
+            lastValidNoteText = noteTextarea.value;
+        }
+        noteData.text = noteTextarea.value;
+    });
+
+
+
+    // Live colour change via native picker applies instantly to textarea text
+    textColorPicker.addEventListener('input', () => {
+        noteData.color = textColorPicker.value;
+        noteTextarea.style.color = noteData.color;
+        // Reflect active state on swatches
+        document.querySelectorAll('.colour-swatch').forEach(s => s.classList.remove('swatch-active'));
+    });
+
+    // Colour swatches in left panel — click to instantly change font colour
+    document.querySelectorAll('.font-swatch').forEach(swatch => {
+        swatch.addEventListener('click', () => {
+            const color = swatch.dataset.color;
+            noteData.color = color;
+            noteTextarea.style.color = color;
+            textColorPicker.value = color;
+            document.querySelectorAll('.font-swatch').forEach(s => s.classList.remove('swatch-active'));
+            swatch.classList.add('swatch-active');
+        });
+    });
+
+    // Save Changes
+    document.getElementById('saveCustomization').addEventListener('click', () => {
+        if (!noteData.src) {
+            alert('Please compose a note before saving!');
+            return;
+        }
+        
+        const noteId = Math.random().toString(36).substr(2, 9);
+        
+        const mRect = mainNote.getBoundingClientRect();
+        
+        // Calculate true rendered size due to object-fit: contain
+        const imgRatio = mainNote.naturalWidth / mainNote.naturalHeight;
+        const containerRatio = mRect.width / mRect.height;
+        
+        let renderWidth = mRect.width;
+        let renderHeight = mRect.height;
+        
+        if (imgRatio > containerRatio) {
+            renderHeight = mRect.width / imgRatio;
+        } else {
+            renderWidth = mRect.height * imgRatio;
+        }
+        
+        const noteWidth = renderWidth;
+        const noteHeight = renderHeight;
+        
+        const mCenterX = mRect.left + mRect.width / 2;
+        const mCenterY = mRect.top + mRect.height / 2;
+        
+        // Unscaled visual top-left of the actual rendered image
+        const mTopLeftX = mCenterX - (noteWidth / 2);
+        const mTopLeftY = mCenterY - (noteHeight / 2);
+        
+        let textDetails = null;
+        if (noteData.text && noteData.text.trim()) {
+            const tRect = noteTextarea.getBoundingClientRect();
+            const tCenterX = tRect.left + tRect.width / 2;
+            const tCenterY = tRect.top + tRect.height / 2;
+            const textLeft = tCenterX - mTopLeftX;
+            const textTop = tCenterY - mTopLeftY;
+            textDetails = {
+                text: noteData.text,
+                fontFamily: 'Pacifico',
+                color: noteData.color,
+                left: (textLeft / noteWidth) * 100,
+                top: (textTop / noteHeight) * 100,
+                width: (noteTextarea.offsetWidth / noteWidth) * 100,
+                height: (noteTextarea.offsetHeight / noteHeight) * 100,
+                fontSize: (parseFloat(window.getComputedStyle(noteTextarea).fontSize) / noteWidth) * 100,
+                angle: 0,
+                scale: 1
+            };
+        }
+        
+        const embeddedStickers = stickers.map(s => {
+            const sRect = s.getBoundingClientRect();
+            const sCenterX = sRect.left + sRect.width / 2;
+            const sCenterY = sRect.top + sRect.height / 2;
+            const stickerLeft = sCenterX - mTopLeftX;
+            const stickerTop = sCenterY - mTopLeftY;
+            return {
+                src: s.src,
+                left: (stickerLeft / noteWidth) * 100,
+                top: (stickerTop / noteHeight) * 100,
+                width: (s.offsetWidth / noteWidth) * 100,
+                angle: s.dataset.angle || 0,
+                scale: s.dataset.scale || 1
+            };
+        });
+        
+        cart.push({
+            id: noteId,
+            type: 'note',
+            src: noteData.src,
+            angle: mainNote.dataset.angle || 0,
+            scale: mainNote.dataset.scale || 1,
+            noteTextDetails: textDetails,
+            stickers: embeddedStickers,
+            quantity: 1,
+            name: 'Custom Note'
+        });
+        
+        sessionStorage.setItem("cart", JSON.stringify(cart));
+        window.location.href = "checkout.html";
+    });
+
+    // Dragging / Rotate / Resize Logic
+    let isDragging = false;
+    let isRotating = false;
+    let isResizing = false;
+    let dragStartX, dragStartY;
+    let initialLeft, initialTop;
+    let startAngle = 0;
+    let startScale = 1;
+
+    function selectElement(el) {
+        if (selectedElement) {
+            selectedElement.classList.remove('canvas-selected');
+        }
+        selectedElement = el;
+        if (el) {
+            el.classList.add('canvas-selected');
+            updateControls();
+        } else {
+            itemDeleteBtn.style.display = 'none';
+            itemRotateBtn.style.display = 'none';
+            itemResizeBtn.style.display = 'none';
+        }
+    }
+
+    function updateControls() {
+        if (!selectedElement) {
+            itemDeleteBtn.style.display = 'none';
+            itemRotateBtn.style.display = 'none';
+            itemResizeBtn.style.display = 'none';
+            return;
+        }
+        
+        const rect = selectedElement.getBoundingClientRect();
+        const parentRect = customScene.getBoundingClientRect();
+        
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        
+        const scale = parseFloat(selectedElement.dataset.scale) || 1;
+        const w = selectedElement.offsetWidth * scale;
+        const h = selectedElement.offsetHeight * scale;
+        
+        const rotRad = parseFloat(selectedElement.dataset.angle) || 0;
+        
+        function getRotatedPos(dx, dy) {
+            const rx = cx + dx * Math.cos(rotRad) - dy * Math.sin(rotRad);
+            const ry = cy + dx * Math.sin(rotRad) + dy * Math.cos(rotRad);
+            return { x: rx, y: ry };
+        }
+        
+        const offsetX = parentRect.left;
+        const offsetY = parentRect.top;
+        
+        const delPos = getRotatedPos(w/2, -h/2);
+        itemDeleteBtn.style.left = (delPos.x - offsetX - 16) + 'px';
+        itemDeleteBtn.style.top = (delPos.y - offsetY - 16) + 'px';
+        itemDeleteBtn.style.display = 'block';
+
+        const rotPos = getRotatedPos(-w/2, h/2);
+        itemRotateBtn.style.left = (rotPos.x - offsetX - 16) + 'px';
+        itemRotateBtn.style.top = (rotPos.y - offsetY - 16) + 'px';
+        itemRotateBtn.style.display = 'block';
+
+        const resPos = getRotatedPos(w/2, h/2);
+        itemResizeBtn.style.left = (resPos.x - offsetX - 16) + 'px';
+        itemResizeBtn.style.top = (resPos.y - offsetY - 16) + 'px';
+        itemResizeBtn.style.display = 'block';
+    }
+
+    customScene.addEventListener('mousedown', (e) => {
+        if (e.target.closest('#itemDeleteBtn')) {
+            if (selectedElement && selectedElement.classList.contains('draggableSticker')) {
+                selectedElement.remove();
+                stickers = stickers.filter(s => s !== selectedElement);
+            } else if (selectedElement === noteText) {
+                noteText.style.display = 'none';
+                noteData.text = '';
+            } else if (selectedElement === mainNote) {
+                mainNote.style.display = 'none';
+                noteData.src = null;
+                placeholderMsg.style.display = 'flex';
+                addTextBtn.style.display = 'none';
+                noteText.style.display = 'none';
+                stickers.forEach(s => s.remove());
+                stickers = [];
+            }
+            selectElement(null);
+            return;
+        }
+
+        if (e.target.closest('#itemRotateBtn')) {
+            isRotating = true;
+            const rect = selectedElement.getBoundingClientRect();
+            dragStartX = rect.left + rect.width / 2;
+            dragStartY = rect.top + rect.height / 2;
+            startAngle = Math.atan2(e.clientY - dragStartY, e.clientX - dragStartX);
+            e.preventDefault();
+            return;
+        }
+
+        if (e.target.closest('#itemResizeBtn')) {
+            isResizing = true;
+            const rect = selectedElement.getBoundingClientRect();
+            dragStartX = rect.left + rect.width / 2;
+            dragStartY = rect.top + rect.height / 2;
+            startScale = parseFloat(selectedElement.dataset.scale || 1);
+            selectedElement.dataset.startDist = Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY);
+            e.preventDefault();
+            return;
+        }
+
+        if (e.target.classList.contains('draggableSticker') || e.target === noteText || e.target === mainNote) {
+            isDragging = true;
+            selectElement(e.target);
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            initialLeft = selectedElement.offsetLeft;
+            initialTop = selectedElement.offsetTop;
+            e.preventDefault();
+        } else if (!e.target.closest('#addTextBtn') && !e.target.closest('.canvas-placeholder')) {
+            selectElement(null);
+        }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!selectedElement) return;
+
+        if (isRotating) {
+            const angle = Math.atan2(e.clientY - dragStartY, e.clientX - dragStartX);
+            const currentAngle = parseFloat(selectedElement.dataset.angle || 0);
+            const delta = angle - startAngle;
+            const newAngle = currentAngle + delta;
+            
+            selectedElement.dataset.angle = newAngle;
+            const scale = selectedElement.dataset.scale || 1;
+            selectedElement.style.transform = `translate(-50%, -50%) rotate(${newAngle}rad) scale(${scale})`;
+            
+            startAngle = angle;
+            updateControls();
+        } else if (isResizing) {
+            const dist = Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY);
+            const startDist = parseFloat(selectedElement.dataset.startDist);
+            
+            let newScale = startScale * (dist / startDist);
+            newScale = Math.max(0.2, Math.min(newScale, 5));
+            
+            selectedElement.dataset.scale = newScale;
+            const angle = selectedElement.dataset.angle || 0;
+            selectedElement.style.transform = `translate(-50%, -50%) rotate(${angle}rad) scale(${newScale})`;
+            
+            updateControls();
+        } else if (isDragging) {
+            const dx = e.clientX - dragStartX;
+            const dy = e.clientY - dragStartY;
+            
+            let newLeft = initialLeft + dx;
+            let newTop = initialTop + dy;
+            
+            // Constrain dragging to the canvas boundaries
+            const sceneWidth = customScene.offsetWidth;
+            const sceneHeight = customScene.offsetHeight;
+            
+            const scale = parseFloat(selectedElement.dataset.scale) || 1;
+            const w = selectedElement.offsetWidth * scale;
+            const h = selectedElement.offsetHeight * scale;
+            
+            newLeft = Math.max(w/2, Math.min(newLeft, sceneWidth - w/2));
+            newTop = Math.max(h/2, Math.min(newTop, sceneHeight - h/2));
+            
+            selectedElement.style.left = newLeft + 'px';
+            selectedElement.style.top = newTop + 'px';
+            
+            updateControls();
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        isRotating = false;
+        isResizing = false;
+    });
+
+    function updateTextareaStyles() {
+        if (!mainNote || !mainNote.complete) return;
+        const mRect = mainNote.getBoundingClientRect();
+        if (mRect.width === 0) return;
+        const imgRatio = mainNote.naturalWidth / (mainNote.naturalHeight || 1);
+        const containerRatio = mRect.width / (mRect.height || 1);
+        let renderWidth = mRect.width;
+        if (imgRatio > containerRatio) {
+            // Note image is wider, height is scaled down
+            // renderWidth remains mRect.width
+        } else {
+            // Note image is taller, width is scaled down
+            renderWidth = mRect.height * imgRatio;
+        }
+        
+        // Match 7.5cqw from gift.html
+        const newFontSize = renderWidth * 0.075;
+        noteTextarea.style.fontSize = Math.max(12, newFontSize) + "px";
+    }
+
+    window.addEventListener('resize', updateTextareaStyles);
+    mainNote.addEventListener('load', updateTextareaStyles);
+    // Observe customScene resizes in case it changes dynamically
+    if (window.ResizeObserver) {
+        new ResizeObserver(updateTextareaStyles).observe(customScene);
+    } else {
+        setTimeout(updateTextareaStyles, 100);
+    }
+    updateTextareaStyles();
+
+</script>
+
+</body>
+
+</html>
