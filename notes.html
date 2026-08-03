@@ -744,7 +744,150 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<style>
+@media (max-width: 768px) {
+    #storeNavbar { 
+        justify-content: space-between !important; 
+        padding: 10px 15px !important; 
+    }
+    #storeNavbar > .navLink { display: none !important; }
+    
+    .mobile-hamburger { 
+        display: block !important; 
+        position: static !important;
+        font-size: 26px !important;
+        padding: 5px;
+    }
+    
+    .navBrand { 
+        font-size: 20px !important; 
+        position: static !important;
+        transform: none !important;
+        left: auto !important;
+        flex: 1;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .mobile-sidebar {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 270px;
+        height: 100vh;
+        background: rgba(90, 0, 53, 0.96);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 1100;
+        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
+        flex-direction: column;
+        padding-top: 90px;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-shadow: none;
+        border-right: 1px solid rgba(250, 197, 207, 0.2);
+    }
+    .mobile-sidebar.open {
+        left: 0;
+        box-shadow: 6px 0 40px rgba(0,0,0,0.45);
+    }
+    .mobile-sidebar .navLink {
+        padding: 16px 24px;
+        font-size: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        display: block !important;
+        color: rgba(255,255,255,0.85);
+        text-decoration: none;
+        font-family: 'Fredoka', sans-serif;
+        border-radius: 12px;
+        transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+        opacity: 0;
+        transform: translateX(-16px);
+    }
+    .mobile-sidebar.open .navLink {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    .mobile-sidebar.open .navLink:nth-child(1) { transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s, background 0.2s ease, color 0.2s ease; }
+    .mobile-sidebar.open .navLink:nth-child(2) { transition: opacity 0.3s ease 0.18s, transform 0.3s ease 0.18s, background 0.2s ease, color 0.2s ease; }
+    .mobile-sidebar.open .navLink:nth-child(3) { transition: opacity 0.3s ease 0.26s, transform 0.3s ease 0.26s, background 0.2s ease, color 0.2s ease; }
+    .mobile-sidebar .navLink:hover, .mobile-sidebar .navLink.active {
+        background: rgba(250, 197, 207, 0.15);
+        color: #fac5cf;
+        padding-left: 30px;
+    }
+    /* Overlay */
+    #sidebarOverlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        backdrop-filter: blur(3px);
+        z-index: 1099;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+    }
+    #sidebarOverlay.visible {
+        display: block;
+        opacity: 1;
+    }
+    /* Hamburger → X animation */
+    .mobile-hamburger {
+        transition: transform 0.3s ease;
+    }
+    .mobile-hamburger.open {
+        transform: rotate(90deg);
+    }
+    #saveCustomization .desktop-text {
+        display: none !important;
+    }
+    #saveCustomization .mobile-text {
+        display: inline !important;
+        font-size: 11px !important;
+    }
+    
+    #mainContainer {
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 10px !important;
+    }
+    #customScene {
+        order: 1 !important;
+        width: 100% !important;
+        height: 380px !important;
+        flex: none !important;
+        margin-bottom: 20px !important;
+    }
+    #leftPanel {
+        order: 2 !important;
+        width: 100% !important;
+        margin-bottom: 20px !important;
+    }
+    #rightPanel {
+        order: 3 !important;
+        width: 100% !important;
+    }
+}
+/* --- MOBILE SIDEBAR STYLES --- */
+.mobile-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    left: 20px;
+    z-index: 1001;
+}
+.mobile-sidebar {
+    display: none;
+}
+</style>
 </head>
+
 
 
 <body class="giftPage no-scroll">
@@ -760,12 +903,14 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     </style>
     <!-- Baby Pink Navbar -->
     <nav id="storeNavbar">
+        <button id="mobileMenuBtn" class="mobile-hamburger">☰</button>
         <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
         <a href="plushies.html" class="navLink">Plushies</a>
         <a href="flowers.html" class="navLink">Flowers</a>
         <a href="notes.html" class="navLink active">Notes</a>
         <button id="saveCustomization" class="shiny-cta" style="padding: 8px 16px; font-size: 14px;">
-            <span>Save Changes</span>
+            <span class="desktop-text">Save Changes</span>
+            <span class="mobile-text" style="display: none;">Save</span>
         </button>
     </nav>
 
@@ -921,6 +1066,9 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 placeholderMsg.style.display = 'none';
                 document.getElementById('noteTextarea').focus();
             }
+            if (window.innerWidth <= 768) {
+                customScene.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         });
     });
 
@@ -945,6 +1093,9 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             canvasContent.appendChild(img);
             stickers.push(img);
             selectElement(img);
+            if (window.innerWidth <= 768) {
+                customScene.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         });
     });
 
@@ -986,6 +1137,9 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             textColorPicker.value = color;
             document.querySelectorAll('.font-swatch').forEach(s => s.classList.remove('swatch-active'));
             swatch.classList.add('swatch-active');
+            if (window.innerWidth <= 768) {
+                customScene.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         });
     });
 
@@ -1145,7 +1299,19 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         itemResizeBtn.style.display = 'block';
     }
 
-    customScene.addEventListener('mousedown', (e) => {
+    function getPointerEvent(e) {
+        if (e.type.startsWith('touch')) {
+            return e.touches.length > 0 ? e.touches[0] : null;
+        }
+        return e;
+    }
+
+    function handlePointerDown(e) {
+        const ptr = getPointerEvent(e);
+        if (!ptr && e.type !== 'touchend' && e.type !== 'touchcancel') return;
+        const clientX = ptr ? ptr.clientX : 0;
+        const clientY = ptr ? ptr.clientY : 0;
+
         if (e.target.closest('#itemDeleteBtn')) {
             if (selectedElement && selectedElement.classList.contains('draggableSticker')) {
                 selectedElement.remove();
@@ -1171,8 +1337,8 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             const rect = selectedElement.getBoundingClientRect();
             dragStartX = rect.left + rect.width / 2;
             dragStartY = rect.top + rect.height / 2;
-            startAngle = Math.atan2(e.clientY - dragStartY, e.clientX - dragStartX);
-            e.preventDefault();
+            startAngle = Math.atan2(clientY - dragStartY, clientX - dragStartX);
+            if(e.cancelable) e.preventDefault();
             return;
         }
 
@@ -1182,29 +1348,33 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             dragStartX = rect.left + rect.width / 2;
             dragStartY = rect.top + rect.height / 2;
             startScale = parseFloat(selectedElement.dataset.scale || 1);
-            selectedElement.dataset.startDist = Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY);
-            e.preventDefault();
+            selectedElement.dataset.startDist = Math.hypot(clientX - dragStartX, clientY - dragStartY);
+            if(e.cancelable) e.preventDefault();
             return;
         }
 
         if (e.target.classList.contains('draggableSticker') || e.target === noteText || e.target === mainNote) {
             isDragging = true;
             selectElement(e.target);
-            dragStartX = e.clientX;
-            dragStartY = e.clientY;
+            dragStartX = clientX;
+            dragStartY = clientY;
             initialLeft = selectedElement.offsetLeft;
             initialTop = selectedElement.offsetTop;
-            e.preventDefault();
+            if(e.cancelable) e.preventDefault();
         } else if (!e.target.closest('#addTextBtn') && !e.target.closest('.canvas-placeholder')) {
             selectElement(null);
         }
-    });
+    }
 
-    document.addEventListener('mousemove', (e) => {
+    function handlePointerMove(e) {
         if (!selectedElement) return;
+        const ptr = getPointerEvent(e);
+        if (!ptr) return;
+        const clientX = ptr.clientX;
+        const clientY = ptr.clientY;
 
         if (isRotating) {
-            const angle = Math.atan2(e.clientY - dragStartY, e.clientX - dragStartX);
+            const angle = Math.atan2(clientY - dragStartY, clientX - dragStartX);
             const currentAngle = parseFloat(selectedElement.dataset.angle || 0);
             const delta = angle - startAngle;
             const newAngle = currentAngle + delta;
@@ -1215,8 +1385,9 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             
             startAngle = angle;
             updateControls();
+            if(e.cancelable) e.preventDefault();
         } else if (isResizing) {
-            const dist = Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY);
+            const dist = Math.hypot(clientX - dragStartX, clientY - dragStartY);
             const startDist = parseFloat(selectedElement.dataset.startDist);
             
             let newScale = startScale * (dist / startDist);
@@ -1227,9 +1398,10 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             selectedElement.style.transform = `translate(-50%, -50%) rotate(${angle}rad) scale(${newScale})`;
             
             updateControls();
+            if(e.cancelable) e.preventDefault();
         } else if (isDragging) {
-            const dx = e.clientX - dragStartX;
-            const dy = e.clientY - dragStartY;
+            const dx = clientX - dragStartX;
+            const dy = clientY - dragStartY;
             
             let newLeft = initialLeft + dx;
             let newTop = initialTop + dy;
@@ -1249,14 +1421,25 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             selectedElement.style.top = newTop + 'px';
             
             updateControls();
+            if(e.cancelable) e.preventDefault();
         }
-    });
+    }
 
-    document.addEventListener('mouseup', () => {
+    function handlePointerUp() {
         isDragging = false;
         isRotating = false;
         isResizing = false;
-    });
+    }
+
+    customScene.addEventListener('mousedown', handlePointerDown);
+    customScene.addEventListener('touchstart', handlePointerDown, { passive: false });
+
+    document.addEventListener('mousemove', handlePointerMove);
+    document.addEventListener('touchmove', handlePointerMove, { passive: false });
+
+    document.addEventListener('mouseup', handlePointerUp);
+    document.addEventListener('touchend', handlePointerUp);
+    document.addEventListener('touchcancel', handlePointerUp);
 
     function updateTextareaStyles() {
         if (!mainNote || !mainNote.complete) return;
@@ -1290,6 +1473,35 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 </script>
 
+
+    <div id="sidebarOverlay"></div>
+    <div id="mobileSidebar" class="mobile-sidebar">
+        <a href="plushies.html" class="navLink">Plushies</a>
+        <a href="flowers.html" class="navLink">Flowers</a>
+        <a href="notes.html" class="navLink active">Notes</a>
+    </div>
+    <script>
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('mobileSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('visible');
+            menuBtn.classList.add('open');
+            menuBtn.textContent = '✕';
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('visible');
+            menuBtn.classList.remove('open');
+            menuBtn.textContent = '☰';
+        }
+        menuBtn.addEventListener('click', function() {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+        overlay.addEventListener('click', closeSidebar);
+    </script>
 </body>
+
 
 </html>

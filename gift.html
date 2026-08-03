@@ -789,7 +789,28 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<style>
+@media (max-width: 768px) {
+    .checkoutTitle, .giftHeader {
+        font-size: 36px !important;
+        margin-top: 80px !important;
+    }
+
+    #storeNavbar { 
+        justify-content: space-between !important; 
+        padding: 10px 15px !important; 
+        width: 100% !important;
+    }
+    #storeNavbar > .navLink { display: none !important; }
+    
+    #storeNavbar .navBrand {
+        display: none !important;
+    }
+}
+</style>
 </head>
+
 
 <body class="giftPage">
 
@@ -1065,7 +1086,11 @@ function makeDraggable(el){
     }, { passive: false });
 }
 
-document.addEventListener("mousedown", (e) => {
+function getPointerEvent(e) {
+    return e.touches ? e.touches[0] : e;
+}
+
+function handlePointerDownButtons(e) {
     if (e.target.closest('#itemDeleteBtn')) {
         if (selected) {
             selected.remove();
@@ -1075,10 +1100,12 @@ document.addEventListener("mousedown", (e) => {
     }
     
     if (e.target.closest('#itemResizeBtn') && selected) {
-        e.stopPropagation(); e.preventDefault();
+        e.stopPropagation(); 
+        if(e.cancelable) e.preventDefault();
         isResizing = true;
-        resizeStartX = e.clientX;
-        resizeStartY = e.clientY;
+        const pt = getPointerEvent(e);
+        resizeStartX = pt.clientX;
+        resizeStartY = pt.clientY;
         resizeStartW = selected.offsetWidth;
         resizeStartH = selected.offsetHeight;
         resizeStartLeft = parseFloat(selected.style.left) || 0;
@@ -1087,17 +1114,22 @@ document.addEventListener("mousedown", (e) => {
     }
     
     if (e.target.closest('#itemRotateBtn') && selected) {
-        e.stopPropagation(); e.preventDefault();
+        e.stopPropagation(); 
+        if(e.cancelable) e.preventDefault();
         isRotating = true;
+        const pt = getPointerEvent(e);
         
         const rect = selected.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
-        rotateStartAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+        rotateStartAngle = Math.atan2(pt.clientY - cy, pt.clientX - cx) * 180 / Math.PI;
         rotateInitialElementAngle = parseFloat(selected.dataset.rotation) || 0;
         return;
     }
-});
+}
+
+document.addEventListener("mousedown", handlePointerDownButtons);
+document.addEventListener("touchstart", handlePointerDownButtons, { passive: false });
 
 /* -------------------- */
 /* LOAD GIFT ITEMS      */
@@ -1342,20 +1374,20 @@ giftItems.forEach((item, itemIndex) => {
 /* GLOBAL DRAG MOVE     */
 /* -------------------- */
 
-document.addEventListener("mousemove", (e) => {
+function handlePointerMove(e) {
+    const pt = getPointerEvent(e);
     const sceneW = giftScene.clientWidth;
     const sceneH = giftScene.clientHeight;
 
     if (isResizing && selected) {
-        const dx = e.clientX - resizeStartX;
+        const dx = pt.clientX - resizeStartX;
         const isText = selected.classList.contains("giftText");
         
         if (isText) {
             let currentFS = parseFloat(window.getComputedStyle(selected).fontSize) || 16;
-            // Use vertical drag distance to roughly adjust font size
-            const dy = e.clientY - resizeStartY;
+            const dy = pt.clientY - resizeStartY;
             selected.style.fontSize = Math.max(10, currentFS + dy/10) + "px";
-            resizeStartY = e.clientY; // reset to track small movements
+            resizeStartY = pt.clientY; 
         } else {
             const b = getBowConstraints();
             let maxWByWidth = b.right - resizeStartLeft;
@@ -1368,6 +1400,7 @@ document.addEventListener("mousemove", (e) => {
             selected.style.height = (newW * (resizeStartH / resizeStartW)) + "px";
         }
         updateSelectionUI();
+        if(e.cancelable) e.preventDefault();
         return;
     }
     
@@ -1375,7 +1408,7 @@ document.addEventListener("mousemove", (e) => {
         const rect = selected.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
-        const currentAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+        const currentAngle = Math.atan2(pt.clientY - cy, pt.clientX - cx) * 180 / Math.PI;
         
         let angleDiff = currentAngle - rotateStartAngle;
         let newAngle = rotateInitialElementAngle + angleDiff;
@@ -1384,14 +1417,15 @@ document.addEventListener("mousemove", (e) => {
         let flipStr = selected.dataset.flip === "-1" ? "scaleX(-1) " : "";
         selected.style.transform = flipStr + "rotate(" + newAngle + "deg)";
         updateSelectionUI();
+        if(e.cancelable) e.preventDefault();
         return;
     }
 
     if (!selected || isResizing || isRotating || !isDragging) return;
 
     const sceneRect = giftScene.getBoundingClientRect();
-    let newLeft = e.clientX - sceneRect.left - dragOffsetX;
-    let newTop = e.clientY - sceneRect.top - dragOffsetY;
+    let newLeft = pt.clientX - sceneRect.left - dragOffsetX;
+    let newTop = pt.clientY - sceneRect.top - dragOffsetY;
 
     // Constrain within the four-bow area
     const b = getBowConstraints();
@@ -1401,25 +1435,10 @@ document.addEventListener("mousemove", (e) => {
     selected.style.left = newLeft + "px";
     selected.style.top  = newTop  + "px";
     updateSelectionUI();
-});
+    if(e.cancelable) e.preventDefault();
+}
 
-// Touch move
-document.addEventListener("touchmove", (e) => {
-    if (!selected || !isDragging) return;
-    const touch = e.touches[0];
-    const sceneRect = giftScene.getBoundingClientRect();
-    let newLeft = touch.clientX - sceneRect.left - dragOffsetX;
-    let newTop  = touch.clientY - sceneRect.top  - dragOffsetY;
-    const b = getBowConstraints();
-    newLeft = Math.max(b.left, Math.min(newLeft, b.right  - selected.offsetWidth));
-    newTop  = Math.max(b.top,  Math.min(newTop,  b.bottom - selected.offsetHeight));
-    selected.style.left = newLeft + "px";
-    selected.style.top  = newTop  + "px";
-    updateSelectionUI();
-    e.preventDefault();
-}, { passive: false });
-
-document.addEventListener("mouseup", () => {
+function handlePointerUp() {
     isResizing = false;
     isRotating = false;
     isDragging = false;
@@ -1428,13 +1447,12 @@ document.addEventListener("mouseup", () => {
     } else {
         giftScene.style.cursor = '';
     }
-});
+}
 
-document.addEventListener("touchend", () => {
-    isResizing = false;
-    isRotating = false;
-    isDragging = false;
-});
+document.addEventListener("mousemove", handlePointerMove);
+document.addEventListener("touchmove", handlePointerMove, { passive: false });
+document.addEventListener("mouseup", handlePointerUp);
+document.addEventListener("touchend", handlePointerUp);
 
 /* Click on scene background to deselect */
 giftScene.addEventListener("mousedown", (e) => {
@@ -1566,7 +1584,9 @@ if (saveGiftBtn) {
 }
 
 </style>
+
 </body>
+
 </html>
 
 

@@ -998,12 +998,113 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+/* --- MOBILE SIDEBAR STYLES --- */
+.mobile-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    left: 20px;
+    z-index: 1001;
+}
+.mobile-sidebar {
+    display: none;
+}
+@media (max-width: 768px) {
+    #storeNavbar { 
+        justify-content: center !important; 
+        padding: 10px 15px !important;
+        position: relative !important; 
+    }
+    #storeNavbar > .navLink { display: none !important; }
+    
+    .mobile-hamburger, .mobile-sidebar { 
+        display: none !important; 
+    }
+    
+    .navBrand { 
+        font-size: 15px !important; 
+        position: static !important;
+        transform: none !important;
+        left: auto !important;
+        text-align: center;
+        white-space: nowrap;
+        margin: 0;
+    }
+
+    #customizeNavActions {
+        position: static !important;
+        margin: 0 !important;
+        gap: 0 !important;
+    }
+    
+    /* Back Button on left */
+    #customizeNavActions button:first-child {
+        position: absolute !important;
+        left: 15px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        font-size: 0 !important; 
+        padding: 6px !important;
+        margin: 0 !important;
+        background: transparent !important;
+    }
+    #customizeNavActions button:first-child svg {
+        margin-right: 0 !important;
+        width: 20px !important; 
+        height: 20px !important;
+    }
+    
+    /* Save Changes on right */
+    #saveCustomization {
+        position: absolute !important;
+        right: 15px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        padding: 6px 10px !important;
+        margin: 0 !important;
+    }
+    #saveCustomization .desktop-text {
+        display: none !important;
+    }
+    #saveCustomization .mobile-text {
+        display: inline !important;
+        font-size: 11px !important;
+    }
+
+    /* Container layout: Canvas on top, Panel below */
+    #customizeContainer {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 15px !important;
+        padding: 10px !important;
+    }
+    
+    #customScene {
+        width: 100% !important;
+        max-width: 400px !important;
+        height: 320px !important;
+        flex: none !important;
+    }
+
+    #customPanel {
+        width: 100% !important;
+        max-width: 400px !important;
+        max-height: none !important;
+    }
+}
+</style>
 </head>
 
 <body class="no-scroll">
 
     <!-- Baby Pink Navbar -->
         <nav id="storeNavbar">
+        <button id="mobileMenuBtn" class="mobile-hamburger">☰</button>
         <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
         <div id="customizeNavActions" style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
             <button onclick="window.location.href='plushies.html'" style="display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; height: 38px; padding: 0 10px; color: #ffffff; cursor: pointer; text-decoration: none; white-space: nowrap; transition: all 0.3s ease;" onmouseover="this.style.color='white'; this.style.transform='translateY(-2px)'; this.style.opacity='0.9';" onmouseout="this.style.color='#ffffff'; this.style.transform='translateY(0)'; this.style.opacity='1';">
@@ -1011,7 +1112,8 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 Go back
             </button>
             <button id="saveCustomization" class="shiny-cta" style="padding: 8px 16px; font-size: 14px;">
-                <span>Save Changes</span>
+                <span class="desktop-text">Save Changes</span>
+                <span class="mobile-text" style="display: none;">Save</span>
             </button>
         </div>
     </nav>
@@ -1256,6 +1358,9 @@ document.querySelectorAll(".accessoryTemplate").forEach(item => {
         const top = (plushieRect.top - rect.top) + (plushieH - width) / 2;
         
         createAccessory(item.src, left, top, width);
+        if (window.innerWidth <= 768) {
+            customScene.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     });
 
     // Support drag start from the sidebar templates
@@ -1305,14 +1410,22 @@ let resizeStartLeft = 0, resizeStartTop = 0;
 let rotateStartAngle = 0;
 let rotateInitialElementAngle = 0;
 
-document.addEventListener("mousedown", (e) => {
+function handlePointerDown(e) {
+    let clientX = e.clientX;
+    let clientY = e.clientY;
+    if (e.type.startsWith('touch')) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    }
+
     if (e.target.closest('#itemDeleteBtn')) return;
     
     if (e.target.closest('#itemResizeBtn') && selectedItem) {
-        e.stopPropagation(); e.preventDefault();
+        e.stopPropagation(); 
+        if(e.cancelable) e.preventDefault();
         isResizing = true;
-        resizeStartX = e.clientX;
-        resizeStartY = e.clientY;
+        resizeStartX = clientX;
+        resizeStartY = clientY;
         resizeStartW = selectedItem.offsetWidth;
         resizeStartH = selectedItem.offsetHeight;
         resizeStartLeft = parseFloat(selectedItem.style.left) || 0;
@@ -1321,13 +1434,14 @@ document.addEventListener("mousedown", (e) => {
     }
     
     if (e.target.closest('#itemRotateBtn') && selectedItem) {
-        e.stopPropagation(); e.preventDefault();
+        e.stopPropagation(); 
+        if(e.cancelable) e.preventDefault();
         isRotating = true;
         
         const rect = selectedItem.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
-        rotateStartAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+        rotateStartAngle = Math.atan2(clientY - cy, clientX - cx) * 180 / Math.PI;
         rotateInitialElementAngle = parseFloat(selectedItem.dataset.rotation) || 0;
         return;
     }
@@ -1341,28 +1455,35 @@ document.addEventListener("mousedown", (e) => {
         selected = item;
         const rect = item.getBoundingClientRect();
         
-        dragOffsetX = e.clientX - rect.left;
-        dragOffsetY = e.clientY - rect.top;
+        dragOffsetX = clientX - rect.left;
+        dragOffsetY = clientY - rect.top;
         
         if (typeof highestZ !== 'undefined') {
             item.style.zIndex = highestZ++;
         }
-        e.preventDefault();
+        if(e.cancelable) e.preventDefault();
         customScene.style.cursor = 'grabbing';
     } else {
-        // Deselect if clicking outside of the customScene or customization panels
         if (!e.target.closest('#customScene') && !e.target.closest('#customPanel')) {
             selectAccessory(null);
         }
     }
-});
+}
 
-document.addEventListener("mousemove", (e) => {
+function handlePointerMove(e) {
+    let clientX = e.clientX;
+    let clientY = e.clientY;
+    if (e.type.startsWith('touch')) {
+        if(e.touches.length === 0) return;
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    }
+
     const sceneW = customScene.clientWidth;
     const sceneH = customScene.clientHeight;
 
     if (isResizing && selectedItem) {
-        const dx = e.clientX - resizeStartX;
+        const dx = clientX - resizeStartX;
         
         let maxW = Math.min(sceneW - resizeStartLeft, sceneH - resizeStartTop);
         let newW = resizeStartW + dx;
@@ -1371,6 +1492,7 @@ document.addEventListener("mousemove", (e) => {
         selectedItem.style.width = newW + "px";
         selectedItem.style.height = (newW * (resizeStartH / resizeStartW)) + "px";
         updateSelectionUI();
+        if(e.cancelable) e.preventDefault();
         return;
     }
     
@@ -1378,7 +1500,7 @@ document.addEventListener("mousemove", (e) => {
         const rect = selectedItem.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
-        const currentAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+        const currentAngle = Math.atan2(clientY - cy, clientX - cx) * 180 / Math.PI;
         
         let angleDiff = currentAngle - rotateStartAngle;
         let newAngle = rotateInitialElementAngle + angleDiff;
@@ -1387,14 +1509,15 @@ document.addEventListener("mousemove", (e) => {
         let flipStr = selectedItem.dataset.flip === "-1" ? "scaleX(-1) " : "";
         selectedItem.style.transform = flipStr + "rotate(" + newAngle + "deg)";
         updateSelectionUI();
+        if(e.cancelable) e.preventDefault();
         return;
     }
 
     if (!selected) return;
 
     const rect = customScene.getBoundingClientRect();
-    let left = e.clientX - rect.left - dragOffsetX;
-    let top = e.clientY - rect.top - dragOffsetY;
+    let left = clientX - rect.left - dragOffsetX;
+    let top = clientY - rect.top - dragOffsetY;
 
     left = Math.max(0, Math.min(left, sceneW - selected.offsetWidth));
     top = Math.max(0, Math.min(top, sceneH - selected.offsetHeight));
@@ -1402,9 +1525,10 @@ document.addEventListener("mousemove", (e) => {
     selected.style.left = left + "px";
     selected.style.top = top + "px";
     updateSelectionUI();
-});
+    if(e.cancelable) e.preventDefault();
+}
 
-document.addEventListener("mouseup", () => {
+function handlePointerUp() {
     selected = null;
     isResizing = false;
     isRotating = false;
@@ -1413,13 +1537,25 @@ document.addEventListener("mouseup", () => {
     } else {
         customScene.style.cursor = '';
     }
-});
+}
 
-customScene.addEventListener("mousedown", (e) => {
+document.addEventListener("mousedown", handlePointerDown);
+document.addEventListener("touchstart", handlePointerDown, { passive: false });
+
+document.addEventListener("mousemove", handlePointerMove);
+document.addEventListener("touchmove", handlePointerMove, { passive: false });
+
+document.addEventListener("mouseup", handlePointerUp);
+document.addEventListener("touchend", handlePointerUp);
+document.addEventListener("touchcancel", handlePointerUp);
+
+function handleScenePointerDown(e) {
     if (e.target === customScene || e.target.id === 'mainPlushie' || e.target.closest('.canvas-placeholder')) {
         selectAccessory(null);
     }
-});
+}
+customScene.addEventListener("mousedown", handleScenePointerDown);
+customScene.addEventListener("touchstart", handleScenePointerDown, { passive: false });
 
 document.getElementById("itemDeleteBtn").addEventListener("click", (e) => {
     e.stopPropagation();
@@ -1534,6 +1670,17 @@ window.location.href = "checkout.html";
 
 </style>
 
+    <!-- Mobile Sidebar -->
+    <div id="mobileSidebar" class="mobile-sidebar">
+        <a href="plushies.html" class="navLink">Plushies</a>
+        <a href="flowers.html" class="navLink">Flowers</a>
+        <a href="notes.html" class="navLink">Notes</a>
+    </div>
+    <script>
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mobileSidebar').classList.toggle('open');
+        });
+    </script>
 </body>
 
 </html>

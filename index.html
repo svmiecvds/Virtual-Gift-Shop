@@ -457,6 +457,48 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 #storeNavbar {
     border-bottom: none !important;
 }
+
+/* --- MOBILE SPECIFIC STYLES --- */
+@media screen and (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+    
+    .hero {
+        padding: 40px 15px 40px !important;
+        min-height: 100vh !important;
+    }
+    
+    .hero-title {
+        font-size: 60px !important;
+        transform: none !important;
+        padding: 10px !important;
+        line-height: 1.1 !important;
+        margin-bottom: 15px !important;
+        width: 100%;
+        word-wrap: break-word;
+    }
+    
+    .hero-subtitle {
+        font-size: 26px !important;
+        margin-bottom: 40px !important;
+        padding: 0 15px;
+        line-height: 1.3 !important;
+    }
+    
+    .hero-btn {
+        font-size: 22px !important;
+        padding: 12px 30px !important;
+    }
+    
+    .site-footer {
+        font-size: 11px !important;
+        padding: 8px 10px !important;
+        height: auto !important;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+}
 </style>
 </body>
 </html>

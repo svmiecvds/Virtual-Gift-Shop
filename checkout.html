@@ -939,7 +939,131 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<style>
+@media (max-width: 768px) {
+    #storeNavbar { 
+        justify-content: space-between !important; 
+        padding: 10px 15px !important; 
+    }
+    #storeNavbar > .navLink { display: none !important; }
+    
+    .mobile-hamburger { 
+        display: block !important; 
+        position: static !important;
+        font-size: 26px !important;
+        padding: 5px;
+    }
+    
+    .navBrand { 
+        font-size: 20px !important; 
+        position: static !important;
+        transform: none !important;
+        left: auto !important;
+        flex: 1;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .mobile-sidebar {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 270px;
+        height: 100vh;
+        background: rgba(90, 0, 53, 0.96);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 1100;
+        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
+        flex-direction: column;
+        padding-top: 90px;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-shadow: none;
+        border-right: 1px solid rgba(250, 197, 207, 0.2);
+    }
+    .mobile-sidebar.open {
+        left: 0;
+        box-shadow: 6px 0 40px rgba(0,0,0,0.45);
+    }
+    .mobile-sidebar .navLink {
+        padding: 16px 24px;
+        font-size: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        display: block !important;
+        color: rgba(255,255,255,0.85);
+        text-decoration: none;
+        font-family: 'Fredoka', sans-serif;
+        border-radius: 12px;
+        transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+        opacity: 0;
+        transform: translateX(-16px);
+    }
+    .mobile-sidebar.open .navLink {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    .mobile-sidebar.open .navLink:nth-child(1) { transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s, background 0.2s ease, color 0.2s ease; }
+    .mobile-sidebar.open .navLink:nth-child(2) { transition: opacity 0.3s ease 0.18s, transform 0.3s ease 0.18s, background 0.2s ease, color 0.2s ease; }
+    .mobile-sidebar.open .navLink:nth-child(3) { transition: opacity 0.3s ease 0.26s, transform 0.3s ease 0.26s, background 0.2s ease, color 0.2s ease; }
+    .mobile-sidebar .navLink:hover, .mobile-sidebar .navLink.active {
+        background: rgba(250, 197, 207, 0.15);
+        color: #fac5cf;
+        padding-left: 30px;
+    }
+    #sidebarOverlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        backdrop-filter: blur(3px);
+        z-index: 1099;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+    }
+    #sidebarOverlay.visible {
+        display: block;
+        opacity: 1;
+    }
+    .mobile-hamburger {
+        transition: transform 0.3s ease;
+    }
+    .mobile-hamburger.open {
+        transform: rotate(90deg);
+    }
+    #storeNavbar .navBrand {
+        display: none !important;
+    }
+    #checkoutNavActions {
+        width: 100% !important;
+        justify-content: space-between !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important; /* no hamburger, flush left */
+    }
+    #checkoutNavActions button {
+        padding: 0 !important;
+    }
+}
+/* --- MOBILE SIDEBAR STYLES --- */
+.mobile-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    left: 20px;
+    z-index: 1001;
+}
+.mobile-sidebar {
+    display: none;
+}
+</style>
 </head>
+
 
 <body class="checkoutPage">
 
@@ -950,7 +1074,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         <div id="checkoutNavActions" style="margin-left: auto; display: flex; gap: 15px; align-items: center;">
             <button onclick="window.location.href='index.html'" style="display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; height: 38px; padding: 0 10px; color: #ffffff; cursor: pointer; text-decoration: none; white-space: nowrap; transition: all 0.3s ease;" onmouseover="this.style.color='white'; this.style.transform='translateY(-2px)'; this.style.opacity='0.9';" onmouseout="this.style.color='#ffffff'; this.style.transform='translateY(0)'; this.style.opacity='1';">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6; margin-right: 4px; flex-shrink: 0;" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-                Go back
+                <span class="mobile-back-text">Go back</span>
             </button>
             <div id="giftButton" class="shiny-cta"><span>Make This A Gift</span></div>
         </div>
@@ -1093,7 +1217,9 @@ input:focus {
 }
 </style>
 
+
 </body>
+
 
 </html>
 

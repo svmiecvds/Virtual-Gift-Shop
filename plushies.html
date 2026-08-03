@@ -981,12 +981,189 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+/* --- MOBILE SIDEBAR STYLES --- */
+.mobile-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    left: 20px;
+    z-index: 1001;
+}
+.mobile-sidebar {
+    display: none;
+}
+@media (max-width: 768px) {
+    #storeNavbar { 
+        justify-content: space-between !important; 
+        padding: 10px 15px !important; 
+    }
+    #storeNavbar > .navLink { display: none !important; }
+    
+    .mobile-hamburger { 
+        display: block !important; 
+        position: static !important;
+        font-size: 26px !important;
+        padding: 5px;
+    }
+    
+    .navBrand { 
+        font-size: 20px !important; 
+        position: static !important;
+        transform: none !important;
+        left: auto !important;
+        flex: 1;
+        text-align: center;
+        white-space: nowrap;
+    }
+    
+    /* Cart button mobile tweaks */
+    #cartButton {
+        padding: 0 !important;
+        border-radius: 50% !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    #cartButton > span {
+        display: none !important;
+    }
+    #cartButton svg {
+        margin: 0 !important;
+    }
+
+    .mobile-sidebar {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 270px;
+        height: 100vh;
+        background: rgba(90, 0, 53, 0.96);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 1100;
+        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
+        flex-direction: column;
+        padding-top: 90px;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-shadow: none;
+        border-right: 1px solid rgba(250, 197, 207, 0.2);
+    }
+    .mobile-sidebar.open {
+        left: 0;
+        box-shadow: 6px 0 40px rgba(0,0,0,0.45);
+    }
+    .mobile-sidebar .navLink {
+        padding: 16px 24px;
+        font-size: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        display: block !important;
+        color: rgba(255,255,255,0.85);
+        text-decoration: none;
+        font-family: 'Fredoka', sans-serif;
+        border-radius: 12px;
+        transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+        opacity: 0;
+        transform: translateX(-16px);
+    }
+    .mobile-sidebar.open .navLink {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    .mobile-sidebar.open .navLink:nth-child(1) { transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s, background 0.2s ease, color 0.2s ease; }
+    .mobile-sidebar.open .navLink:nth-child(2) { transition: opacity 0.3s ease 0.18s, transform 0.3s ease 0.18s, background 0.2s ease, color 0.2s ease; }
+    .mobile-sidebar.open .navLink:nth-child(3) { transition: opacity 0.3s ease 0.26s, transform 0.3s ease 0.26s, background 0.2s ease, color 0.2s ease; }
+    .mobile-sidebar .navLink:hover, .mobile-sidebar .navLink.active {
+        background: rgba(250, 197, 207, 0.15);
+        color: #fac5cf;
+        padding-left: 30px;
+    }
+    #sidebarOverlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        backdrop-filter: blur(3px);
+        z-index: 1099;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+    }
+    #sidebarOverlay.visible {
+        display: block;
+        opacity: 1;
+    }
+    .mobile-hamburger {
+        transition: transform 0.3s ease;
+    }
+    .mobile-hamburger.open {
+        transform: rotate(90deg);
+    }
+
+    /* Make cards smaller on mobile */
+    .flowerCard {
+        width: 230px !important;
+        padding: 15px !important;
+        border-radius: 20px !important;
+    }
+    .flowerImage {
+        width: 120px !important;
+        height: 120px !important;
+        margin-bottom: 10px !important;
+    }
+    .flowerName {
+        font-size: 20px !important;
+        margin-bottom: 10px !important;
+    }
+    .color-option {
+        padding: 4px 8px !important;
+    }
+    .color-dot {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    .color-label {
+        font-size: 11px !important;
+    }
+    .color-scroll-container {
+        gap: 6px !important;
+        margin-bottom: 10px !important;
+    }
+    .flowerSelector {
+        padding: 4px 12px !important;
+        margin-bottom: 15px !important;
+        gap: 10px !important;
+    }
+    .flowerSelector button {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 16px !important;
+    }
+    .flowerQuantity {
+        font-size: 16px !important;
+        min-width: 20px !important;
+    }
+    .flowerCard .addToCartBtn, .flowerCard .customizeBtn {
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+        margin-bottom: 8px !important;
+    }
+}
+</style>
 </head>
 
 <body class="no-scroll">
 
     <!-- Baby Pink Navbar -->
     <nav id="storeNavbar">
+        <button id="mobileMenuBtn" class="mobile-hamburger">☰</button>
         <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
         <a href="plushies.html" class="navLink active">Plushies</a>
         <a href="flowers.html" class="navLink">Flowers</a>
@@ -1711,6 +1888,34 @@ document.addEventListener('DOMContentLoaded', () => {
     border-bottom: none !important;
 }
 </style>
+
+    <div id="sidebarOverlay"></div>
+    <div id="mobileSidebar" class="mobile-sidebar">
+        <a href="plushies.html" class="navLink active">Plushies</a>
+        <a href="flowers.html" class="navLink">Flowers</a>
+        <a href="notes.html" class="navLink">Notes</a>
+    </div>
+    <script>
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('mobileSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('visible');
+            menuBtn.classList.add('open');
+            menuBtn.textContent = '✕';
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('visible');
+            menuBtn.classList.remove('open');
+            menuBtn.textContent = '☰';
+        }
+        menuBtn.addEventListener('click', function() {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+        overlay.addEventListener('click', closeSidebar);
+    </script>
 </body>
 
 </html>
