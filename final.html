@@ -902,8 +902,29 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 <style>
 @media (max-width: 768px) {
     .checkoutTitle, .giftHeader {
-        font-size: 36px !important;
+        font-size: 28px !important;
         margin-top: 80px !important;
+        margin-bottom: 10px !important;
+    }
+    
+    body, body.receiptPage, body.giftPage {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        height: auto !important;
+        min-height: 100vh !important;
+    }
+
+    #giftContainer {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 10px !important;
+        height: auto !important;
+        min-height: 55vw !important;
+    }
+
+    #giftScene {
+        height: 60vw !important;
+        min-height: 260px !important;
     }
     
     #storeNavbar { 
