@@ -55,7 +55,7 @@
     box-sizing: border-box;
 }
 
-html { scrollbar-width: none; }
+html { scrollbar-width: none; background-color: #fef2f4; /* prevent white overscroll on iOS */ }
 html::-webkit-scrollbar { display: none; }
 html_REMOVED {
     transition: background-color 0.5s ease, color 0.5s ease;
@@ -1519,8 +1519,10 @@ function handlePointerMove(e) {
     let left = clientX - rect.left - dragOffsetX;
     let top = clientY - rect.top - dragOffsetY;
 
-    left = Math.max(0, Math.min(left, sceneW - selected.offsetWidth));
-    top = Math.max(0, Math.min(top, sceneH - selected.offsetHeight));
+    // Allow free movement — only keep a 20px handle visible so items aren't completely lost
+    const minVisible = 20;
+    left = Math.max(-(selected.offsetWidth - minVisible), Math.min(left, sceneW - minVisible));
+    top  = Math.max(-(selected.offsetHeight - minVisible), Math.min(top,  sceneH - minVisible));
 
     selected.style.left = left + "px";
     selected.style.top = top + "px";

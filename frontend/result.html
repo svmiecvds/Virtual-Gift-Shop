@@ -26,7 +26,7 @@
             --heading-color: #B71A3D;
         }
 
-        html { scrollbar-width: none; }
+        html { scrollbar-width: none; background-color: #fef2f4; /* prevent white overscroll on iOS */ }
 html::-webkit-scrollbar { display: none; }
 html, body {
             width: 100%;
@@ -588,7 +588,7 @@ html, body {
                     wrapper.className = 'note giftEl';
 
                     wrapper.style.containerType = "inline-size";
-                    wrapper.style.overflow = "hidden";
+                    wrapper.style.overflow = "visible";
                     wrapper.style.aspectRatio = "1 / 1";
                     wrapper.style.height = wrapper.style.width;
 
