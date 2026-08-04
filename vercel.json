@@ -1,5 +1,8 @@
 {
+  "cleanUrls": true,
   "rewrites": [
-    { "source": "/gift/:id", "destination": "/result.html?id=:id" }
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/gift/:id", "destination": "/frontend/result.html?id=:id" },
+    { "source": "/(.*)", "destination": "/frontend/$1" }
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "name": "thegiftingcotest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byayushdas/theGiftingCoTest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/byayushdas/theGiftingCoTest/issues"
+  },
+  "homepage": "https://github.com/byayushdas/theGiftingCoTest#readme",
+  "dependencies": {
+    "mongodb": "^7.5.0",
+    "nanoid": "^3.3.17"
+  }
+}
