@@ -796,6 +796,27 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         font-size: 36px !important;
         margin-top: 80px !important;
     }
+    
+    body, body.receiptPage, body.giftPage {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        height: auto !important;
+        min-height: 100vh !important;
+        background-image: url('assets/mobilegiftbg.webp') !important;
+    }
+
+    #giftContainer {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 10px !important;
+        height: auto !important;
+        min-height: 55vw !important;
+    }
+
+    #giftScene {
+        height: 60vw !important;
+        min-height: 260px !important;
+    }
 
     #storeNavbar { 
         justify-content: space-between !important; 
@@ -1469,6 +1490,8 @@ const saveGiftBtn = document.getElementById("saveGiftLayoutBtn");
 if (saveGiftBtn) {
     saveGiftBtn.addEventListener("click", () => {
         const savedLayout = [];
+        const sceneW = giftScene.offsetWidth;
+        const sceneH = giftScene.offsetHeight;
         document.querySelectorAll("#giftScene .giftEl").forEach(el => {
             const isPlushie = el.classList.contains("draggable") && !el.classList.contains("note") && !el.classList.contains("giftText") && el.querySelector("img") && !el.querySelector("img").src.includes("sticker");
             const isNote = el.classList.contains("note");
@@ -1510,9 +1533,14 @@ if (saveGiftBtn) {
                 text = el.innerText;
             }
 
-            const sceneW = giftScene.clientWidth || 800;
-            const realLeft = parseFloat(el.style.left) || 0;
-            const centerOffset = realLeft - (sceneW / 2);
+            const rawLeft   = parseFloat(el.style.left)   || 0;
+            const rawTop    = parseFloat(el.style.top)    || 0;
+            const rawWidth  = parseFloat(el.style.width)  || 0;
+            const rawHeight = parseFloat(el.style.height);
+            const leftPct   = rawLeft  / sceneW * 100;
+            const topPct    = rawTop   / sceneH * 100;
+            const widthPct  = rawWidth / sceneW * 100;
+            const heightPct = (el.style.height && el.style.height !== "auto") ? (rawHeight / sceneH * 100) : null;
 
             let accessories = [];
             const itemIndex = el.dataset.itemIndex;
@@ -1537,11 +1565,18 @@ if (saveGiftBtn) {
             savedLayout.push({
                 type: type,
                 isBouquet: isBouquetItem,
+                // Percentage-based positions — device-independent
+                leftPct:   leftPct,
+                topPct:    topPct,
+                widthPct:  widthPct,
+                heightPct: heightPct,
+                // Legacy pixel fields kept for shared-link backwards compat
                 left: el.style.left,
-                centerOffset: centerOffset,
                 top: el.style.top,
                 width: el.style.width,
                 height: el.style.height,
+                sceneW: sceneW,
+                sceneH: sceneH,
                 zIndex: el.style.zIndex,
                 rotation: el.dataset.rotation || "0",
                 flip: el.dataset.flip || "1",
@@ -1557,8 +1592,6 @@ if (saveGiftBtn) {
                 canvasH: canvasH,
                 canvasL: canvasL,
                 canvasT: canvasT,
-                sceneW: giftScene.offsetWidth,
-                sceneH: giftScene.offsetHeight
             });
         });
         
