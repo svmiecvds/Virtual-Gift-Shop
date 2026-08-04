@@ -390,7 +390,9 @@ html, body {
                 docId = parts[parts.length - 1];
             }
             if (!docId || docId === 'result.html' || docId === 'gift') {
-                loadingMsg.textContent = 'Gift not found or invalid link.';
+                loadingMsg.textContent = 'Gift Expired';
+                loadingMsg.style.fontFamily = "'Pinyon Script', cursive";
+                loadingMsg.style.fontSize = "56px";
                 return;
             }
             try {
@@ -405,7 +407,9 @@ html, body {
                     loadingMsg.remove();
                     renderGift();
                 } else {
-                    loadingMsg.textContent = 'Gift not found!';
+                    loadingMsg.textContent = 'Gift Expired';
+                    loadingMsg.style.fontFamily = "'Pinyon Script', cursive";
+                    loadingMsg.style.fontSize = "56px";
                 }
             } catch (e) {
                 console.error('Error loading gift:', e);
