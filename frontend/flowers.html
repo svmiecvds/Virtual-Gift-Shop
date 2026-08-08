@@ -2171,7 +2171,8 @@ const placeholderMsg = document.getElementById("placeholderMsg");
 
     let selectedItem = null;
     let selected = null;
-    let highestZ = 10;
+    let highestLeafZ = 10;
+    let highestZ = 100;
 
     let dragOffsetX = 0;
     let dragOffsetY = 0;
@@ -2236,7 +2237,11 @@ const placeholderMsg = document.getElementById("placeholderMsg");
             el.style.top = (300 - defaultDim / 2) + "px";
         }
         
-        el.style.zIndex = highestZ++;
+        if (type === 'leaf') {
+            el.style.zIndex = highestLeafZ++;
+        } else {
+            el.style.zIndex = highestZ++;
+        }
         el.draggable = false;
         
         // Track state
@@ -2398,7 +2403,11 @@ function handlePointerDown(e) {
         dragOffsetY = ((clientY - rect.top) * scale);
         
         if (typeof highestZ !== 'undefined') {
-            item.style.zIndex = highestZ++;
+            if (item.dataset.type === 'leaf') {
+                item.style.zIndex = highestLeafZ++;
+            } else {
+                item.style.zIndex = highestZ++;
+            }
         } else {
             item.style.zIndex = parseInt(item.style.zIndex || "100") + 1;
         }
