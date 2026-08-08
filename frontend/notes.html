@@ -1011,8 +1011,9 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         #leftPanel::-webkit-scrollbar, #rightPanel::-webkit-scrollbar { width: 6px; }
         #leftPanel::-webkit-scrollbar-track, #rightPanel::-webkit-scrollbar-track { background: transparent; }
         #leftPanel::-webkit-scrollbar-thumb, #rightPanel::-webkit-scrollbar-thumb { background: #900C3F; border-radius: 10px; }
-        .draggableSticker { position: absolute; width: 60px; height: auto; cursor: move; pointer-events: auto; }
-        .canvas-selected { outline: 3px solid #B71A3D; border-radius: 24px; }
+        .draggableSticker { position: absolute; width: 90px; height: auto; cursor: move; pointer-events: auto; }
+        .canvas-selected { outline: calc(3px / var(--scale, 1)) solid #B71A3D; border-radius: calc(24px / var(--scale, 1)); }
+
         .colour-swatch {
             width: 100%;
             aspect-ratio: 1;
@@ -1088,6 +1089,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             
             img.dataset.angle = 0;
             img.dataset.scale = 1;
+            img.style.setProperty('--scale', 1);
             img.style.transform = `translate(-50%, -50%) rotate(0rad) scale(1)`;
             
             canvasContent.appendChild(img);
@@ -1394,6 +1396,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
             newScale = Math.max(0.2, Math.min(newScale, 5));
             
             selectedElement.dataset.scale = newScale;
+            selectedElement.style.setProperty('--scale', newScale);
             const angle = selectedElement.dataset.angle || 0;
             selectedElement.style.transform = `translate(-50%, -50%) rotate(${angle}rad) scale(${newScale})`;
             
