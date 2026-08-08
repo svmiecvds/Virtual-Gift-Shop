@@ -1316,14 +1316,16 @@ function selectAccessory(element) {
     document.querySelectorAll(".draggableAccessory").forEach(item => {
         item.classList.remove("selectedAccessory");
         item.style.outline = "none";
+        item.style.borderRadius = "";
     });
     const deleteBtn = document.getElementById('itemDeleteBtn');
     if (element) {
         element.classList.add("selectedAccessory");
-        element.style.outline = "2px dashed #B71A3D";
+        element.style.outline = "3px solid #B71A3D";
+        element.style.borderRadius = "24px";
         updateSelectionUI();
     } else {
-        deleteBtn.style.display = 'none';
+        updateSelectionUI();
         customScene.style.cursor = '';
     }
 }

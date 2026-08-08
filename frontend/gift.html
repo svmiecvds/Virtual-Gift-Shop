@@ -1056,11 +1056,13 @@ function selectElement(el) {
     document.querySelectorAll(".gifSelected").forEach(item => {
         item.classList.remove("gifSelected");
         item.style.outline = "none";
+        item.style.borderRadius = "";
     });
     
     if (el) {
         el.classList.add("gifSelected");
-        el.style.outline = "2px dashed #B71A3D";
+        el.style.outline = "3px solid #B71A3D";
+        el.style.borderRadius = "24px";
         updateSelectionUI();
     } else {
         updateSelectionUI();
