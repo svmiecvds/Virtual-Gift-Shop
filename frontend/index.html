@@ -444,7 +444,7 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
                 <div class="heart-particle">❤</div>
                 <div class="heart-particle">❤</div>
             </div>
-            <a href="plushies.html" class="hero-btn">Start Gifting</a>
+            <a href="plushies.html" class="hero-btn" id="startGiftingBtn">Start Gifting</a>
         </div>
     </main>
 
@@ -454,9 +454,152 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
         &copy; 2026 | &#9825; designed by<a href="https://www.instagram.com/artwsomi?igsh=bHRpb2Z6aWo1ZjFi" target="_blank" rel="noopener noreferrer">Somi</a> &amp; <a href="https://www.instagram.com/byayushdas" target="_blank" rel="noopener noreferrer">Ayush Das</a>
     </footer>
 
+    <!-- Desktop Recommendation Modal -->
+    <div id="desktopWarningModal" class="desktop-warning-overlay">
+        <div class="desktop-warning-modal">
+            <button id="closeWarningBtn" class="close-warning-btn">&times;</button>
+            <div class="warning-icon">💻</div>
+            <h3>For the Best Experience</h3>
+            <p>We recommend using The Gifting Co. on a desktop or laptop browser to fully enjoy our detailed customization tools and interactive features.</p>
+            <a href="plushies.html" id="continueGiftingBtn" class="warning-continue">Continue Anyway</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const startBtn = document.getElementById("startGiftingBtn");
+            const modal = document.getElementById("desktopWarningModal");
+            const closeBtn = document.getElementById("closeWarningBtn");
+
+            if (startBtn && modal && closeBtn) {
+                startBtn.addEventListener("click", function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        modal.classList.add("visible");
+                    }
+                });
+
+                closeBtn.addEventListener("click", function() {
+                    modal.classList.remove("visible");
+                });
+
+                modal.addEventListener("click", function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove("visible");
+                    }
+                });
+            }
+        });
+    </script>
+
 <style>
 #storeNavbar {
     border-bottom: none !important;
+}
+
+/* --- DESKTOP WARNING MODAL --- */
+.desktop-warning-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.desktop-warning-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.desktop-warning-modal {
+    background: #fce0e5;
+    border: 2px solid #fac5cf;
+    border-radius: 28px;
+    padding: 32px 36px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(255, 105, 180, 0.25);
+    text-align: center;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    box-sizing: border-box;
+}
+
+.desktop-warning-overlay.visible .desktop-warning-modal {
+    transform: scale(1) translateY(0);
+}
+
+.close-warning-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    color: #B71A3D;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    line-height: 1;
+    padding: 5px;
+}
+
+.close-warning-btn:hover {
+    transform: scale(1.1) rotate(90deg);
+    color: #900C3F;
+}
+
+.warning-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.desktop-warning-modal h3 {
+    font-family: 'Pinyon Script', cursive;
+    color: #B71A3D;
+    font-size: 36px;
+    margin-bottom: 12px;
+    font-weight: normal;
+}
+
+.desktop-warning-modal p {
+    color: #5a0035;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+.warning-continue {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 25px;
+    background: #ffffff;
+    color: #B71A3D;
+    border: 2px solid #fac5cf;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.warning-continue:hover {
+    background: #fac5cf;
+    color: #5a0035;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(250, 197, 207, 0.4);
 }
 
 /* --- MOBILE SPECIFIC STYLES --- */
