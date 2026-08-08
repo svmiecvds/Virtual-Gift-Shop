@@ -1205,14 +1205,32 @@
                 // Base plushie image
                 const img = document.createElement("img");
                 img.src = resolveMainSrc(item.src);
-                img.style.position = "absolute";
-                img.style.width = "100%";
-                img.style.height = (isBouquet || item.canvasW !== undefined) ? "100%" : "auto";
+                const hasAccessories = item.accessories && item.accessories.length > 0;
                 if (isBouquet || item.canvasW !== undefined) {
+                    // Bouquets and canvas-based items need absolute positioning inside a sized container
+                    img.style.position = "absolute";
+                    img.style.width = "100%";
+                    img.style.height = "100%";
                     img.style.objectFit = "contain";
+                    img.style.left = "0";
+                    img.style.top = "0";
+                } else if (hasAccessories) {
+                    // Regular plushies WITH accessories: use block so wrapper gets natural height,
+                    // enabling percentage-based accessory positioning to work correctly.
+                    img.style.position = "relative";
+                    img.style.width = "100%";
+                    img.style.height = "auto";
+                    img.style.display = "block";
+                    // Ensure accessories peeking outside the plushie bounds are not clipped
+                    wrapper.style.overflow = "visible";
+                } else {
+                    // Regular plushies without accessories: absolute is fine
+                    img.style.position = "absolute";
+                    img.style.width = "100%";
+                    img.style.height = "auto";
+                    img.style.left = "0";
+                    img.style.top = "0";
                 }
-                img.style.left = "0";
-                img.style.top = "0";
                 img.draggable = false;
                 wrapper.appendChild(img);
 
