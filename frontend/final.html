@@ -49,16 +49,15 @@
 
         html {
             scrollbar-width: none;
-            background-color: #fef2f4; /* prevent white overscroll on iOS */
+            background-color: #fef2f4;
+            /* prevent white overscroll on iOS */
         }
 
         html::-webkit-scrollbar {
             display: none;
         }
 
-        html_REMOVED {
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
+
 
         body,
         body.receiptPage,
@@ -94,39 +93,7 @@
 
 
 
-        .sidebar-panel {
-            display: none;
-            /* --- controlled by JS --- */
-            background: var(--popup-bg);
-            padding: 25px;
-            border-radius: 25px;
-            text-align: center;
-            transition: background 0.5s ease, box-shadow 0.5s ease;
-        }
 
-        #shelf {
-            width: 1000px;
-            height: 800px;
-            background: url("shelf.webp");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            position: relative;
-            margin: 0 auto;
-
-            /* --- Shelf stays strictly center aligned --- */
-        }
-
-        .character {
-            position: absolute;
-            width: 170px;
-            cursor: pointer;
-            transition: .25s;
-        }
-
-        .character:hover {
-            transform: scale(1.05);
-        }
 
         /* --- CHECKOUT BUTTON --- */
 
@@ -148,30 +115,18 @@
             word-break: break-word;
         }
 
-        /* --- CUSTOM ALIGNMENTS --- */
-        .checkoutTitle,
-        .customizeTitle {
-            text-align: center !important;
-            font-family: 'Pinyon Script', cursive;
-            color: #ffffff;
-            margin-top: 100px;
-            margin-bottom: 25px;
-            font-size: 50px;
-            text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
-            font-weight: bold;
-        }
+
 
 
 
         /* --- NAVBAR --- */
         #storeNavbar {
-            background: url('assets/kisses-bg.webp') center/cover no-repeat !important;
+            background: #900C3F;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 70px;
-            background: rgba(255, 228, 241, 0.95);
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: flex-end;
@@ -186,94 +141,6 @@
 
 
 
-        .navLink {
-            font-size: 20px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .navLink:hover {
-            color: white;
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-
-        .navLink.active {
-            color: white;
-            font-weight: 800;
-            border-bottom: 3px solid var(--heading-color);
-            padding-bottom: 2px;
-        }
-
-
-
-        /* --- Header Text styling --- */
-        .storeHeader {
-            text-align: center;
-            margin-top: 100px;
-            margin-bottom: 20px;
-            color: var(--heading-color);
-            font-family: 'Pinyon Script', cursive;
-            font-size: 56px;
-            text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
-            font-weight: bold;
-        }
-
-
-
-
-
-        /* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
-
-        /* --- Bubbly option elements inside selection panel --- */
-        .box-option {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px 20px;
-            background: var(--btn-bg);
-            border-radius: 20px;
-            cursor: pointer;
-            margin-bottom: 12px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            width: 100%;
-        }
-
-        .box-option:hover {
-            transform: translateY(-3px) scale(1.02);
-            border-color: #B71A3D;
-            box-shadow: 0 5px 12px rgba(183, 26, 61, 0.2);
-        }
-
-        .box-option.active {
-            background: #fac5cf;
-            border-color: #B71A3D;
-            box-shadow: none;
-        }
-
-        .box-option img {
-            width: 45px;
-            height: 32px;
-            object-fit: contain;
-        }
-
-        .box-option span {
-            font-size: 16px;
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .box-option.active span {
-            color: #5a0035;
-        }
 
 
 
@@ -281,41 +148,6 @@
 
 
 
-        /* --- Customization Buttons Placed Side-by-Side --- */
-        .buttons-row {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .buttons-row button {
-            flex: 1;
-            margin: 0 !important;
-            padding: 12px 6px !important;
-            font-size: 14px !important;
-            border-radius: 25px !important;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            background: #fce0e5;
-            color: #5a0035;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
-        }
-
-        .buttons-row button:hover {
-            transform: scale(1.05);
-        }
-
-        .draggableTreat {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            object-fit: contain;
-            cursor: move;
-            z-index: 10;
-            transition: transform 0.1s ease;
-        }
 
         /* --- PEARL STARDUST BUTTON DESIGN --- */
         :root {
@@ -364,92 +196,22 @@
             transform: scale(0.98);
         }
 
-        /* --- extra padding for box shadows --- */
 
-
-        .carousel-track {
-            display: flex;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .carousel-slide {
-            flex: 0 0 calc(100% / 3);
-
-            /* --- Show 3 items --- */
-            padding: 0 15px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-        }
-
-
-
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #fafafa;
-            border: 1px solid #e4e4e7;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            color: #52525b;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-
-
-        .carousel-btn:hover:not(:disabled) {
-            background: #f4f4f5;
-            color: #18181b;
-        }
-
-
-
-        .carousel-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .carousel-prev {
-            left: 0;
-        }
-
-        .carousel-next {
-            right: 0;
-        }
-
-        .carousel-slide .flowerCard {
-            width: 100%;
-
-            /* --- Take up the slide width --- */
-            max-width: 320px;
-
-            /* --- Don't get too crazy large --- */
-            margin: 0 auto;
-        }
-
-        /* --- NAV BRAND CENTERING --- */
-        .navBrand {
+        /* --- NAV BRAND --- */
+        .navBrand, a.navBrand {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
             margin: 0;
             font-family: 'Pinyon Script', cursive;
-            font-size: 32px;
-            color: white !important;
+            font-size: 38px;
+            color: white;
             text-decoration: none;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.3s ease;
+            text-shadow: none;
         }
 
         .navBrand:hover {
             transform: translateX(-50%) scale(1.08);
-            text-shadow: none;
         }
 
         /* --- SHARE BUTTON --- */
@@ -698,42 +460,6 @@
             transform: translateY(-2px);
         }
 
-
-
-        /* --- NAVBAR BRAND OVERRIDE --- */
-        .navBrand,
-        a.navBrand {
-            font-family: 'Pinyon Script', cursive !important;
-            color: white !important;
-            font-size: 38px !important;
-            text-shadow: none !important;
-        }
-
-
-
-        /* NAVBAR OVERRIDE */
-        #storeNavbar {
-            background: #900C3F !important;
-            /* dark cherry red */
-        }
-
-        .navBrand,
-        a.navBrand,
-        .navBrand:hover {
-            color: white !important;
-        }
-
-        #cartButton,
-        #giftButton {
-            background-color: #ffffff !important;
-        }
-
-        #cartButton>span::before,
-        #giftButton>span::before {
-            content: none !important;
-            display: none !important;
-        }
-
         /* New Envelope Animation Styles */
         .envelope-overlay {
             position: fixed;
@@ -882,12 +608,6 @@
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
 
 
@@ -917,30 +637,14 @@
         .continue-btn,
         .action-btn,
         .nav-action-btn,
-        .shiny-cta,
-        .navLink {
+        .shiny-cta {
             box-shadow: none !important;
             text-shadow: none !important;
             filter: none !important;
-        }
-
-        .flowerCard {
-            height: 100% !important;
-        }
-
-        .flowerSelector {
-            margin-top: auto !important;
-        }
-
-        .flowerCard .customizeBtn {
-            margin-top: 0 !important;
-        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
-        .mobile-share-btn {
-            display: none;
-        }
+        .mobile-share-btn { display: none; }
     </style>
 
     <style>
@@ -1035,17 +739,22 @@
         <div class="share-modal">
             <button class="share-modal-close" id="closeShareModal">&times;</button>
             <h3 style="font-family: var(--font-ui); color: var(--heading-color);">Share Your Gift!</h3>
-            
+
             <!-- Step 1: Input Name -->
             <div id="shareStep1">
-                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">Who is this beautiful gift for?</p>
-                <input type="text" id="recipientNameInput" placeholder="Recipient's Name" style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #fac5cf; border-radius: 8px; font-family: var(--font-ui); font-size: 16px; outline: none; box-sizing: border-box;" />
-                <button id="generateLinkBtn" class="shiny-cta" style="width: 100%; justify-content: center; padding: 12px; border-radius: 8px;"><span>Generate Link</span></button>
+                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">Who is this
+                    beautiful gift for?</p>
+                <input type="text" id="recipientNameInput" placeholder="Recipient's Name"
+                    style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #fac5cf; border-radius: 8px; font-family: var(--font-ui); font-size: 16px; outline: none; box-sizing: border-box;" />
+                <button id="generateLinkBtn" class="shiny-cta"
+                    style="width: 100%; justify-content: center; padding: 12px; border-radius: 8px;"><span>Generate
+                        Link</span></button>
             </div>
 
             <!-- Step 2: Show Link -->
             <div id="shareStep2" style="display: none;">
-                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">Copy the link below and send it to them!</p>
+                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">Copy the link
+                    below and send it to them!</p>
                 <div class="share-url-box">
                     <input type="text" id="shareUrlInput" readonly />
                     <button id="copyShareBtn">Copy</button>
@@ -1057,7 +766,8 @@
     <div style="text-align: center;">
         <button id="shareGiftBtnMobile" class="shiny-cta mobile-share-btn">
             <span>
-                <svg style="margin-right: 4px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg style="margin-right: 4px;" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="18" cy="5" r="3"></circle>
                     <circle cx="6" cy="12" r="3"></circle>
                     <circle cx="18" cy="19" r="3"></circle>
@@ -1192,13 +902,13 @@
             wrapper.style.transform = `rotate(${item.rotation || 0}deg) scaleX(${item.flip || 1})`;
 
             // scaleX/scaleY of 1 for content rendering since we now use % positioning
-            renderGiftItemContents(wrapper, item, 1, 1);
+            renderGiftItemContents(wrapper, item);
             giftScene.appendChild(wrapper);
         });
 
 
         // Reusable function to render the actual item contents
-        function renderGiftItemContents(wrapper, item, scaleX, scaleY) {
+        function renderGiftItemContents(wrapper, item) {
             if (item.type === "plushie" || item.type === "flower") {
                 const isBouquet = item.isBouquet === true || (item.src && item.src.startsWith("data:image")) || (item.image && item.image.startsWith("data:image"));
 
@@ -1274,15 +984,9 @@
                             adjustedLeft = rawLeft - canvasL;
                             adjustedTop = rawTop - canvasT;
                         }
-                        if (item.canvasW !== undefined) {
-                            accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
-                            accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
-                            accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
-                        } else {
-                            accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
-                            accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
-                            accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
-                        }
+                        accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
+                        accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
+                        accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
 
                         if (item.accessories.indexOf(acc) === 0 && !isBouquet && item.canvasW !== undefined) {
                             accessory.style.height = "auto";
@@ -1380,8 +1084,7 @@
                 wrapper.innerText = item.text;
                 wrapper.style.fontFamily = item.fontFamily;
 
-                let fs = parseFloat(item.fontSize) || 22;
-                wrapper.style.fontSize = (fs * scaleX) + "px";
+                wrapper.style.fontSize = (parseFloat(item.fontSize) || 22) + "px";
 
                 wrapper.style.color = item.color;
                 wrapper.style.userSelect = "none";
@@ -1446,18 +1149,18 @@
                             recipientName: name
                         })
                     });
-                    
+
                     if (!response.ok) {
                         throw new Error('Failed to generate link');
                     }
-                    
+
                     const data = await response.json();
                     const shareUrl = window.location.origin + '/result.html?id=' + data.id;
-                    
+
                     shareUrlInput.value = shareUrl;
                     shareStep1.style.display = 'none';
                     shareStep2.style.display = 'block';
-                } catch(e) {
+                } catch (e) {
                     console.error("Error generating link:", e);
                     alert("Failed to generate link. Please try again.");
                 } finally {

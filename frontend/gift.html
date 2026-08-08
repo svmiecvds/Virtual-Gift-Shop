@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="light">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>The Gifting Co.</title>
+    <title>The Gifting Co.</title>
     <link rel="icon" type="image/png" href="assets/favicon.webp">
     <link rel="preload" as="image" href="assets/giftbg.webp">
     <script>
@@ -18,698 +18,540 @@
     <script defer src="/_vercel/insights/script.js"></script>
     <script src="block-mobile.js"></script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
-/* --- THEME VARIABLES --- */
-:root {
-    --bg-gradient: linear-gradient(135deg, #fce0e5 0%, #fac5cf 40%, #fac5cf 100%);
-    --body-bg: #fef2f4;
-    --panel-bg: #fce0e5;
-    --popup-bg: #fce0e5;
-    --receipt-bg: #fef2f4;
-    --card-bg: #ffffff;
-    --text-color: #B71A3D;
-    --heading-color: #B71A3D;
-    --btn-bg: #ffffff;
-    --btn-text: #B71A3D;
-    --cart-btn-bg: #B71A3D;
-    --cart-btn-shadow: #B71A3D;
-    --glow-color: #B71A3D;
-    --glow-soft: #fac5cf;
-    --toast-bg: #B71A3D;
-    --receipt-shadow: #fac5cf;
-    --shelf-overlay: rgba(255,255,255,0.0);
-    --font-body: 'Quicksand', sans-serif;
-    --font-heading: 'Pinyon Script', cursive;
-    --font-ui: 'Fredoka', sans-serif;
-    --font-nav: 'Inter', sans-serif;
-}
-
-
-
-/* --- BASE --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html { scrollbar-width: none; background-color: #fef2f4; /* prevent white overscroll on iOS */ }
-html::-webkit-scrollbar { display: none; }
-html_REMOVED {
-    transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-body,
-body.receiptPage,
-body.giftPage {
-    color: var(--text-color);
-    background-image: url('assets/giftbg.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: var(--body-bg);
-    overflow: hidden !important;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    transition: background 0.5s ease, color 0.5s ease;
-    font-family: var(--font-body);
-    font-weight: 500;
-}
-
-
-
-.sidebar-panel {
-    display: none;
-    /* --- controlled by JS --- */
-    background: var(--popup-bg);
-    padding: 25px;
-    border-radius: 25px;
-    text-align: center;
-    transition: background 0.5s ease, box-shadow 0.5s ease;
-}
-
-#shelf {
-    width: 1000px;
-    height: 800px;
-    background: url("shelf.webp");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: relative;
-    margin: 0 auto;
-
-/* --- Shelf stays strictly center aligned --- */
-}
-
-.character {
-    position: absolute;
-    width: 170px;
-    cursor: pointer;
-    transition: .25s;
-}
-
-.character:hover {
-    transform: scale(1.05);
-}
-
-/* --- CHECKOUT BUTTON --- */
-
-
-/* --- GIFT PAGE --- */
-.giftTitle {
-    text-align: center;
-    margin-top: 100px;
-    color: #ffffff;
-    font-family: var(--font-heading);
-}
-
-#giftContainer {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-    align-items: center;
-    gap: 20px;
-    justify-content: center;
-    width: 85%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding-top: 10px;
-    padding-bottom: 20px;
-}
-
-#giftScene {
-    flex: 1;
-    height: 55vh;
-    background: transparent;
-    border-radius: 25px;
-    position: relative;
-    box-shadow: none;
-    transition: background 0.5s ease, box-shadow 0.5s ease;
-}
-
-#customPanel {
-    width: 320px;
-    height: 65vh;
-    background: var(--panel-bg);
-    border-radius: 25px;
-    padding: 15px;
-    overflow-y: auto;
-    transition: background 0.5s ease, box-shadow 0.5s ease;
-    scrollbar-width: thin;
-    scrollbar-color: var(--glow-soft) rgba(0, 0, 0, 0.05);
-}
-
-#customPanel::-webkit-scrollbar {
-    width: 8px;
-}
-
-#customPanel::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.02);
-    border-radius: 10px;
-}
-
-#customPanel::-webkit-scrollbar-thumb {
-    background: var(--glow-soft);
-    border-radius: 10px;
-}
-
-#customPanel::-webkit-scrollbar-thumb:hover,
-#assetPanel::-webkit-scrollbar-thumb:hover {
-    background: var(--heading-color);
-}
-
-#customPanel h2 {
-    color: var(--heading-color);
-    margin: 10px 0;
-}
-
-#customPanel img {
-    width: 100px;
-    display: block;
-    margin: 10px auto;
-    cursor: pointer;
-    transition: .25s;
-}
-
-#customPanel img:hover,
-#assetPanel img:hover {
-    transform: scale(1.05);
-}
-
-.draggable {
-    position: absolute;
-    cursor: move;
-}
-
-.note {
-    width: 260px;
-}
-
-.note img {
-    width: 100%;
-}
-
-.noteText {
-    position: absolute;
-    top: 12%;
-    left: 10%;
-    width: 75%;
-    height: 70%;
-    overflow: hidden;
-    text-align: center;
-    word-wrap: break-word;
-    font-size: 18px;
-}
-
-/* --- GIFT CONTROLS --- */
-.giftControls {
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid var(--glow-soft);
-}
-
-.giftControls h2 {
-    color: var(--heading-color);
-    margin-bottom: 10px;
-}
-
-.giftControlBtn {
-    display: block;
-    width: 100%;
-    margin: 6px 0;
-    padding: 10px 14px;
-    border: none;
-    border-radius: 50px;
-    background: var(--btn-bg);
-    color: var(--btn-text);
-    font-family: var(--font-ui);
-    font-size: 15px;
-    cursor: pointer;
-    transition: transform 0.15s, background 0.3s;
-}
-
-.giftControlBtn:hover {
-    transform: scale(1.04);
-}
-
-.giftDeleteBtn {
-}
-
-/* --- Highlight selected gift element --- */
-.gifSelected {
-    outline: 3px solid #B71A3D !important;
-    outline-offset: 3px;
-}
-
-/* --- Gift text element --- */
-.giftText {
-    min-width: 80px;
-    font-size: 22px;
-    color: var(--heading-color);
-    user-select: none;
-    cursor: move;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-/* --- CUSTOM ALIGNMENTS --- */
-.checkoutTitle, .customizeTitle {
-    text-align: center !important;
-    font-family: var(--font-heading);
-    color: var(--heading-color);
-    margin-top: 100px;
-    margin-bottom: 25px;
-    font-size: 50px;
-    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
-    font-weight: bold;
-}
-
-
-
-/* --- NAVBAR --- */
-#storeNavbar {
-    background: url('assets/kisses-bg.webp') center/cover no-repeat !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    background: rgba(255, 228, 241, 0.95);
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 30px;
-    z-index: 999;
-    border-bottom: 3px solid #fac5cf;
-    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
-    padding: 10px 30px;
-    box-sizing: border-box;
-}
-
-
-
-.navLink {
-    font-size: 16px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    letter-spacing: 0.5px;
-}
-
-.navLink:hover {
-    color: white;
-    transform: translateY(-2px);
-    opacity: 0.9;
-}
-
-.navLink.active {
-    color: white;
-    font-weight: 800;
-    border-bottom: 3px solid var(--heading-color);
-    padding-bottom: 2px;
-}
-
-
-
-/* --- Header Text styling --- */
-.storeHeader, .giftHeader {
-    text-align: center !important;
-    margin-top: 100px !important;
-    margin-bottom: 20px !important;
-    color: var(--heading-color) !important;
-    font-family: var(--font-heading) !important;
-    font-size: 56px !important;
-    text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4) !important;
-    font-weight: bold !important;
-    line-height: 1.2 !important;
-}
-
-
-
-
-/* --- BACK TO SHOP BTN --- */
-
-
-
-
-/* --- Big chosen box canvas - a tad bit smaller (600x600px) --- */
-
-/* --- Bubbly option elements inside selection panel --- */
-.box-option {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 20px;
-    background: var(--btn-bg);
-    border-radius: 20px;
-    cursor: pointer;
-    margin-bottom: 12px;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    width: 100%;
-}
-
-.box-option:hover {
-    transform: translateY(-3px) scale(1.02);
-    border-color: #B71A3D;
-    box-shadow: 0 5px 12px rgba(183, 26, 61, 0.2);
-}
-
-.box-option.active {
-    background: #fac5cf;
-    border-color: #B71A3D;
-    box-shadow: none;
-}
-
-.box-option img {
-    width: 45px;
-    height: 32px;
-    object-fit: contain;
-}
-
-.box-option span {
-    font-size: 16px;
-    font-family: var(--font-ui);
-    font-weight: 600;
-    color: var(--text-color);
-}
-
-.box-option.active span {
-    color: #5a0035;
-}
-
-
-
-
-
-
-
-/* --- Customization Buttons Placed Side-by-Side --- */
-.buttons-row {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.buttons-row button {
-    flex: 1;
-    margin: 0 !important;
-    padding: 12px 6px !important;
-    font-size: 14px !important;
-    border-radius: 25px !important;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    background: #fce0e5;
-    color: #5a0035;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
-}
-
-.buttons-row button:hover {
-    transform: scale(1.05);
-}
-
-#saveCustomization {
-    background: #fac5cf !important;
-    color: #5a0035 !important;
-    box-shadow: 0 0 10px pink !important;
-}
-
-#saveCustomization:hover {
-    box-shadow: none !important;
-}
-.draggableTreat {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
-    cursor: move;
-    z-index: 10;
-    transition: transform 0.1s ease;
-}
-
-/* --- PEARL STARDUST BUTTON DESIGN --- */
-:root {
-    --bg-pink: #fac5cf;
-    --hover-glow: rgba(250, 197, 207, 0.6);
-    --hover-glow-soft: rgba(183, 26, 61, 0.8);
-    --btn-text-color: #5a0035;
-}
-
-
-
-.shiny-cta {
-    outline: none;
-    cursor: pointer;
-    border: 0;
-    position: relative;
-    border-radius: 100px;
-    background-color: var(--bg-pink);
-    transition: all 0.2s ease;
-    box-shadow: 
-      inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.4),
-      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
-      inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.3),
-      0 10px 15px -3px rgba(255, 105, 180, 0.3),
-      0 4px 6px -2px rgba(255, 105, 180, 0.05);
-    overflow: hidden;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    padding: 10px 24px;
-}
-
-.shiny-cta::before {
-    content: "";
-    position: absolute;
-    left: -15%;
-    right: -15%;
-    bottom: 25%;
-    top: -100%;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.25);
-    transition: all 0.3s ease;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.shiny-cta::after {
-    content: "";
-    position: absolute;
-    left: 6%;
-    right: 6%;
-    top: 12%;
-    bottom: 40%;
-    border-radius: 22px 22px 0 0;
-    box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.6);
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    transition: all 0.3s ease;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.shiny-cta span {
-    position: relative;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    color: var(--btn-text-color);
-    transition: all 0.2s ease;
-    transform: translateY(2%);
-}
-
-.shiny-cta > span::before {
-    content: "✧";
-    transition: all 0.2s ease;
-}
-
-.shiny-cta:hover > span::before {
-    content: "✦";
-}
-
-.shiny-cta:hover {
-    box-shadow:
-      inset 0 0.3rem 0.5rem var(--hover-glow),
-      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
-      0 12px 20px rgba(255, 105, 180, 0.4),
-      0 4px 8px rgba(255, 105, 180, 0.1);
-}
-
-.shiny-cta:hover::before {
-    transform: translateY(-5%);
-}
-
-.shiny-cta:hover::after {
-    opacity: 0.4;
-    transform: translateY(5%);
-}
-
-.shiny-cta:hover span {
-    transform: translateY(-4%);
-}
-
-.shiny-cta:active {
-    transform: translateY(2px);
-    box-shadow:
-      inset 0 0.3rem 0.5rem var(--hover-glow),
-      inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.5),
-      0 6px 10px rgba(183, 26, 61, 0.2);
-}
-
-
-
-
-
-@keyframes gradient-angle {
-  to {
-    --gradient-angle: 360deg;
-  }
-}
-
-@keyframes shimmer {
-  to {
-    rotate: 360deg;
-  }
-}
-
-@keyframes breathe {
-  from, to {
-    scale: 1;
-  }
-  50% {
-    scale: 1.2;
-  }
-}
-
-/* --- extra padding for box shadows --- */
-
-
-.carousel-track {
-    display: flex;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.carousel-slide {
-    flex: 0 0 calc(100% / 3);
-
-/* --- Show 3 items --- */
-padding: 0 15px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-}
-
-
-
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #fafafa;
-    border: 1px solid #e4e4e7;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    color: #52525b;
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-
-
-.carousel-btn:hover:not(:disabled) {
-    background: #f4f4f5;
-    color: #18181b;
-}
-
-
-
-.carousel-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.carousel-prev {
-    left: 0;
-}
-
-.carousel-next {
-    right: 0;
-}
-
-.carousel-slide .flowerCard {
-    width: 100%;
-
-/* --- Take up the slide width --- */
-max-width: 320px;
-
-/* --- Don't get too crazy large --- */
-margin: 0 auto;
-}
-
-/* --- NAV BRAND CENTERING --- */
-.navBrand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;
-    font-family: var(--font-heading);
-    font-size: 28px;
-    color: white !important;
-    text-decoration: none;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.3s ease;
-}
-
-.navBrand:hover {
-    transform: translateX(-50%) scale(1.08);
-    text-shadow: none;
-}
-
-/* --- NAVBAR BRAND OVERRIDE --- */
-.navBrand, a.navBrand {
-    font-family: 'Pinyon Script', cursive !important;
-    color: white !important;
-    font-size: 38px !important;
-    text-shadow: none !important;
-}
-
-
-
-/* NAVBAR OVERRIDE */
-#storeNavbar {
-    background: #900C3F !important; /* dark cherry red */
-}
-.navBrand, a.navBrand, .navBrand:hover {
-    color: white !important;
-}
-</style>
-
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fce0e5 0%, #fac5cf 40%, #fac5cf 100%);
+            --body-bg: #fef2f4;
+            --panel-bg: #fce0e5;
+            --popup-bg: #fce0e5;
+            --receipt-bg: #fef2f4;
+            --card-bg: #ffffff;
+            --text-color: #B71A3D;
+            --heading-color: #B71A3D;
+            --btn-bg: #ffffff;
+            --btn-text: #B71A3D;
+            --cart-btn-bg: #B71A3D;
+            --cart-btn-shadow: #B71A3D;
+            --glow-color: #B71A3D;
+            --glow-soft: #fac5cf;
+            --toast-bg: #B71A3D;
+            --receipt-shadow: #fac5cf;
+            --shelf-overlay: rgba(255, 255, 255, 0.0);
+            --font-body: 'Quicksand', sans-serif;
+            --font-heading: 'Pinyon Script', cursive;
+            --font-ui: 'Fredoka', sans-serif;
+            --font-nav: 'Inter', sans-serif;
+        }
+
+
+
+        /* --- BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scrollbar-width: none;
+            background-color: #fef2f4;
+            /* prevent white overscroll on iOS */
+        }
+
+        html::-webkit-scrollbar {
+            display: none;
+        }
+
+
+
+        body,
+        body.receiptPage,
+        body.giftPage {
+            color: var(--text-color);
+            background-image: url('assets/giftbg.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: var(--body-bg);
+            overflow: hidden !important;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.5s ease, color 0.5s ease;
+            font-family: var(--font-body);
+            font-weight: 500;
+        }
+
+
+
+
+        /* --- GIFT PAGE --- */
+
+        #giftContainer {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+            width: 85%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+
+        #giftScene {
+            flex: 1;
+            height: 55vh;
+            background: transparent;
+            border-radius: 25px;
+            position: relative;
+            box-shadow: none;
+            transition: background 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        #customPanel {
+            width: 320px;
+            height: 65vh;
+            background: var(--panel-bg);
+            border-radius: 25px;
+            padding: 15px;
+            overflow-y: auto;
+            transition: background 0.5s ease, box-shadow 0.5s ease;
+            scrollbar-width: thin;
+            scrollbar-color: var(--glow-soft) rgba(0, 0, 0, 0.05);
+        }
+
+        #customPanel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #customPanel::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 10px;
+        }
+
+        #customPanel::-webkit-scrollbar-thumb {
+            background: var(--glow-soft);
+            border-radius: 10px;
+        }
+
+        #customPanel::-webkit-scrollbar-thumb:hover,
+        #assetPanel::-webkit-scrollbar-thumb:hover {
+            background: var(--heading-color);
+        }
+
+        #customPanel h2 {
+            color: var(--heading-color);
+            margin: 10px 0;
+        }
+
+        #customPanel img {
+            width: 100px;
+            display: block;
+            margin: 10px auto;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        #customPanel img:hover,
+        #assetPanel img:hover {
+            transform: scale(1.05);
+        }
+
+        .draggable {
+            position: absolute;
+            cursor: move;
+        }
+
+        .note {
+            width: 260px;
+        }
+
+        .note img {
+            width: 100%;
+        }
+
+        .noteText {
+            position: absolute;
+            top: 12%;
+            left: 10%;
+            width: 75%;
+            height: 70%;
+            overflow: hidden;
+            text-align: center;
+            word-wrap: break-word;
+            font-size: 18px;
+        }
+
+        /* --- GIFT CONTROLS --- */
+        .giftControls {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--glow-soft);
+        }
+
+        .giftControls h2 {
+            color: var(--heading-color);
+            margin-bottom: 10px;
+        }
+
+        .giftControlBtn {
+            display: block;
+            width: 100%;
+            margin: 6px 0;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 50px;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            font-family: var(--font-ui);
+            font-size: 15px;
+            cursor: pointer;
+            transition: transform 0.15s, background 0.3s;
+        }
+
+        .giftControlBtn:hover {
+            transform: scale(1.04);
+        }
+
+        .giftDeleteBtn {}
+
+        /* --- Highlight selected gift element --- */
+        .gifSelected {
+            outline: 3px solid #B71A3D !important;
+            outline-offset: 3px;
+        }
+
+        /* --- Gift text element --- */
+        .giftText {
+            min-width: 80px;
+            font-size: 22px;
+            color: var(--heading-color);
+            user-select: none;
+            cursor: move;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* --- CUSTOM ALIGNMENTS --- */
+        .checkoutTitle,
+        .customizeTitle {
+            text-align: center !important;
+            font-family: var(--font-heading);
+            color: var(--heading-color);
+            margin-top: 100px;
+            margin-bottom: 25px;
+            font-size: 50px;
+            text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
+            font-weight: bold;
+        }
+
+
+
+        /* --- NAVBAR --- */
+        #storeNavbar {
+            background: #900C3F;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 30px;
+            z-index: 999;
+            border-bottom: 3px solid #fac5cf;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
+            padding: 10px 30px;
+            box-sizing: border-box;
+        }
+
+
+
+        /* --- Header Text styling --- */
+        .storeHeader,
+        .giftHeader {
+            text-align: center !important;
+            margin-top: 100px !important;
+            margin-bottom: 20px !important;
+            color: var(--heading-color) !important;
+            font-family: var(--font-heading) !important;
+            font-size: 56px !important;
+            text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4) !important;
+            font-weight: bold !important;
+            line-height: 1.2 !important;
+        }
+
+
+
+
+        /* --- PEARL STARDUST BUTTON DESIGN --- */
+        :root {
+            --bg-pink: #fac5cf;
+            --hover-glow: rgba(250, 197, 207, 0.6);
+            --hover-glow-soft: rgba(183, 26, 61, 0.8);
+            --btn-text-color: #5a0035;
+        }
+
+
+
+        .shiny-cta {
+            outline: none;
+            cursor: pointer;
+            border: 0;
+            position: relative;
+            border-radius: 100px;
+            background-color: var(--bg-pink);
+            transition: all 0.2s ease;
+            box-shadow:
+                inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.4),
+                inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+                inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.3),
+                0 10px 15px -3px rgba(255, 105, 180, 0.3),
+                0 4px 6px -2px rgba(255, 105, 180, 0.05);
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 10px 24px;
+        }
+
+        .shiny-cta::before {
+            content: "";
+            position: absolute;
+            left: -15%;
+            right: -15%;
+            bottom: 25%;
+            top: -100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.25);
+            transition: all 0.3s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .shiny-cta::after {
+            content: "";
+            position: absolute;
+            left: 6%;
+            right: 6%;
+            top: 12%;
+            bottom: 40%;
+            border-radius: 22px 22px 0 0;
+            box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.6);
+            background: linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.3) 0%,
+                    rgba(255, 255, 255, 0) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transition: all 0.3s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .shiny-cta span {
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            color: var(--btn-text-color);
+            transition: all 0.2s ease;
+            transform: translateY(2%);
+        }
+
+        .shiny-cta>span::before {
+            content: "✧";
+            transition: all 0.2s ease;
+        }
+
+        .shiny-cta:hover>span::before {
+            content: "✦";
+        }
+
+        .shiny-cta:hover {
+            box-shadow:
+                inset 0 0.3rem 0.5rem var(--hover-glow),
+                inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.4),
+                0 12px 20px rgba(255, 105, 180, 0.4),
+                0 4px 8px rgba(255, 105, 180, 0.1);
+        }
+
+        .shiny-cta:hover::before {
+            transform: translateY(-5%);
+        }
+
+        .shiny-cta:hover::after {
+            opacity: 0.4;
+            transform: translateY(5%);
+        }
+
+        .shiny-cta:hover span {
+            transform: translateY(-4%);
+        }
+
+        .shiny-cta:active {
+            transform: translateY(2px);
+            box-shadow:
+                inset 0 0.3rem 0.5rem var(--hover-glow),
+                inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.5),
+                0 6px 10px rgba(183, 26, 61, 0.2);
+        }
+
+
+
+
+
+        @keyframes gradient-angle {
+            to {
+                --gradient-angle: 360deg;
+            }
+        }
+
+        @keyframes shimmer {
+            to {
+                rotate: 360deg;
+            }
+        }
+
+        @keyframes breathe {
+
+            from,
+            to {
+                scale: 1;
+            }
+
+            50% {
+                scale: 1.2;
+            }
+        }
+
+        /* --- extra padding for box shadows --- */
+
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .carousel-slide {
+            flex: 0 0 calc(100% / 3);
+
+            /* --- Show 3 items --- */
+            padding: 0 15px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+
+
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fafafa;
+            border: 1px solid #e4e4e7;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            color: #52525b;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+
+
+        .carousel-btn:hover:not(:disabled) {
+            background: #f4f4f5;
+            color: #18181b;
+        }
+
+
+
+        .carousel-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .carousel-prev {
+            left: 0;
+        }
+
+        .carousel-next {
+            right: 0;
+        }
+
+        .carousel-slide .flowerCard {
+            width: 100%;
+
+            /* --- Take up the slide width --- */
+            max-width: 320px;
+
+            /* --- Don't get too crazy large --- */
+            margin: 0 auto;
+        }
+
+        /* --- NAV BRAND CENTERING --- */
+        .navBrand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;
+            font-family: var(--font-heading);
+            font-size: 28px;
+            color: white !important;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.3s ease;
+        }
+
+        .navBrand:hover {
+            transform: translateX(-50%) scale(1.08);
+            text-shadow: none;
+        }
+
+        /* --- NAVBAR BRAND OVERRIDE --- */
+        .navBrand,
+        a.navBrand {
+            font-family: 'Pinyon Script', cursive !important;
+            color: white !important;
+            font-size: 38px !important;
+            text-shadow: none !important;
+        }
+
+
+
+        /* NAVBAR OVERRIDE */
+        #storeNavbar {
+            background: #900C3F !important;
+            /* dark cherry red */
+        }
+
+        .navBrand,
+        a.navBrand,
+        .navBrand:hover {
+            color: white !important;
+        }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -717,119 +559,139 @@ margin: 0 auto;
     <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
 
 
-<style>
-.site-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 32px;
-    padding: 0 20px;
-    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 15px;
-    color: var(--text-color);
-    width: 100%;
-    box-sizing: border-box;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 9999;
-    pointer-events: none;
-    background: rgba(252, 224, 229, 0.85);
-    backdrop-filter: blur(8px);
-    border-top: 1px solid rgba(183, 26, 61, 0.2);
-    transition: all 0.3s ease;
-}
+    <style>
+        .site-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            padding: 0 20px;
+            font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+            font-size: 15px;
+            color: var(--text-color);
+            width: 100%;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 9999;
+            pointer-events: none;
+            background: rgba(252, 224, 229, 0.85);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(183, 26, 61, 0.2);
+            transition: all 0.3s ease;
+        }
 
-.site-footer a {
-    color: var(--heading-color);
-    text-decoration: none;
-    font-weight: 600;
-    border-bottom: 1px dotted var(--heading-color);
-    transition: opacity 0.2s ease, color 0.3s ease;
-    pointer-events: auto;
-}
-.site-footer a:hover {
-    opacity: 0.7;
-}
+        .site-footer a {
+            color: var(--heading-color);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dotted var(--heading-color);
+            transition: opacity 0.2s ease, color 0.3s ease;
+            pointer-events: auto;
+        }
 
+        .site-footer a:hover {
+            opacity: 0.7;
+        }
+    </style>
 
-</style>
+    <style>
+        /* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
+        [class*="card"],
+        [class*="panel"],
+        [class*="popup"],
+        [id*="Scene"],
+        [class*="item"],
+        .summary,
+        .cart-item,
+        .checkout-panel,
+        .category-card,
+        .spawner-item {
+            border: none !important;
+            box-shadow: none !important;
+            filter: none !important;
+        }
 
-<style>
-/* GLOBAL OVERRIDES TO REMOVE BORDERS AND SHADOWS FROM CARDS AND BUTTONS */
-[class*="card"], [class*="panel"], [class*="popup"], [id*="Scene"], [class*="item"], .summary, .cart-item, .checkout-panel, .category-card, .spawner-item {
-    border: none !important;
-    box-shadow: none !important;
-    filter: none !important;
-}
+        button,
+        [class*="btn"],
+        [class*="button"],
+        .continue-btn,
+        .action-btn,
+        .nav-action-btn,
+        .shiny-cta,
+        .navLink {
+            box-shadow: none !important;
+            text-shadow: none !important;
+            filter: none !important;
+        }
 
-button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-action-btn, .shiny-cta, .navLink {
-    box-shadow: none !important;
-    text-shadow: none !important;
-    filter: none !important;
-}
+        .flowerCard {
+            height: 100% !important;
+        }
 
-.flowerCard {
-    height: 100% !important;
-}
+        .flowerSelector {
+            margin-top: auto !important;
+        }
 
-.flowerSelector {
-    margin-top: auto !important;
-}
+        .flowerCard .customizeBtn {
+            margin-top: 0 !important;
+        }
+    </style>
 
-.flowerCard .customizeBtn {
-    margin-top: 0 !important;
-}
+    <style>
+        /* ---- Mobile Navbar for Gift Page ---- */
+    </style>
 
-</style>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 
-<style>
-/* ---- Mobile Navbar for Gift Page ---- */
+    <style>
+        @media (max-width: 768px) {
 
-</style>
+            .checkoutTitle,
+            .giftHeader {
+                font-size: 36px !important;
+                margin-top: 80px !important;
+            }
 
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+            body,
+            body.receiptPage,
+            body.giftPage {
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                height: auto !important;
+                min-height: 100vh !important;
+                background-image: url('assets/mobilegiftbg.webp') !important;
+            }
 
-<style>
-@media (max-width: 768px) {
-    .checkoutTitle, .giftHeader {
-        font-size: 36px !important;
-        margin-top: 80px !important;
-    }
-    
-    body, body.receiptPage, body.giftPage {
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
-        height: auto !important;
-        min-height: 100vh !important;
-        background-image: url('assets/mobilegiftbg.webp') !important;
-    }
+            #giftContainer {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 10px !important;
+                height: auto !important;
+                min-height: 55vw !important;
+            }
 
-    #giftContainer {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 0 10px !important;
-        height: auto !important;
-        min-height: 55vw !important;
-    }
+            #giftScene {
+                height: 60vw !important;
+                min-height: 260px !important;
+            }
 
-    #giftScene {
-        height: 60vw !important;
-        min-height: 260px !important;
-    }
+            #storeNavbar {
+                justify-content: space-between !important;
+                padding: 10px 15px !important;
+                width: 100% !important;
+            }
 
-    #storeNavbar { 
-        justify-content: space-between !important; 
-        padding: 10px 15px !important; 
-        width: 100% !important;
-    }
-    #storeNavbar > .navLink { display: none !important; }
-    
-    #storeNavbar .navBrand {
-        display: none !important;
-    }
-}
-</style>
+            #storeNavbar>.navLink {
+                display: none !important;
+            }
+
+            #storeNavbar .navBrand {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 
@@ -838,8 +700,15 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
     <!-- Baby Pink Navbar -->
     <nav id="storeNavbar">
         <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
-        <a href="checkout.html" id="backToShopNavLink" style="display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; color: white !important; cursor: pointer; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.8'; this.style.transform='translateX(-3px)';" onmouseout="this.style.opacity='1'; this.style.transform='translateX(0)';">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6; margin-right: 4px; flex-shrink: 0;" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        <a href="checkout.html" id="backToShopNavLink"
+            style="display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; color: white !important; cursor: pointer; text-decoration: none; transition: all 0.3s ease;"
+            onmouseover="this.style.opacity='0.8'; this.style.transform='translateX(-3px)';"
+            onmouseout="this.style.opacity='1'; this.style.transform='translateX(0)';">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                style="opacity: 0.6; margin-right: 4px; flex-shrink: 0;" aria-hidden="true">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
             Go back
         </a>
         <button id="saveGiftLayoutBtn" class="shiny-cta"><span>Save and Wrap</span></button>
@@ -848,15 +717,15 @@ button, [class*="btn"], [class*="button"], .continue-btn, .action-btn, .nav-acti
 
 
 
-<h1 class="storeHeader giftHeader">
+    <h1 class="storeHeader giftHeader">
 
-Create Your Gift
+        Create Your Gift
 
-</h1>
+    </h1>
 
-<div id="giftContainer">
+    <div id="giftContainer">
 
-    <div id="giftScene">
+        <div id="giftScene">
             <!-- Invisible boundary overlay that traces the inner bow area -->
             <div id="bowBoundary" style="
                 position: absolute;
@@ -865,764 +734,776 @@ Create Your Gift
                 border: 2px dashed transparent;
                 box-sizing: border-box;
             "></div>
-            <div id="itemRotateBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.21l5.67-1.36"/></svg>
+            <div id="itemRotateBtn"
+                style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.21l5.67-1.36" />
+                </svg>
             </div>
-            <div id="itemResizeBtn" style="display: none; position: absolute; z-index: 1000; cursor: nwse-resize; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            <div id="itemResizeBtn"
+                style="display: none; position: absolute; z-index: 1000; cursor: nwse-resize; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="#B71A3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                </svg>
             </div>
-            <div id="itemDeleteBtn" style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B71A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            <div id="itemDeleteBtn"
+                style="display: none; position: absolute; z-index: 1000; cursor: pointer; background: white; border-radius: 50%; padding: 4px; border: 1px solid #fac5cf; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="#B71A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18" />
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                </svg>
             </div>
+
+        </div>
+
 
     </div>
 
-    
-    </div>
 
 
 
 
+    <script defer>
+        const giftScene = document.getElementById("giftScene");
+        const bowBoundary = document.getElementById("bowBoundary");
 
-<script defer>
-const giftScene = document.getElementById("giftScene");
-const bowBoundary = document.getElementById("bowBoundary");
+        // Position the bowBoundary to match the inner area between the four bows.
+        // Desktop giftbg: bows at ~20%/79% x, ~19%/70% y of VIEWPORT (background-attachment: fixed)
+        // Mobile mobilegiftbg: bows at ~13%/82% x, ~27%/84% y of VIEWPORT
+        function updateBowBoundary() {
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const sceneRect = giftScene.getBoundingClientRect();
 
-// Position the bowBoundary to match the inner area between the four bows.
-// Desktop giftbg: bows at ~20%/79% x, ~19%/70% y of VIEWPORT (background-attachment: fixed)
-// Mobile mobilegiftbg: bows at ~13%/82% x, ~27%/84% y of VIEWPORT
-function updateBowBoundary() {
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    const sceneRect = giftScene.getBoundingClientRect();
+            // Image properties for assets/giftbg.webp
+            const imgW = 1672;
+            const imgH = 941;
+            const imgRatio = imgW / imgH;
+            const winRatio = vw / vh;
 
-    // Image properties for assets/giftbg.webp
-    const imgW = 1672;
-    const imgH = 941;
-    const imgRatio = imgW / imgH;
-    const winRatio = vw / vh;
-    
-    let scaledH, offsetY;
-    if (winRatio > imgRatio) {
-        // Window is wider, image width matches viewport, height is scaled up
-        scaledH = vw / imgRatio;
-        offsetY = (vh - scaledH) / 2; 
-    } else {
-        // Window is narrower, image height matches viewport
-        scaledH = vh;
-        offsetY = 0;
-    }
-
-    // Exact bow centers in the original image 
-    // (found via python image analysis: top=242px, bottom=729px)
-    const bowTopRatio = 242 / imgH;
-    const bowBottomRatio = 729 / imgH;
-
-    const absTop = offsetY + (scaledH * bowTopRatio);
-    const absBottom = offsetY + (scaledH * bowBottomRatio);
-
-    const relLeft = 0;
-    const relRight = sceneRect.width; // scene-relative right edge, symmetric to relLeft = 0
-    const relTop = absTop - sceneRect.top;
-    const relBottom = absBottom - sceneRect.top;
-
-    // Do not clamp horizontally or vertically to the scene bounds
-    // This allows dragging items anywhere across the full viewport exactly between the physical bow lines
-    const sl = relLeft;
-    const st = relTop;
-    const sr = relRight;
-    const sb = relBottom;
-
-    bowBoundary.style.left   = sl + "px";
-    bowBoundary.style.top    = st + "px";
-    bowBoundary.style.width  = (sr - sl) + "px";
-    bowBoundary.style.height = (sb - st) + "px";
-}
-
-window.addEventListener('load',   updateBowBoundary);
-window.addEventListener('resize', updateBowBoundary);
-setTimeout(updateBowBoundary, 200); // fallback after layout
-
-function getBowConstraints() {
-    const br = bowBoundary.getBoundingClientRect();
-    const sr = giftScene.getBoundingClientRect();
-    return {
-        left:   br.left - sr.left,
-        top:    br.top  - sr.top,
-        right:  br.right  - sr.left,
-        bottom: br.bottom - sr.top
-    };
-}
-
-
-function resolveAccessorySrc(src) {
-    if (!src) return "";
-    let path = src.replace(/\\/g, "/");
-    const assetsIndex = path.toLowerCase().indexOf("assets/");
-    if (assetsIndex !== -1) {
-        return path.substring(assetsIndex);
-    }
-    const filename = path.split("/").pop();
-    if (filename.includes("custom")) {
-        return "assets/plushies/" + filename;
-    } else if (filename.includes("flower") || filename.includes("bow") || filename.includes("holder")) {
-        return "assets/flowers/" + filename;
-    }
-}
-
-/* Read from "giftItems" - the key set by checkout.js */
-const giftItems =
-JSON.parse(
-sessionStorage.getItem(
-"giftItems"
-)
-) || [];
-
-let selected = null;
-let currentNote = null;
-let highestZ = 1;
-
-/* Drag offset so item doesn't jump to cursor centre */
-let dragOffsetX = 0;
-let dragOffsetY = 0;
-
-/* -------------------- */
-/* HELPER: make element */
-/* selectable & draggable */
-/* -------------------- */
-
-function updateSelectionUI() {
-    const deleteBtn = document.getElementById('itemDeleteBtn');
-    const rotateBtn = document.getElementById('itemRotateBtn');
-    const resizeBtn = document.getElementById('itemResizeBtn');
-    
-    if (!selected) {
-        if (deleteBtn) deleteBtn.style.display = 'none';
-        if (rotateBtn) rotateBtn.style.display = 'none';
-        if (resizeBtn) resizeBtn.style.display = 'none';
-        return;
-    }
-    
-    const l = parseFloat(selected.style.left) || 0;
-    const t = parseFloat(selected.style.top)  || 0;
-    const w = selected.offsetWidth;
-    const h = selected.offsetHeight;
-    
-    const cx = l + w / 2;
-    const cy = t + h / 2;
-    
-    const angle = parseFloat(selected.dataset.rotation) || 0;
-    const rad = angle * Math.PI / 180;
-    const flip = parseInt(selected.dataset.flip) || 1;
-    
-    function getRotatedPoint(dx, dy) {
-        let rx = dx * Math.cos(rad) - dy * Math.sin(rad);
-        let ry = dx * Math.sin(rad) + dy * Math.cos(rad);
-        rx *= flip;
-        return {
-            x: cx + rx,
-            y: cy + ry
-        };
-    }
-    
-    // Top Right (Delete)
-    const tr = getRotatedPoint(w/2, -h/2);
-    // Bottom Left (Rotate)
-    const bl = getRotatedPoint(-w/2, h/2);
-    // Bottom Right (Resize)
-    const br = getRotatedPoint(w/2, h/2);
-    
-    if (deleteBtn) {
-        deleteBtn.style.left = (tr.x - 12) + 'px';
-        deleteBtn.style.top  = (tr.y - 12) + 'px';
-        deleteBtn.style.display = 'flex';
-    }
-    
-    if (rotateBtn) {
-        rotateBtn.style.left = (bl.x - 12) + 'px';
-        rotateBtn.style.top  = (bl.y - 12) + 'px';
-        rotateBtn.style.display = 'flex';
-    }
-    
-    if (resizeBtn) {
-        resizeBtn.style.left = (br.x - 12) + 'px';
-        resizeBtn.style.top  = (br.y - 12) + 'px';
-        resizeBtn.style.display = 'flex';
-    }
-}
-
-function selectElement(el) {
-    selected = el;
-    document.querySelectorAll(".gifSelected").forEach(item => {
-        item.classList.remove("gifSelected");
-        item.style.outline = "none";
-        item.style.borderRadius = "";
-    });
-    
-    if (el) {
-        el.classList.add("gifSelected");
-        el.style.outline = "3px solid #B71A3D";
-        el.style.borderRadius = "24px";
-        updateSelectionUI();
-    } else {
-        updateSelectionUI();
-        giftScene.style.cursor = '';
-    }
-}
-
-let isResizing = false;
-let isRotating = false;
-let isDragging = false;
-let resizeStartX = 0, resizeStartY = 0;
-let resizeStartW = 0, resizeStartH = 0;
-let resizeStartLeft = 0, resizeStartTop = 0;
-let rotateStartAngle = 0;
-let rotateInitialElementAngle = 0;
-
-function makeDraggable(el){
-    // Mouse events
-    el.addEventListener("mousedown", (e) => {
-        if (e.target.closest('#itemDeleteBtn') || e.target.closest('#itemRotateBtn') || e.target.closest('#itemResizeBtn')) return;
-        e.stopPropagation();
-        if (selected !== el) selectElement(el);
-        isDragging = true;
-        el.style.zIndex = highestZ++;
-        const rect = el.getBoundingClientRect();
-        dragOffsetX = e.clientX - rect.left;
-        dragOffsetY = e.clientY - rect.top;
-        e.preventDefault();
-        giftScene.style.cursor = 'grabbing';
-    });
-
-    // Touch events for mobile
-    el.addEventListener("touchstart", (e) => {
-        if (e.target.closest('#itemDeleteBtn') || e.target.closest('#itemRotateBtn') || e.target.closest('#itemResizeBtn')) return;
-        e.stopPropagation();
-        if (selected !== el) selectElement(el);
-        isDragging = true;
-        el.style.zIndex = highestZ++;
-        const touch = e.touches[0];
-        const rect = el.getBoundingClientRect();
-        dragOffsetX = touch.clientX - rect.left;
-        dragOffsetY = touch.clientY - rect.top;
-        e.preventDefault();
-    }, { passive: false });
-}
-
-function getPointerEvent(e) {
-    return e.touches ? e.touches[0] : e;
-}
-
-function handlePointerDownButtons(e) {
-    if (e.target.closest('#itemDeleteBtn')) {
-        if (selected) {
-            selected.remove();
-            selectElement(null);
-        }
-        return;
-    }
-    
-    if (e.target.closest('#itemResizeBtn') && selected) {
-        e.stopPropagation(); 
-        if(e.cancelable) e.preventDefault();
-        isResizing = true;
-        const pt = getPointerEvent(e);
-        resizeStartX = pt.clientX;
-        resizeStartY = pt.clientY;
-        resizeStartW = selected.offsetWidth;
-        resizeStartH = selected.offsetHeight;
-        resizeStartLeft = parseFloat(selected.style.left) || 0;
-        resizeStartTop = parseFloat(selected.style.top) || 0;
-        return;
-    }
-    
-    if (e.target.closest('#itemRotateBtn') && selected) {
-        e.stopPropagation(); 
-        if(e.cancelable) e.preventDefault();
-        isRotating = true;
-        const pt = getPointerEvent(e);
-        
-        const rect = selected.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        rotateStartAngle = Math.atan2(pt.clientY - cy, pt.clientX - cx) * 180 / Math.PI;
-        rotateInitialElementAngle = parseFloat(selected.dataset.rotation) || 0;
-        return;
-    }
-}
-
-document.addEventListener("mousedown", handlePointerDownButtons);
-document.addEventListener("touchstart", handlePointerDownButtons, { passive: false });
-
-/* -------------------- */
-/* LOAD GIFT ITEMS      */
-/* -------------------- */
-
-
-giftItems.forEach((item, itemIndex) => {
-    const qty = item.quantity || 1;
-    for (let q = 0; q < qty; q++) {
-        
-        if (item.type === 'text') {
-            const textEl = document.createElement("div");
-            textEl.className = "draggable giftEl giftText";
-            textEl.dataset.itemIndex = itemIndex;
-            textEl.style.position = "absolute";
-            textEl.style.left = (150 + q * 20) + "px";
-            textEl.style.top = (200 + q * 20) + "px";
-            textEl.style.zIndex = highestZ++;
-            textEl.style.fontFamily = item.fontFamily || "Pacifico, cursive";
-            textEl.style.fontSize = "22px";
-            textEl.style.color = item.color || "#B71A3D";
-            textEl.style.cursor = "move";
-            textEl.style.userSelect = "none";
-            textEl.innerText = item.text || "Custom Text";
-            
-            makeDraggable(textEl);
-            giftScene.appendChild(textEl);
-            continue;
-        }
-        
-        if (item.type === 'note') {
-            const wrapper = document.createElement("div");
-            wrapper.className = "note draggable giftEl";
-            wrapper.dataset.itemIndex = itemIndex;
-            wrapper.style.position = "absolute";
-            wrapper.style.left = (200 + q * 20) + "px";
-            wrapper.style.top = (150 + q * 20) + "px";
-            const scaleMultiplier = item.scale || 1;
-            wrapper.style.width = (220 * scaleMultiplier) + "px";
-            wrapper.style.zIndex = highestZ++;
-            
-            const angleRad = item.angle || 0;
-            const angleDeg = angleRad * (180 / Math.PI);
-            wrapper.dataset.rotation = angleDeg;
-            wrapper.style.transform = `rotate(${angleDeg}deg)`;
-            
-            const paper = document.createElement("img");
-            paper.src = item.src;
-            paper.style.width = "100%";
-            paper.style.display = "block";
-            paper.draggable = false;
-            wrapper.className = "note giftEl";
-            
-            wrapper.style.containerType = "inline-size";
-            wrapper.style.aspectRatio = "1 / 1";
-            wrapper.style.height = wrapper.style.width;
-            
-            wrapper.appendChild(paper);
-
-            if (item.noteTextDetails) {
-                const textDiv = document.createElement("div");
-                textDiv.className = "noteText";
-                textDiv.innerText = item.noteTextDetails.text;
-                textDiv.style.fontFamily = item.noteTextDetails.fontFamily;
-                textDiv.style.color = item.noteTextDetails.color;
-                
-                if (item.noteTextDetails.left !== undefined) {
-                    textDiv.style.position = "absolute";
-                    textDiv.style.left = item.noteTextDetails.left + "%";
-                    textDiv.style.top = item.noteTextDetails.top + "%";
-                    textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
-                    
-                    let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
-                    textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
-                    
-                    const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "50%";
-                    textDiv.style.height = savedHeight;
-                    textDiv.style.maxHeight = savedHeight;
-                    textDiv.style.overflow = "hidden";
-                    textDiv.style.whiteSpace = "pre-wrap";
-                    textDiv.style.wordBreak = "break-word";
-                    textDiv.style.textAlign = "center";
-                    textDiv.style.lineHeight = "1.2";
-                    // Use saved fontSize (% of note paper width) so it scales correctly with the wrapper.
-                    // Fall back to 7.5cqw only if no fontSize was saved.
-                    if (item.noteTextDetails.fontSize) {
-                        textDiv.style.fontSize = item.noteTextDetails.fontSize + "cqw";
-                    } else {
-                        textDiv.style.fontSize = "7.5cqw";
-                    }
-                }
-                
-                wrapper.appendChild(textDiv);
+            let scaledH, offsetY;
+            if (winRatio > imgRatio) {
+                // Window is wider, image width matches viewport, height is scaled up
+                scaledH = vw / imgRatio;
+                offsetY = (vh - scaledH) / 2;
+            } else {
+                // Window is narrower, image height matches viewport
+                scaledH = vh;
+                offsetY = 0;
             }
-            
-            if (item.stickers) {
-                item.stickers.forEach(st => {
-                    const stickerImg = document.createElement("img");
-                    stickerImg.src = st.src;
-                    stickerImg.style.position = "absolute";
-                    stickerImg.style.left = st.left + "%";
-                    stickerImg.style.top = st.top + "%";
-                    stickerImg.style.width = st.width + "%";
-                    let stFlip = st.flip == "-1" ? "scaleX(-1) " : "";
-                    stickerImg.style.transform = `translate(-50%, -50%) ${stFlip}rotate(${st.angle || 0}rad) scale(${st.scale || 1})`;
-                    stickerImg.style.pointerEvents = "none";
-                    wrapper.appendChild(stickerImg);
-                });
+
+            // Exact bow centers in the original image 
+            // (found via python image analysis: top=242px, bottom=729px)
+            const bowTopRatio = 242 / imgH;
+            const bowBottomRatio = 729 / imgH;
+
+            const absTop = offsetY + (scaledH * bowTopRatio);
+            const absBottom = offsetY + (scaledH * bowBottomRatio);
+
+            const relLeft = 0;
+            const relRight = sceneRect.width; // scene-relative right edge, symmetric to relLeft = 0
+            const relTop = absTop - sceneRect.top;
+            const relBottom = absBottom - sceneRect.top;
+
+            // Do not clamp horizontally or vertically to the scene bounds
+            // This allows dragging items anywhere across the full viewport exactly between the physical bow lines
+            const sl = relLeft;
+            const st = relTop;
+            const sr = relRight;
+            const sb = relBottom;
+
+            bowBoundary.style.left = sl + "px";
+            bowBoundary.style.top = st + "px";
+            bowBoundary.style.width = (sr - sl) + "px";
+            bowBoundary.style.height = (sb - st) + "px";
+        }
+
+        window.addEventListener('load', updateBowBoundary);
+        window.addEventListener('resize', updateBowBoundary);
+        setTimeout(updateBowBoundary, 200); // fallback after layout
+
+        function getBowConstraints() {
+            const br = bowBoundary.getBoundingClientRect();
+            const sr = giftScene.getBoundingClientRect();
+            return {
+                left: br.left - sr.left,
+                top: br.top - sr.top,
+                right: br.right - sr.left,
+                bottom: br.bottom - sr.top
+            };
+        }
+
+
+        function resolveAccessorySrc(src) {
+            if (!src) return "";
+            let path = src.replace(/\\/g, "/");
+            const assetsIndex = path.toLowerCase().indexOf("assets/");
+            if (assetsIndex !== -1) {
+                return path.substring(assetsIndex);
             }
-            
-            makeDraggable(wrapper);
-            giftScene.appendChild(wrapper);
-            continue;
+            const filename = path.split("/").pop();
+            if (filename.includes("custom")) {
+                return "assets/plushies/" + filename;
+            } else if (filename.includes("flower") || filename.includes("bow") || filename.includes("holder")) {
+                return "assets/flowers/" + filename;
+            }
         }
 
-        if (item.type === 'sticker') {
-            const img = document.createElement("img");
-            img.src = item.src;
-            img.className = "draggable giftEl";
-            img.dataset.itemIndex = itemIndex;
-            img.style.position = "absolute";
-            img.style.width = "100px";
-            img.style.left = (250 + q * 20) + "px";
-            img.style.top = (250 + q * 20) + "px";
-            img.style.zIndex = highestZ++;
-            img.draggable = false;
-            
-            makeDraggable(img);
-            giftScene.appendChild(img);
-            continue;
+        /* Read from "giftItems" - the key set by checkout.js */
+        const giftItems =
+            JSON.parse(
+                sessionStorage.getItem(
+                    "giftItems"
+                )
+            ) || [];
+
+        let selected = null;
+        let currentNote = null;
+        let highestZ = 1;
+
+        /* Drag offset so item doesn't jump to cursor centre */
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+
+        /* -------------------- */
+        /* HELPER: make element */
+        /* selectable & draggable */
+        /* -------------------- */
+
+        function updateSelectionUI() {
+            const deleteBtn = document.getElementById('itemDeleteBtn');
+            const rotateBtn = document.getElementById('itemRotateBtn');
+            const resizeBtn = document.getElementById('itemResizeBtn');
+
+            if (!selected) {
+                if (deleteBtn) deleteBtn.style.display = 'none';
+                if (rotateBtn) rotateBtn.style.display = 'none';
+                if (resizeBtn) resizeBtn.style.display = 'none';
+                return;
+            }
+
+            const l = parseFloat(selected.style.left) || 0;
+            const t = parseFloat(selected.style.top) || 0;
+            const w = selected.offsetWidth;
+            const h = selected.offsetHeight;
+
+            const cx = l + w / 2;
+            const cy = t + h / 2;
+
+            const angle = parseFloat(selected.dataset.rotation) || 0;
+            const rad = angle * Math.PI / 180;
+            const flip = parseInt(selected.dataset.flip) || 1;
+
+            function getRotatedPoint(dx, dy) {
+                let rx = dx * Math.cos(rad) - dy * Math.sin(rad);
+                let ry = dx * Math.sin(rad) + dy * Math.cos(rad);
+                rx *= flip;
+                return {
+                    x: cx + rx,
+                    y: cy + ry
+                };
+            }
+
+            // Top Right (Delete)
+            const tr = getRotatedPoint(w / 2, -h / 2);
+            // Bottom Left (Rotate)
+            const bl = getRotatedPoint(-w / 2, h / 2);
+            // Bottom Right (Resize)
+            const br = getRotatedPoint(w / 2, h / 2);
+
+            if (deleteBtn) {
+                deleteBtn.style.left = (tr.x - 12) + 'px';
+                deleteBtn.style.top = (tr.y - 12) + 'px';
+                deleteBtn.style.display = 'flex';
+            }
+
+            if (rotateBtn) {
+                rotateBtn.style.left = (bl.x - 12) + 'px';
+                rotateBtn.style.top = (bl.y - 12) + 'px';
+                rotateBtn.style.display = 'flex';
+            }
+
+            if (resizeBtn) {
+                resizeBtn.style.left = (br.x - 12) + 'px';
+                resizeBtn.style.top = (br.y - 12) + 'px';
+                resizeBtn.style.display = 'flex';
+            }
         }
 
-        // Standard plushie/flower/treat
-        const wrapper = document.createElement("div");
-        wrapper.className = "draggable giftEl";
-        wrapper.dataset.itemIndex = itemIndex;
-        
-        const isBouquet = (item.customId && item.customId.startsWith("bouquet_")) || (item.name && item.name.toLowerCase().includes("bouquet"));
-        if (isBouquet) wrapper.dataset.isBouquet = "true";
-        
-        wrapper.style.position = "absolute";
-        wrapper.style.left = (80 + q * 30) + "px";
-        wrapper.style.top = (80 + q * 30) + "px";
-        wrapper.style.width = "180px";
-        
-        let canvasW = isBouquet ? 600 : 280;
-        let canvasH = canvasW;
-        let canvasL = isBouquet ? 50 : 210;
-        let canvasT = isBouquet ? 50 : 210;
-        
-        if (item.canvasW !== undefined) {
-            canvasW = item.canvasW;
-            canvasH = item.canvasH;
-            canvasL = item.canvasL;
-            canvasT = item.canvasT;
-        }
-
-        if (isBouquet || item.canvasW !== undefined) {
-            wrapper.style.height = (180 * (canvasH / canvasW)) + "px";
-        } else {
-            wrapper.style.height = "auto";
-        }
-        
-        wrapper.style.zIndex = highestZ++;
-        
-        const baseImg = document.createElement("img");
-        baseImg.src = item.image || item.src; // fallback for src
-        
-        if (isBouquet || item.canvasW !== undefined) {
-            baseImg.style.position = "absolute";
-            baseImg.style.width = "100%";
-            baseImg.style.height = "100%";
-            baseImg.style.objectFit = "contain";
-        } else {
-            baseImg.style.width = "100%";
-            baseImg.style.height = "auto";
-            baseImg.style.objectFit = "contain";
-        }
-        
-        baseImg.style.left = "0";
-        baseImg.style.top = "0";
-        baseImg.style.transform = "none";
-        baseImg.style.display = "block";
-        baseImg.draggable = false;
-        
-        wrapper.appendChild(baseImg);
-        
-        if (item.accessories && item.accessories.length > 0) {
-            item.accessories.forEach((acc, index) => {
-                const accessory = document.createElement("img");
-                let src = acc.image;
-                if (src) src = resolveAccessorySrc(src);
-                accessory.src = src;
-                accessory.style.position = "absolute";
-                accessory.style.pointerEvents = "none";
-                const rawLeft = parseFloat(acc.left);
-                const rawTop = parseFloat(acc.top);
-                const rawWidth = parseFloat(acc.width);
-                
-                // Backwards compatibility for old saved bouquets (using virtual offset +350 -300)
-                let adjustedLeft = rawLeft;
-                let adjustedTop = rawTop;
-                if (item.canvasW === undefined && isBouquet) {
-                    adjustedLeft = rawLeft - 50;
-                    adjustedTop = rawTop - 50;
-                } else if (item.canvasW === undefined && !isBouquet) {
-                    adjustedLeft = rawLeft - 210;
-                    adjustedTop = rawTop - 210;
-                } else {
-                    adjustedLeft = rawLeft - canvasL;
-                    adjustedTop = rawTop - canvasT;
-                }
-
-                accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
-                accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
-                accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
-                
-                if (index === 0 && !isBouquet && item.canvasW !== undefined) {
-                    accessory.style.height = "auto";
-                    accessory.style.display = "block";
-                } else {
-                    if (acc.height) {
-                        const rawHeight = parseFloat(acc.height);
-                        accessory.style.height = ((rawHeight / canvasH) * 100) + "%";
-                        accessory.style.objectFit = "contain";
-                    }
-                }
-                
-                let accFlip = acc.flip == "-1" ? "scaleX(-1) " : "";
-                accessory.style.transform = `${accFlip}rotate(${acc.rotation || 0}deg)`;
-                wrapper.appendChild(accessory);
+        function selectElement(el) {
+            selected = el;
+            document.querySelectorAll(".gifSelected").forEach(item => {
+                item.classList.remove("gifSelected");
+                item.style.outline = "none";
+                item.style.borderRadius = "";
             });
+
+            if (el) {
+                el.classList.add("gifSelected");
+                el.style.outline = "3px solid #B71A3D";
+                el.style.borderRadius = "24px";
+                updateSelectionUI();
+            } else {
+                updateSelectionUI();
+                giftScene.style.cursor = '';
+            }
         }
-        
 
-        makeDraggable(wrapper);
-        giftScene.appendChild(wrapper);
-    }
-});
+        let isResizing = false;
+        let isRotating = false;
+        let isDragging = false;
+        let resizeStartX = 0, resizeStartY = 0;
+        let resizeStartW = 0, resizeStartH = 0;
+        let resizeStartLeft = 0, resizeStartTop = 0;
+        let rotateStartAngle = 0;
+        let rotateInitialElementAngle = 0;
 
-/* -------------------- */
-/* GLOBAL DRAG MOVE     */
-/* -------------------- */
-
-function handlePointerMove(e) {
-    const pt = getPointerEvent(e);
-    const sceneW = giftScene.clientWidth;
-    const sceneH = giftScene.clientHeight;
-
-    if (isResizing && selected) {
-        const dx = pt.clientX - resizeStartX;
-        const isText = selected.classList.contains("giftText");
-        
-        if (isText) {
-            let currentFS = parseFloat(window.getComputedStyle(selected).fontSize) || 16;
-            const dy = pt.clientY - resizeStartY;
-            selected.style.fontSize = Math.max(10, currentFS + dy/10) + "px";
-            resizeStartY = pt.clientY; 
-        } else {
-            const b = getBowConstraints();
-            let maxWByWidth = b.right - resizeStartLeft;
-            let maxWByHeight = (b.bottom - resizeStartTop) * (resizeStartW / resizeStartH);
-            let maxW = Math.min(maxWByWidth, maxWByHeight);
-            let newW = resizeStartW + dx;
-            newW = Math.max(30, Math.min(newW, maxW));
-            
-            selected.style.width = newW + "px";
-            selected.style.height = (newW * (resizeStartH / resizeStartW)) + "px";
-        }
-        updateSelectionUI();
-        if(e.cancelable) e.preventDefault();
-        return;
-    }
-    
-    if (isRotating && selected) {
-        const rect = selected.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const currentAngle = Math.atan2(pt.clientY - cy, pt.clientX - cx) * 180 / Math.PI;
-        
-        let angleDiff = currentAngle - rotateStartAngle;
-        let newAngle = rotateInitialElementAngle + angleDiff;
-        
-        selected.dataset.rotation = newAngle;
-        let flipStr = selected.dataset.flip === "-1" ? "scaleX(-1) " : "";
-        selected.style.transform = flipStr + "rotate(" + newAngle + "deg)";
-        updateSelectionUI();
-        if(e.cancelable) e.preventDefault();
-        return;
-    }
-
-    if (!selected || isResizing || isRotating || !isDragging) return;
-
-    const sceneRect = giftScene.getBoundingClientRect();
-    let newLeft = pt.clientX - sceneRect.left - dragOffsetX;
-    let newTop = pt.clientY - sceneRect.top - dragOffsetY;
-
-    // Constrain within the four-bow area
-    const b = getBowConstraints();
-    newLeft = Math.max(b.left, Math.min(newLeft, b.right  - selected.offsetWidth));
-    newTop  = Math.max(b.top,  Math.min(newTop,  b.bottom - selected.offsetHeight));
-
-    selected.style.left = newLeft + "px";
-    selected.style.top  = newTop  + "px";
-    updateSelectionUI();
-    if(e.cancelable) e.preventDefault();
-}
-
-function handlePointerUp() {
-    isResizing = false;
-    isRotating = false;
-    isDragging = false;
-    if (selected) {
-        giftScene.style.cursor = 'grab';
-    } else {
-        giftScene.style.cursor = '';
-    }
-}
-
-document.addEventListener("mousemove", handlePointerMove);
-document.addEventListener("touchmove", handlePointerMove, { passive: false });
-document.addEventListener("mouseup", handlePointerUp);
-document.addEventListener("touchend", handlePointerUp);
-
-/* Click on scene background to deselect */
-giftScene.addEventListener("mousedown", (e) => {
-    if (e.target === giftScene || e.target.closest('.canvas-placeholder')) {
-        selectElement(null);
-    }
-});
-
-/* -------------------- */
-/* SERIALIZE & SAVE     */
-/* -------------------- */
-
-const saveGiftBtn = document.getElementById("saveGiftLayoutBtn");
-if (saveGiftBtn) {
-    saveGiftBtn.addEventListener("click", () => {
-        const savedLayout = [];
-        const sceneW = giftScene.offsetWidth;
-        const sceneH = giftScene.offsetHeight;
-        document.querySelectorAll("#giftScene .giftEl").forEach(el => {
-            const isPlushie = el.classList.contains("draggable") && !el.classList.contains("note") && !el.classList.contains("giftText") && el.querySelector("img") && !el.querySelector("img").src.includes("sticker");
-            const isNote = el.classList.contains("note");
-            const isText = el.classList.contains("giftText");
-            const isSticker = el.querySelector("img") && el.querySelector("img").src.includes("sticker") || el.tagName === "IMG";
-
-            let type = "sticker";
-            if (isPlushie) type = "plushie";
-            else if (isNote) type = "note";
-            else if (isText) type = "text";
-
-            let src = "";
-            let text = "";
-            let noteTextDetails = null;
-            let noteStickers = [];
-
-            if (type === "plushie") {
-                src = el.querySelector("img").src;
-            } else if (type === "note") {
-                src = el.querySelector("img").src;
-                const textDiv = el.querySelector(".noteText");
-                if (textDiv) {
-                    noteTextDetails = {
-                        text: textDiv.innerText,
-                        fontFamily: textDiv.style.fontFamily,
-                        color: textDiv.style.color,
-                        left: parseFloat(textDiv.style.left) || undefined,
-                        top: parseFloat(textDiv.style.top) || undefined,
-                        width: parseFloat(textDiv.style.width) || undefined,
-                        height: parseFloat(textDiv.style.height) || undefined,
-                        fontSize: parseFloat(textDiv.style.fontSize) || undefined,
-                        angle: textDiv.style.transform.includes('rotate') ? parseFloat(textDiv.style.transform.split('rotate(')[1]) : 0,
-                        scale: textDiv.style.transform.includes('scale(') ? parseFloat(textDiv.style.transform.split('scale(')[1]) : 1
-                    };
-                }
-            } else if (type === "sticker") {
-                src = el.tagName === "IMG" ? el.src : el.querySelector("img").src;
-            } else if (type === "text") {
-                text = el.innerText;
-            }
-
-            const rawLeft   = parseFloat(el.style.left)   || 0;
-            const rawTop    = parseFloat(el.style.top)    || 0;
-            const rawWidth  = parseFloat(el.style.width)  || 0;
-            const rawHeight = parseFloat(el.style.height);
-            const leftPct   = rawLeft  / sceneW * 100;
-            const topPct    = rawTop   / sceneH * 100;
-            const widthPct  = rawWidth / sceneW * 100;
-            const heightPct = (el.style.height && el.style.height !== "auto") ? (rawHeight / sceneH * 100) : null;
-
-            let accessories = [];
-            const itemIndex = el.dataset.itemIndex;
-            if (itemIndex !== undefined && giftItems[itemIndex]) {
-                accessories = giftItems[itemIndex].accessories || [];
-            }
-
-            let stickers = [];
-            let canvasW, canvasH, canvasL, canvasT;
-            if (itemIndex !== undefined && giftItems[itemIndex]) {
-                const itemData = giftItems[itemIndex];
-                accessories = itemData.accessories || [];
-                stickers = itemData.stickers || [];
-                canvasW = itemData.canvasW;
-                canvasH = itemData.canvasH;
-                canvasL = itemData.canvasL;
-                canvasT = itemData.canvasT;
-            }
-
-            const isBouquetItem = el.dataset.isBouquet === "true";
-
-            savedLayout.push({
-                type: type,
-                isBouquet: isBouquetItem,
-                // Percentage-based positions — device-independent
-                leftPct:   leftPct,
-                topPct:    topPct,
-                widthPct:  widthPct,
-                heightPct: heightPct,
-                // Legacy pixel fields kept for shared-link backwards compat
-                left: el.style.left,
-                top: el.style.top,
-                width: el.style.width,
-                height: el.style.height,
-                sceneW: sceneW,
-                sceneH: sceneH,
-                zIndex: el.style.zIndex,
-                rotation: el.dataset.rotation || "0",
-                flip: el.dataset.flip || "1",
-                src: src,
-                text: text,
-                noteTextDetails: noteTextDetails,
-                stickers: stickers,
-                fontFamily: el.style.fontFamily || "",
-                fontSize: el.style.fontSize || "",
-                color: el.style.color || "",
-                accessories: accessories,
-                canvasW: canvasW,
-                canvasH: canvasH,
-                canvasL: canvasL,
-                canvasT: canvasT,
+        function makeDraggable(el) {
+            // Mouse events
+            el.addEventListener("mousedown", (e) => {
+                if (e.target.closest('#itemDeleteBtn') || e.target.closest('#itemRotateBtn') || e.target.closest('#itemResizeBtn')) return;
+                e.stopPropagation();
+                if (selected !== el) selectElement(el);
+                isDragging = true;
+                el.style.zIndex = highestZ++;
+                const rect = el.getBoundingClientRect();
+                dragOffsetX = e.clientX - rect.left;
+                dragOffsetY = e.clientY - rect.top;
+                e.preventDefault();
+                giftScene.style.cursor = 'grabbing';
             });
+
+            // Touch events for mobile
+            el.addEventListener("touchstart", (e) => {
+                if (e.target.closest('#itemDeleteBtn') || e.target.closest('#itemRotateBtn') || e.target.closest('#itemResizeBtn')) return;
+                e.stopPropagation();
+                if (selected !== el) selectElement(el);
+                isDragging = true;
+                el.style.zIndex = highestZ++;
+                const touch = e.touches[0];
+                const rect = el.getBoundingClientRect();
+                dragOffsetX = touch.clientX - rect.left;
+                dragOffsetY = touch.clientY - rect.top;
+                e.preventDefault();
+            }, { passive: false });
+        }
+
+        function getPointerEvent(e) {
+            return e.touches ? e.touches[0] : e;
+        }
+
+        function handlePointerDownButtons(e) {
+            if (e.target.closest('#itemDeleteBtn')) {
+                if (selected) {
+                    selected.remove();
+                    selectElement(null);
+                }
+                return;
+            }
+
+            if (e.target.closest('#itemResizeBtn') && selected) {
+                e.stopPropagation();
+                if (e.cancelable) e.preventDefault();
+                isResizing = true;
+                const pt = getPointerEvent(e);
+                resizeStartX = pt.clientX;
+                resizeStartY = pt.clientY;
+                resizeStartW = selected.offsetWidth;
+                resizeStartH = selected.offsetHeight;
+                resizeStartLeft = parseFloat(selected.style.left) || 0;
+                resizeStartTop = parseFloat(selected.style.top) || 0;
+                return;
+            }
+
+            if (e.target.closest('#itemRotateBtn') && selected) {
+                e.stopPropagation();
+                if (e.cancelable) e.preventDefault();
+                isRotating = true;
+                const pt = getPointerEvent(e);
+
+                const rect = selected.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                rotateStartAngle = Math.atan2(pt.clientY - cy, pt.clientX - cx) * 180 / Math.PI;
+                rotateInitialElementAngle = parseFloat(selected.dataset.rotation) || 0;
+                return;
+            }
+        }
+
+        document.addEventListener("mousedown", handlePointerDownButtons);
+        document.addEventListener("touchstart", handlePointerDownButtons, { passive: false });
+
+        /* -------------------- */
+        /* LOAD GIFT ITEMS      */
+        /* -------------------- */
+
+
+        giftItems.forEach((item, itemIndex) => {
+            const qty = item.quantity || 1;
+            for (let q = 0; q < qty; q++) {
+
+                if (item.type === 'text') {
+                    const textEl = document.createElement("div");
+                    textEl.className = "draggable giftEl giftText";
+                    textEl.dataset.itemIndex = itemIndex;
+                    textEl.style.position = "absolute";
+                    textEl.style.left = (150 + q * 20) + "px";
+                    textEl.style.top = (200 + q * 20) + "px";
+                    textEl.style.zIndex = highestZ++;
+                    textEl.style.fontFamily = item.fontFamily || "Pacifico, cursive";
+                    textEl.style.fontSize = "22px";
+                    textEl.style.color = item.color || "#B71A3D";
+                    textEl.style.cursor = "move";
+                    textEl.style.userSelect = "none";
+                    textEl.innerText = item.text || "Custom Text";
+
+                    makeDraggable(textEl);
+                    giftScene.appendChild(textEl);
+                    continue;
+                }
+
+                if (item.type === 'note') {
+                    const wrapper = document.createElement("div");
+                    wrapper.className = "note draggable giftEl";
+                    wrapper.dataset.itemIndex = itemIndex;
+                    wrapper.style.position = "absolute";
+                    wrapper.style.left = (200 + q * 20) + "px";
+                    wrapper.style.top = (150 + q * 20) + "px";
+                    const scaleMultiplier = item.scale || 1;
+                    wrapper.style.width = (220 * scaleMultiplier) + "px";
+                    wrapper.style.zIndex = highestZ++;
+
+                    const angleRad = item.angle || 0;
+                    const angleDeg = angleRad * (180 / Math.PI);
+                    wrapper.dataset.rotation = angleDeg;
+                    wrapper.style.transform = `rotate(${angleDeg}deg)`;
+
+                    const paper = document.createElement("img");
+                    paper.src = item.src;
+                    paper.style.width = "100%";
+                    paper.style.display = "block";
+                    paper.draggable = false;
+                    wrapper.className = "note giftEl";
+
+                    wrapper.style.containerType = "inline-size";
+                    wrapper.style.aspectRatio = "1 / 1";
+                    wrapper.style.height = wrapper.style.width;
+
+                    wrapper.appendChild(paper);
+
+                    if (item.noteTextDetails) {
+                        const textDiv = document.createElement("div");
+                        textDiv.className = "noteText";
+                        textDiv.innerText = item.noteTextDetails.text;
+                        textDiv.style.fontFamily = item.noteTextDetails.fontFamily;
+                        textDiv.style.color = item.noteTextDetails.color;
+
+                        if (item.noteTextDetails.left !== undefined) {
+                            textDiv.style.position = "absolute";
+                            textDiv.style.left = item.noteTextDetails.left + "%";
+                            textDiv.style.top = item.noteTextDetails.top + "%";
+                            textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
+
+                            let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
+                            textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
+
+                            const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "50%";
+                            textDiv.style.height = savedHeight;
+                            textDiv.style.maxHeight = savedHeight;
+                            textDiv.style.overflow = "hidden";
+                            textDiv.style.whiteSpace = "pre-wrap";
+                            textDiv.style.wordBreak = "break-word";
+                            textDiv.style.textAlign = "center";
+                            textDiv.style.lineHeight = "1.2";
+                            // Use saved fontSize (% of note paper width) so it scales correctly with the wrapper.
+                            // Fall back to 7.5cqw only if no fontSize was saved.
+                            if (item.noteTextDetails.fontSize) {
+                                textDiv.style.fontSize = item.noteTextDetails.fontSize + "cqw";
+                            } else {
+                                textDiv.style.fontSize = "7.5cqw";
+                            }
+                        }
+
+                        wrapper.appendChild(textDiv);
+                    }
+
+                    if (item.stickers) {
+                        item.stickers.forEach(st => {
+                            const stickerImg = document.createElement("img");
+                            stickerImg.src = st.src;
+                            stickerImg.style.position = "absolute";
+                            stickerImg.style.left = st.left + "%";
+                            stickerImg.style.top = st.top + "%";
+                            stickerImg.style.width = st.width + "%";
+                            let stFlip = st.flip == "-1" ? "scaleX(-1) " : "";
+                            stickerImg.style.transform = `translate(-50%, -50%) ${stFlip}rotate(${st.angle || 0}rad) scale(${st.scale || 1})`;
+                            stickerImg.style.pointerEvents = "none";
+                            wrapper.appendChild(stickerImg);
+                        });
+                    }
+
+                    makeDraggable(wrapper);
+                    giftScene.appendChild(wrapper);
+                    continue;
+                }
+
+                if (item.type === 'sticker') {
+                    const img = document.createElement("img");
+                    img.src = item.src;
+                    img.className = "draggable giftEl";
+                    img.dataset.itemIndex = itemIndex;
+                    img.style.position = "absolute";
+                    img.style.width = "100px";
+                    img.style.left = (250 + q * 20) + "px";
+                    img.style.top = (250 + q * 20) + "px";
+                    img.style.zIndex = highestZ++;
+                    img.draggable = false;
+
+                    makeDraggable(img);
+                    giftScene.appendChild(img);
+                    continue;
+                }
+
+                // Standard plushie/flower/treat
+                const wrapper = document.createElement("div");
+                wrapper.className = "draggable giftEl";
+                wrapper.dataset.itemIndex = itemIndex;
+
+                const isBouquet = (item.customId && item.customId.startsWith("bouquet_")) || (item.name && item.name.toLowerCase().includes("bouquet"));
+                if (isBouquet) wrapper.dataset.isBouquet = "true";
+
+                wrapper.style.position = "absolute";
+                wrapper.style.left = (80 + q * 30) + "px";
+                wrapper.style.top = (80 + q * 30) + "px";
+                wrapper.style.width = "180px";
+
+                let canvasW = isBouquet ? 600 : 280;
+                let canvasH = canvasW;
+                let canvasL = isBouquet ? 50 : 210;
+                let canvasT = isBouquet ? 50 : 210;
+
+                if (item.canvasW !== undefined) {
+                    canvasW = item.canvasW;
+                    canvasH = item.canvasH;
+                    canvasL = item.canvasL;
+                    canvasT = item.canvasT;
+                }
+
+                if (isBouquet || item.canvasW !== undefined) {
+                    wrapper.style.height = (180 * (canvasH / canvasW)) + "px";
+                } else {
+                    wrapper.style.height = "auto";
+                }
+
+                wrapper.style.zIndex = highestZ++;
+
+                const baseImg = document.createElement("img");
+                baseImg.src = item.image || item.src; // fallback for src
+
+                if (isBouquet || item.canvasW !== undefined) {
+                    baseImg.style.position = "absolute";
+                    baseImg.style.width = "100%";
+                    baseImg.style.height = "100%";
+                    baseImg.style.objectFit = "contain";
+                } else {
+                    baseImg.style.width = "100%";
+                    baseImg.style.height = "auto";
+                    baseImg.style.objectFit = "contain";
+                }
+
+                baseImg.style.left = "0";
+                baseImg.style.top = "0";
+                baseImg.style.transform = "none";
+                baseImg.style.display = "block";
+                baseImg.draggable = false;
+
+                wrapper.appendChild(baseImg);
+
+                if (item.accessories && item.accessories.length > 0) {
+                    item.accessories.forEach((acc, index) => {
+                        const accessory = document.createElement("img");
+                        let src = acc.image;
+                        if (src) src = resolveAccessorySrc(src);
+                        accessory.src = src;
+                        accessory.style.position = "absolute";
+                        accessory.style.pointerEvents = "none";
+                        const rawLeft = parseFloat(acc.left);
+                        const rawTop = parseFloat(acc.top);
+                        const rawWidth = parseFloat(acc.width);
+
+                        // Backwards compatibility for old saved bouquets (using virtual offset +350 -300)
+                        let adjustedLeft = rawLeft;
+                        let adjustedTop = rawTop;
+                        if (item.canvasW === undefined && isBouquet) {
+                            adjustedLeft = rawLeft - 50;
+                            adjustedTop = rawTop - 50;
+                        } else if (item.canvasW === undefined && !isBouquet) {
+                            adjustedLeft = rawLeft - 210;
+                            adjustedTop = rawTop - 210;
+                        } else {
+                            adjustedLeft = rawLeft - canvasL;
+                            adjustedTop = rawTop - canvasT;
+                        }
+
+                        accessory.style.left = ((adjustedLeft / canvasW) * 100) + "%";
+                        accessory.style.top = ((adjustedTop / canvasH) * 100) + "%";
+                        accessory.style.width = ((rawWidth / canvasW) * 100) + "%";
+
+                        if (index === 0 && !isBouquet && item.canvasW !== undefined) {
+                            accessory.style.height = "auto";
+                            accessory.style.display = "block";
+                        } else {
+                            if (acc.height) {
+                                const rawHeight = parseFloat(acc.height);
+                                accessory.style.height = ((rawHeight / canvasH) * 100) + "%";
+                                accessory.style.objectFit = "contain";
+                            }
+                        }
+
+                        let accFlip = acc.flip == "-1" ? "scaleX(-1) " : "";
+                        accessory.style.transform = `${accFlip}rotate(${acc.rotation || 0}deg)`;
+                        wrapper.appendChild(accessory);
+                    });
+                }
+
+
+                makeDraggable(wrapper);
+                giftScene.appendChild(wrapper);
+            }
         });
-        
-        sessionStorage.setItem("savedGiftLayout", JSON.stringify(savedLayout));
-        window.location = "final.html";
-    });
-}
 
-</script>
-    
+        /* -------------------- */
+        /* GLOBAL DRAG MOVE     */
+        /* -------------------- */
 
-<style>
-/* Glass canvas removed as requested */
-#saveGiftLayoutBtn {
-    background-color: #ffffff !important;
-}
-#saveGiftLayoutBtn > span {
-    color: #ff6b81 !important;
-}
-#saveGiftLayoutBtn > span::before {
-    content: none !important;
-    display: none !important;
-}
+        function handlePointerMove(e) {
+            const pt = getPointerEvent(e);
+            const sceneW = giftScene.clientWidth;
+            const sceneH = giftScene.clientHeight;
 
-</style>
+            if (isResizing && selected) {
+                const dx = pt.clientX - resizeStartX;
+                const isText = selected.classList.contains("giftText");
+
+                if (isText) {
+                    let currentFS = parseFloat(window.getComputedStyle(selected).fontSize) || 16;
+                    const dy = pt.clientY - resizeStartY;
+                    selected.style.fontSize = Math.max(10, currentFS + dy / 10) + "px";
+                    resizeStartY = pt.clientY;
+                } else {
+                    const b = getBowConstraints();
+                    let maxWByWidth = b.right - resizeStartLeft;
+                    let maxWByHeight = (b.bottom - resizeStartTop) * (resizeStartW / resizeStartH);
+                    let maxW = Math.min(maxWByWidth, maxWByHeight);
+                    let newW = resizeStartW + dx;
+                    newW = Math.max(30, Math.min(newW, maxW));
+
+                    selected.style.width = newW + "px";
+                    selected.style.height = (newW * (resizeStartH / resizeStartW)) + "px";
+                }
+                updateSelectionUI();
+                if (e.cancelable) e.preventDefault();
+                return;
+            }
+
+            if (isRotating && selected) {
+                const rect = selected.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const currentAngle = Math.atan2(pt.clientY - cy, pt.clientX - cx) * 180 / Math.PI;
+
+                let angleDiff = currentAngle - rotateStartAngle;
+                let newAngle = rotateInitialElementAngle + angleDiff;
+
+                selected.dataset.rotation = newAngle;
+                let flipStr = selected.dataset.flip === "-1" ? "scaleX(-1) " : "";
+                selected.style.transform = flipStr + "rotate(" + newAngle + "deg)";
+                updateSelectionUI();
+                if (e.cancelable) e.preventDefault();
+                return;
+            }
+
+            if (!selected || isResizing || isRotating || !isDragging) return;
+
+            const sceneRect = giftScene.getBoundingClientRect();
+            let newLeft = pt.clientX - sceneRect.left - dragOffsetX;
+            let newTop = pt.clientY - sceneRect.top - dragOffsetY;
+
+            // Constrain within the four-bow area
+            const b = getBowConstraints();
+            newLeft = Math.max(b.left, Math.min(newLeft, b.right - selected.offsetWidth));
+            newTop = Math.max(b.top, Math.min(newTop, b.bottom - selected.offsetHeight));
+
+            selected.style.left = newLeft + "px";
+            selected.style.top = newTop + "px";
+            updateSelectionUI();
+            if (e.cancelable) e.preventDefault();
+        }
+
+        function handlePointerUp() {
+            isResizing = false;
+            isRotating = false;
+            isDragging = false;
+            if (selected) {
+                giftScene.style.cursor = 'grab';
+            } else {
+                giftScene.style.cursor = '';
+            }
+        }
+
+        document.addEventListener("mousemove", handlePointerMove);
+        document.addEventListener("touchmove", handlePointerMove, { passive: false });
+        document.addEventListener("mouseup", handlePointerUp);
+        document.addEventListener("touchend", handlePointerUp);
+
+        /* Click on scene background to deselect */
+        giftScene.addEventListener("mousedown", (e) => {
+            if (e.target === giftScene || e.target.closest('.canvas-placeholder')) {
+                selectElement(null);
+            }
+        });
+
+        /* -------------------- */
+        /* SERIALIZE & SAVE     */
+        /* -------------------- */
+
+        const saveGiftBtn = document.getElementById("saveGiftLayoutBtn");
+        if (saveGiftBtn) {
+            saveGiftBtn.addEventListener("click", () => {
+                const savedLayout = [];
+                const sceneW = giftScene.offsetWidth;
+                const sceneH = giftScene.offsetHeight;
+                document.querySelectorAll("#giftScene .giftEl").forEach(el => {
+                    const isPlushie = el.classList.contains("draggable") && !el.classList.contains("note") && !el.classList.contains("giftText") && el.querySelector("img") && !el.querySelector("img").src.includes("sticker");
+                    const isNote = el.classList.contains("note");
+                    const isText = el.classList.contains("giftText");
+                    const isSticker = el.querySelector("img") && el.querySelector("img").src.includes("sticker") || el.tagName === "IMG";
+
+                    let type = "sticker";
+                    if (isPlushie) type = "plushie";
+                    else if (isNote) type = "note";
+                    else if (isText) type = "text";
+
+                    let src = "";
+                    let text = "";
+                    let noteTextDetails = null;
+                    let noteStickers = [];
+
+                    if (type === "plushie") {
+                        src = el.querySelector("img").src;
+                    } else if (type === "note") {
+                        src = el.querySelector("img").src;
+                        const textDiv = el.querySelector(".noteText");
+                        if (textDiv) {
+                            noteTextDetails = {
+                                text: textDiv.innerText,
+                                fontFamily: textDiv.style.fontFamily,
+                                color: textDiv.style.color,
+                                left: parseFloat(textDiv.style.left) || undefined,
+                                top: parseFloat(textDiv.style.top) || undefined,
+                                width: parseFloat(textDiv.style.width) || undefined,
+                                height: parseFloat(textDiv.style.height) || undefined,
+                                fontSize: parseFloat(textDiv.style.fontSize) || undefined,
+                                angle: textDiv.style.transform.includes('rotate') ? parseFloat(textDiv.style.transform.split('rotate(')[1]) : 0,
+                                scale: textDiv.style.transform.includes('scale(') ? parseFloat(textDiv.style.transform.split('scale(')[1]) : 1
+                            };
+                        }
+                    } else if (type === "sticker") {
+                        src = el.tagName === "IMG" ? el.src : el.querySelector("img").src;
+                    } else if (type === "text") {
+                        text = el.innerText;
+                    }
+
+                    const rawLeft = parseFloat(el.style.left) || 0;
+                    const rawTop = parseFloat(el.style.top) || 0;
+                    const rawWidth = parseFloat(el.style.width) || 0;
+                    const rawHeight = parseFloat(el.style.height);
+                    const leftPct = rawLeft / sceneW * 100;
+                    const topPct = rawTop / sceneH * 100;
+                    const widthPct = rawWidth / sceneW * 100;
+                    const heightPct = (el.style.height && el.style.height !== "auto") ? (rawHeight / sceneH * 100) : null;
+
+                    let accessories = [];
+                    const itemIndex = el.dataset.itemIndex;
+                    if (itemIndex !== undefined && giftItems[itemIndex]) {
+                        accessories = giftItems[itemIndex].accessories || [];
+                    }
+
+                    let stickers = [];
+                    let canvasW, canvasH, canvasL, canvasT;
+                    if (itemIndex !== undefined && giftItems[itemIndex]) {
+                        const itemData = giftItems[itemIndex];
+                        accessories = itemData.accessories || [];
+                        stickers = itemData.stickers || [];
+                        canvasW = itemData.canvasW;
+                        canvasH = itemData.canvasH;
+                        canvasL = itemData.canvasL;
+                        canvasT = itemData.canvasT;
+                    }
+
+                    const isBouquetItem = el.dataset.isBouquet === "true";
+
+                    savedLayout.push({
+                        type: type,
+                        isBouquet: isBouquetItem,
+                        // Percentage-based positions — device-independent
+                        leftPct: leftPct,
+                        topPct: topPct,
+                        widthPct: widthPct,
+                        heightPct: heightPct,
+                        // Legacy pixel fields kept for shared-link backwards compat
+                        left: el.style.left,
+                        top: el.style.top,
+                        width: el.style.width,
+                        height: el.style.height,
+                        sceneW: sceneW,
+                        sceneH: sceneH,
+                        zIndex: el.style.zIndex,
+                        rotation: el.dataset.rotation || "0",
+                        flip: el.dataset.flip || "1",
+                        src: src,
+                        text: text,
+                        noteTextDetails: noteTextDetails,
+                        stickers: stickers,
+                        fontFamily: el.style.fontFamily || "",
+                        fontSize: el.style.fontSize || "",
+                        color: el.style.color || "",
+                        accessories: accessories,
+                        canvasW: canvasW,
+                        canvasH: canvasH,
+                        canvasL: canvasL,
+                        canvasT: canvasT,
+                    });
+                });
+
+                sessionStorage.setItem("savedGiftLayout", JSON.stringify(savedLayout));
+                window.location = "final.html";
+            });
+        }
+
+    </script>
+
+
+    <style>
+        /* Glass canvas removed as requested */
+        #saveGiftLayoutBtn {
+            background-color: #ffffff !important;
+        }
+
+        #saveGiftLayoutBtn>span {
+            color: #ff6b81 !important;
+        }
+
+        #saveGiftLayoutBtn>span::before {
+            content: none !important;
+            display: none !important;
+        }
+    </style>
 
 </body>
 
 </html>
-
-
-
