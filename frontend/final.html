@@ -1033,42 +1033,40 @@
                 wrapper.className = "note giftEl";
 
                 wrapper.style.containerType = "inline-size";
-                wrapper.style.overflow = "visible";
                 wrapper.style.aspectRatio = "1 / 1";
                 wrapper.style.height = wrapper.style.width;
 
                 if (item.noteTextDetails) {
                     const textDiv = document.createElement("div");
                     textDiv.className = "noteText";
-                    textDiv.style.position = "absolute";
-                    textDiv.style.textAlign = "center";
-                    textDiv.style.wordWrap = "break-word";
-                    textDiv.style.userSelect = "none";
-
                     textDiv.innerText = item.noteTextDetails.text;
                     textDiv.style.fontFamily = item.noteTextDetails.fontFamily;
                     textDiv.style.color = item.noteTextDetails.color;
 
                     if (item.noteTextDetails.left !== undefined) {
+                        textDiv.style.position = "absolute";
                         textDiv.style.left = item.noteTextDetails.left + "%";
                         textDiv.style.top = item.noteTextDetails.top + "%";
                         textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "60%";
+
                         let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
                         textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
+
                         const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "60%";
                         textDiv.style.height = savedHeight;
+                        textDiv.style.maxHeight = savedHeight;
                         textDiv.style.overflow = "hidden";
                         textDiv.style.whiteSpace = "pre-wrap";
                         textDiv.style.wordBreak = "break-word";
+                        textDiv.style.textAlign = "center";
                         textDiv.style.lineHeight = "1.2";
-                        textDiv.style.fontSize = item.noteTextDetails.fontSize ? (item.noteTextDetails.fontSize + "cqw") : "3.8cqw";
-                    } else {
-                        textDiv.style.top = "20%";
-                        textDiv.style.left = "20%";
-                        textDiv.style.width = "60%";
-                        textDiv.style.height = "60%";
-                        textDiv.style.overflow = "hidden";
-                        textDiv.style.fontSize = "18px";
+                        // Use saved fontSize (% of note paper width) so it scales correctly with the wrapper.
+                        // Fall back to 3.8cqw only if no fontSize was saved.
+                        if (item.noteTextDetails.fontSize) {
+                            textDiv.style.fontSize = item.noteTextDetails.fontSize + "cqw";
+                        } else {
+                            textDiv.style.fontSize = "3.8cqw";
+                        }
                     }
 
                     wrapper.appendChild(textDiv);
