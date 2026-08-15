@@ -34,18 +34,30 @@ html, body {
             overflow: hidden;
         }
 
-        body {
-            font-family: 'Fredoka', sans-serif;
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background-image: url('/assets/giftbg.webp');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
             background-color: #fef2f4;
             display: flex;
             flex-direction: column;
+            color: #4A4A4A;
         }
 
+        .checkoutTitle,
         .giftHeader {
             text-align: center !important;
             margin-top: 100px !important;
@@ -59,10 +71,10 @@ html, body {
         }
 
         @media (max-width: 768px) {
-            body {
+            body::before {
                 background-image: url('/assets/mobilegiftbg.webp') !important;
-                background-attachment: fixed !important;
-                background-size: cover !important;
+            }
+            body {
                 height: 100vh !important;
                 width: 100vw !important;
                 overflow: hidden !important;
