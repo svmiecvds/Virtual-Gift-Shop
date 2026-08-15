@@ -61,16 +61,25 @@ html_REMOVED {
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-body,
-body.receiptPage,
-body.giftPage {
-    color: var(--text-color);
+html::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -999;
     background-image: url('assets/plushiesbg.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: var(--body-bg);
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+body,
+body.receiptPage,
+body.giftPage {
+    color: var(--text-color);
+    background: transparent !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
     min-height: 100vh;
@@ -80,6 +89,7 @@ body.giftPage {
     font-family: var(--font-body);
     font-weight: 500;
 }
+
 
 /* --- CARD LAYOUT SYSTEM --- */
 .flowers-layout, .plushies-layout {
