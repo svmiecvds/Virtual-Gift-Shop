@@ -34,14 +34,23 @@ html, body {
             overflow: hidden;
         }
 
-        body {
-            font-family: 'Fredoka', sans-serif;
+        html::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -999;
             background-image: url('/assets/giftbg.webp');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-color: #fef2f4;
+            pointer-events: none;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: transparent !important;
             display: flex;
             flex-direction: column;
         }
@@ -59,10 +68,10 @@ html, body {
         }
 
         @media (max-width: 768px) {
-            body {
+            html::before {
                 background-image: url('/assets/mobilegiftbg.webp') !important;
-                background-attachment: fixed !important;
-                background-size: cover !important;
+            }
+            body {
                 height: 100vh !important;
                 width: 100vw !important;
                 overflow: hidden !important;
