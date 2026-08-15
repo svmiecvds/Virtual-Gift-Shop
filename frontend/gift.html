@@ -67,25 +67,15 @@
 
 
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image: url('assets/giftbg.webp');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: -1;
-            pointer-events: none;
-        }
-
         body,
         body.receiptPage,
         body.giftPage {
             color: var(--text-color);
+            background-image: url('assets/giftbg.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             background-color: var(--body-bg);
             overflow: hidden !important;
             width: 100vw;
