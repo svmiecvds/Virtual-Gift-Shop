@@ -1106,12 +1106,12 @@
                             textDiv.style.position = "absolute";
                             textDiv.style.left = item.noteTextDetails.left + "%";
                             textDiv.style.top = item.noteTextDetails.top + "%";
-                            textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
+                            textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "60%";
 
                             let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
                             textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
 
-                            const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "50%";
+                            const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "60%";
                             textDiv.style.height = savedHeight;
                             textDiv.style.maxHeight = savedHeight;
                             textDiv.style.overflow = "hidden";
@@ -1120,11 +1120,11 @@
                             textDiv.style.textAlign = "center";
                             textDiv.style.lineHeight = "1.2";
                             // Use saved fontSize (% of note paper width) so it scales correctly with the wrapper.
-                            // Fall back to 7.5cqw only if no fontSize was saved.
+                            // Fall back to 3.8cqw only if no fontSize was saved.
                             if (item.noteTextDetails.fontSize) {
                                 textDiv.style.fontSize = item.noteTextDetails.fontSize + "cqw";
                             } else {
-                                textDiv.style.fontSize = "7.5cqw";
+                                textDiv.style.fontSize = "3.8cqw";
                             }
                         }
 

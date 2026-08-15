@@ -742,9 +742,8 @@
 
             <!-- Step 1: Input Name -->
             <div id="shareStep1">
-                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">Who is this
-                    beautiful gift for?</p>
-                <input type="text" id="recipientNameInput" placeholder="Recipient's Name"
+                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">What's Your Name?</p>
+                <input type="text" id="recipientNameInput" placeholder="What's Your Name?"
                     style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #fac5cf; border-radius: 8px; font-family: var(--font-ui); font-size: 16px; outline: none; box-sizing: border-box;" />
                 <button id="generateLinkBtn" class="shiny-cta"
                     style="width: 100%; justify-content: center; padding: 12px; border-radius: 8px;"><span>Generate
@@ -1036,21 +1035,21 @@
                     if (item.noteTextDetails.left !== undefined) {
                         textDiv.style.left = item.noteTextDetails.left + "%";
                         textDiv.style.top = item.noteTextDetails.top + "%";
-                        textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "75%";
+                        textDiv.style.width = item.noteTextDetails.width ? (item.noteTextDetails.width + "%") : "60%";
                         let flipStr = item.noteTextDetails.flip == "-1" ? "scaleX(-1) " : "";
                         textDiv.style.transform = `translate(-50%, -50%) ${flipStr}rotate(${item.noteTextDetails.angle || 0}rad) scale(${item.noteTextDetails.scale || 1})`;
-                        const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "45%";
+                        const savedHeight = item.noteTextDetails.height ? (item.noteTextDetails.height + "%") : "60%";
                         textDiv.style.height = savedHeight;
                         textDiv.style.overflow = "hidden";
                         textDiv.style.whiteSpace = "pre-wrap";
                         textDiv.style.wordBreak = "break-word";
                         textDiv.style.lineHeight = "1.2";
-                        textDiv.style.fontSize = item.noteTextDetails.fontSize ? (item.noteTextDetails.fontSize + "cqw") : "7.5cqw";
+                        textDiv.style.fontSize = item.noteTextDetails.fontSize ? (item.noteTextDetails.fontSize + "cqw") : "3.8cqw";
                     } else {
-                        textDiv.style.top = "12%";
-                        textDiv.style.left = "10%";
-                        textDiv.style.width = "75%";
-                        textDiv.style.height = "70%";
+                        textDiv.style.top = "20%";
+                        textDiv.style.left = "20%";
+                        textDiv.style.width = "60%";
+                        textDiv.style.height = "60%";
                         textDiv.style.overflow = "hidden";
                         textDiv.style.fontSize = "18px";
                     }
@@ -1129,7 +1128,7 @@
             generateLinkBtn.addEventListener("click", async () => {
                 const name = recipientNameInput.value.trim();
                 if (!name) {
-                    alert("Please enter a name for the recipient.");
+                    alert("Please enter a name.");
                     return;
                 }
 
