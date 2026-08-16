@@ -252,15 +252,16 @@
         .share-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(6px);
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 10000;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.35s ease;
         }
 
         .share-modal-overlay.visible {
@@ -269,46 +270,121 @@
         }
 
         .share-modal {
+            position: relative;
             background: var(--popup-bg);
-            border: 2px solid var(--glow-soft);
-            border-radius: 28px;
-            padding: 32px 36px;
-            max-width: 480px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.25);
+            border: 1.5px solid rgba(255, 182, 193, 0.35);
+            border-radius: 32px;
+            padding: 40px 40px 36px;
+            max-width: 440px;
+            width: 92%;
+            box-shadow: 0 32px 80px rgba(255, 105, 180, 0.22), 0 0 0 1px rgba(255,255,255,0.06) inset;
             text-align: center;
-            transform: scale(0.9) translateY(20px);
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.88) translateY(28px);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
         }
 
         .share-modal-overlay.visible .share-modal {
             transform: scale(1) translateY(0);
         }
 
+        /* Icon circle at top of modal */
+        .share-modal-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff85a1 0%, #ff5f8f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(255, 95, 143, 0.4);
+            font-size: 28px;
+        }
+
         .share-modal h3 {
             font-family: 'Pinyon Script', cursive;
             color: var(--heading-color);
-            font-size: 26px;
-            margin-bottom: 8px;
+            font-size: 30px;
+            margin: 0 0 6px;
+            line-height: 1.2;
         }
 
-        .share-modal p {
+        .share-modal-subtitle {
             color: var(--text-color);
             font-family: 'Fredoka', sans-serif;
             font-size: 14px;
-            margin-bottom: 20px;
-            opacity: 0.8;
+            margin: 0 0 28px;
+            opacity: 0.65;
+            letter-spacing: 0.01em;
         }
 
+        /* Name input wrapper */
+        .share-name-wrapper {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .share-name-wrapper label {
+            display: block;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--heading-color);
+            opacity: 0.7;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .share-name-input {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid rgba(255, 182, 193, 0.4);
+            border-radius: 16px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 17px;
+            color: var(--text-color);
+            background: var(--card-bg);
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            caret-color: #ff5f8f;
+        }
+
+        .share-name-input::placeholder {
+            opacity: 0.45;
+            font-style: italic;
+        }
+
+        .share-name-input:focus {
+            border-color: #ff85a1;
+            box-shadow: 0 0 0 4px rgba(255, 133, 161, 0.18);
+        }
+
+        /* Generate Link button — hidden until name typed */
+        .generate-link-btn-wrap {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+        }
+
+        .generate-link-btn-wrap.visible {
+            max-height: 80px;
+            opacity: 1;
+        }
+
+        /* URL copy box */
         .share-url-box {
             display: flex;
             align-items: stretch;
             gap: 0;
             border-radius: 16px;
             overflow: hidden;
-            border: 2px solid var(--glow-soft);
+            border: 2px solid rgba(255, 182, 193, 0.4);
             background: var(--card-bg);
-            margin-bottom: 20px;
+            margin-bottom: 8px;
         }
 
         .share-url-box input {
@@ -317,57 +393,76 @@
             background: transparent;
             padding: 14px 16px;
             font-family: 'Fredoka', sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-color);
             outline: none;
             min-width: 0;
         }
 
-        .share-url-box button {
+        .share-url-copy-btn {
             border: none;
-            background: var(--bg-pink);
-            color: var(--btn-text-color);
-            padding: 14px 20px;
+            background: linear-gradient(135deg, #ff85a1 0%, #ff5f8f 100%);
+            color: #fff;
+            padding: 14px 22px;
             font-family: 'Fredoka', sans-serif;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
             transition: all 0.2s ease;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .share-url-box button:hover {
+        .share-url-copy-btn:hover {
             filter: brightness(1.1);
         }
 
-        .share-modal-close {
-            background: none;
-            border: none;
+        .share-url-copy-btn.copied {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+        }
+
+        .share-step2-hint {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 13px;
             color: var(--text-color);
-            font-size: 22px;
+            opacity: 0.55;
+            margin: 6px 0 0;
+        }
+
+        .share-modal-close {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--text-color);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 18px;
+            line-height: 1;
             cursor: pointer;
             position: absolute;
             top: 16px;
-            right: 20px;
-            opacity: 0.6;
-            transition: opacity 0.2s;
+            right: 18px;
+            opacity: 0.55;
+            transition: opacity 0.2s, background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .share-modal-close:hover {
             opacity: 1;
+            background: rgba(255,105,180,0.18);
         }
 
-        .share-modal {
-            position: relative;
-        }
-
-        /* Spinner inside share button */
+        /* Spinner inside generate button */
         .share-spinner {
             display: inline-block;
             width: 16px;
             height: 16px;
-            border: 2.5px solid var(--btn-text-color);
-            border-top-color: transparent;
+            border: 2.5px solid rgba(255,255,255,0.6);
+            border-top-color: #fff;
             border-radius: 50%;
             animation: spinShare 0.6s linear infinite;
             vertical-align: middle;
@@ -375,9 +470,7 @@
         }
 
         @keyframes spinShare {
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
 
         /* Toast notification */
@@ -427,7 +520,6 @@
             justify-content: center;
             transition: all 0.25s ease;
         }
-
 
         .share-social-btn:hover {
             background: var(--bg-pink);
@@ -792,27 +884,49 @@
     <!-- Share Modal -->
     <div class="share-modal-overlay" id="shareModal">
         <div class="share-modal">
-            <button class="share-modal-close" id="closeShareModal">&times;</button>
-            <h3 style="font-family: var(--font-ui); color: var(--heading-color);">Share Your Gift!</h3>
+            <button class="share-modal-close" id="closeShareModal" aria-label="Close">&#x2715;</button>
+
+            <!-- Icon -->
+            <div class="share-modal-icon">🎁</div>
 
             <!-- Step 1: Input Name -->
             <div id="shareStep1">
-                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">What's Your Name?</p>
-                <input type="text" id="recipientNameInput" placeholder="What's Your Name?"
-                    style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #fac5cf; border-radius: 8px; font-family: var(--font-ui); font-size: 16px; outline: none; box-sizing: border-box;" />
-                <button id="generateLinkBtn" class="shiny-cta"
-                    style="width: 100%; justify-content: center; padding: 12px; border-radius: 8px;"><span>Generate
-                        Link</span></button>
+                <h3>Share your gift!</h3>
+                <p class="share-modal-subtitle">Tell us your name to personalise the link 💌</p>
+
+                <div class="share-name-wrapper">
+                    <label for="senderNameInput">Your Name</label>
+                    <input
+                        class="share-name-input"
+                        type="text"
+                        id="senderNameInput"
+                        placeholder="e.g. Ayush"
+                        autocomplete="off"
+                        maxlength="60"
+                    />
+                </div>
+
+                <!-- Hidden until name typed -->
+                <div class="generate-link-btn-wrap" id="generateLinkBtnWrap">
+                    <button id="generateLinkBtn" class="shiny-cta"
+                        style="width: 100%; justify-content: center; padding: 14px; border-radius: 14px; margin-bottom: 4px;">
+                        <span>✨ Generate Link</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Step 2: Show Link -->
             <div id="shareStep2" style="display: none;">
-                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">Copy the link
-                    below and send it to them!</p>
+                <h3>Your link is ready!</h3>
+                <p class="share-modal-subtitle">Copy and send it to your special someone 💌</p>
                 <div class="share-url-box">
                     <input type="text" id="shareUrlInput" readonly />
-                    <button id="copyShareBtn">Copy</button>
+                    <button id="copyShareBtn" class="share-url-copy-btn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        Copy
+                    </button>
                 </div>
+                <p class="share-step2-hint">Anyone with this link can view your gift 🎀</p>
             </div>
         </div>
     </div>
@@ -1152,58 +1266,78 @@
             document.body.appendChild(badge);
         }
 
+        // ============================================================
         // Share functionality
-        const shareBtn = document.getElementById("shareGiftBtn");
+        // ============================================================
+        const shareBtn       = document.getElementById("shareGiftBtn");
         const shareBtnMobile = document.getElementById("shareGiftBtnMobile");
-        const shareModal = document.getElementById("shareModal");
-        const closeShareModal = document.getElementById("closeShareModal");
-        const shareStep1 = document.getElementById("shareStep1");
-        const shareStep2 = document.getElementById("shareStep2");
-        const recipientNameInput = document.getElementById("recipientNameInput");
-        const generateLinkBtn = document.getElementById("generateLinkBtn");
-        const shareUrlInput = document.getElementById("shareUrlInput");
-        const copyShareBtn = document.getElementById("copyShareBtn");
+        const shareModal     = document.getElementById("shareModal");
+        const closeShareModalBtn = document.getElementById("closeShareModal");
+        const shareStep1     = document.getElementById("shareStep1");
+        const shareStep2     = document.getElementById("shareStep2");
+        const senderNameInput      = document.getElementById("senderNameInput");
+        const generateLinkBtnWrap  = document.getElementById("generateLinkBtnWrap");
+        const generateLinkBtn      = document.getElementById("generateLinkBtn");
+        const shareUrlInput  = document.getElementById("shareUrlInput");
+        const copyShareBtn   = document.getElementById("copyShareBtn");
 
         function openShareModal() {
             if (isViewerMode) return;
+            // Reset to step 1
             shareStep1.style.display = 'block';
             shareStep2.style.display = 'none';
-            recipientNameInput.value = '';
+            senderNameInput.value = '';
+            generateLinkBtnWrap.classList.remove('visible');
+            // Reset copy button
+            if (copyShareBtn) {
+                copyShareBtn.classList.remove('copied');
+                copyShareBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy`;
+            }
             shareModal.classList.add("visible");
-            recipientNameInput.focus();
+            setTimeout(() => senderNameInput.focus(), 200);
         }
 
-        if (shareBtn) shareBtn.addEventListener("click", openShareModal);
+        if (shareBtn)       shareBtn.addEventListener("click", openShareModal);
         if (shareBtnMobile) shareBtnMobile.addEventListener("click", openShareModal);
+
+        // Show/hide Generate Link button based on input
+        if (senderNameInput) {
+            senderNameInput.addEventListener("input", () => {
+                const hasName = senderNameInput.value.trim().length > 0;
+                generateLinkBtnWrap.classList.toggle('visible', hasName);
+            });
+
+            // Allow Enter key to trigger generate
+            senderNameInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" && senderNameInput.value.trim()) {
+                    generateLinkBtn.click();
+                }
+            });
+        }
 
         if (generateLinkBtn) {
             generateLinkBtn.addEventListener("click", async () => {
-                const name = recipientNameInput.value.trim();
-                if (!name) {
-                    alert("Please enter a name.");
-                    return;
-                }
+                const name = senderNameInput.value.trim();
+                if (!name) return;
 
                 const span = generateLinkBtn.querySelector("span");
-                const originalText = span ? span.innerText : "Generate Link";
-                if (span) span.innerText = "Generating...";
+                const originalText = span ? span.innerHTML : "✨ Generate Link";
+                if (span) span.innerHTML = `<span class="share-spinner"></span> Generating…`;
+                generateLinkBtn.disabled = true;
                 generateLinkBtn.style.pointerEvents = "none";
 
                 try {
                     const response = await fetch('/api/saveGift', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             components: savedLayout,
-                            recipientName: name
+                            recipientName: name,
+                            senderName: name
                         })
                     });
 
-                    if (!response.ok) {
-                        throw new Error('Failed to generate link');
-                    }
+                    if (!response.ok) throw new Error('Failed to generate link');
 
                     const data = await response.json();
                     const shareUrl = window.location.origin + '/result.html?id=' + data.id;
@@ -1215,36 +1349,47 @@
                     console.error("Error generating link:", e);
                     alert("Failed to generate link. Please try again.");
                 } finally {
-                    if (span) span.innerText = originalText;
+                    if (span) span.innerHTML = originalText;
+                    generateLinkBtn.disabled = false;
                     generateLinkBtn.style.pointerEvents = "auto";
                 }
             });
         }
 
-        if (closeShareModal) {
-            closeShareModal.addEventListener("click", () => {
-                shareModal.classList.remove("visible");
-                copyShareBtn.innerText = "Copy";
-            });
+        function closeShareModalFn() {
+            shareModal.classList.remove("visible");
+        }
+
+        if (closeShareModalBtn) {
+            closeShareModalBtn.addEventListener("click", closeShareModalFn);
         }
 
         if (copyShareBtn) {
             copyShareBtn.addEventListener("click", () => {
-                shareUrlInput.select();
-                shareUrlInput.setSelectionRange(0, 99999);
                 navigator.clipboard.writeText(shareUrlInput.value).then(() => {
-                    copyShareBtn.innerText = "Copied!";
+                    copyShareBtn.classList.add('copied');
+                    copyShareBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
                     setTimeout(() => {
-                        copyShareBtn.innerText = "Copy";
-                    }, 2000);
+                        copyShareBtn.classList.remove('copied');
+                        copyShareBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy`;
+                    }, 2500);
+                }).catch(() => {
+                    // Fallback for older browsers
+                    shareUrlInput.select();
+                    document.execCommand('copy');
                 });
             });
         }
 
+        // Close on backdrop click
         window.addEventListener("click", (e) => {
-            if (e.target === shareModal) {
-                shareModal.classList.remove("visible");
-                copyShareBtn.innerText = "Copy";
+            if (e.target === shareModal) closeShareModalFn();
+        });
+
+        // Close on Escape key
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && shareModal.classList.contains("visible")) {
+                closeShareModalFn();
             }
         });
 
