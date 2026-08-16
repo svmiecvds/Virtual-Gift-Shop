@@ -1009,26 +1009,29 @@
         let savedLayout = [];
 
         (function detectSharedGift() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#gift=')) {
-                try {
-                    const compressed = hash.substring(6); // remove '#gift='
-                    const json = LZString.decompressFromEncodedURIComponent(compressed);
+            try {
+                const hash = window.location.hash;
+                if (hash.startsWith('#gift=')) {
+                    const compressed = hash.substring(6);
+                    const json = (typeof LZString !== 'undefined')
+                        ? LZString.decompressFromEncodedURIComponent(compressed)
+                        : null;
                     if (json) {
                         savedLayout = JSON.parse(json);
                         isViewerMode = true;
                         document.body.classList.add('viewer-mode');
-                        // Change title for viewer
                         const titleEl = document.querySelector('.checkoutTitle');
                         if (titleEl) titleEl.textContent = 'A Gift For You ';
                     }
-                } catch (e) {
-                    console.error('Failed to decode shared gift data:', e);
                 }
+            } catch (e) {
+                console.error('Failed to decode shared gift data:', e);
             }
-            // Fallback to localStorage if no shared data
+            // Fallback to sessionStorage if no shared data
             if (!savedLayout.length) {
-                savedLayout = JSON.parse(sessionStorage.getItem("savedGiftLayout")) || [];
+                try {
+                    savedLayout = JSON.parse(sessionStorage.getItem("savedGiftLayout")) || [];
+                } catch(e) { savedLayout = []; }
             }
         })();
 
@@ -1283,6 +1286,7 @@
 
         function openShareModal() {
             if (isViewerMode) return;
+            if (!shareStep1 || !shareStep2 || !senderNameInput || !generateLinkBtnWrap || !shareModal) return;
             // Reset to step 1
             shareStep1.style.display = 'block';
             shareStep2.style.display = 'none';
@@ -1294,7 +1298,7 @@
                 copyShareBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy`;
             }
             shareModal.classList.add("visible");
-            setTimeout(() => senderNameInput.focus(), 200);
+            setTimeout(() => { if (senderNameInput) senderNameInput.focus(); }, 200);
         }
 
         if (shareBtn)       shareBtn.addEventListener("click", openShareModal);
