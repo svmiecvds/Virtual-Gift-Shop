@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { components, recipientName, senderName } = req.body;
+    const { components, recipientName } = req.body;
     
     if (!components || !recipientName) {
       return res.status(400).json({ error: 'Missing components or recipientName' });
@@ -44,7 +44,6 @@ module.exports = async (req, res) => {
       _id: shortId,
       components: components,
       recipientName: recipientName,
-      senderName: senderName || recipientName,
       createdAt: new Date()
     });
 
