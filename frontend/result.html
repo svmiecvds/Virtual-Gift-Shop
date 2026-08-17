@@ -365,13 +365,13 @@ html, body {
 
         /* ---------- src helpers ---------- */
         function resolveMainSrc(src) {
-            if (!src) return '';
-            if (src.startsWith('data:')) return src;
-            let path = src.replace(/\\/g, '/');
-            const i = path.toLowerCase().indexOf('assets/');
-            if (i !== -1) {
-                const p = path.substring(i);
-                return p.startsWith('/') ? '.' + p : './' + p;
+            if (!src) return "";
+            if (src.startsWith("data:")) return src;
+            let path = src.replace(/\\/g, "/");
+            const assetsIndex = path.toLowerCase().indexOf("assets/");
+            if (assetsIndex !== -1) {
+                const p = path.substring(assetsIndex);
+                return p.startsWith("/") ? p.substring(1) : p;
             }
             return src;
         }

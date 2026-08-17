@@ -62,7 +62,10 @@
         html::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             z-index: -999;
             background-image: url('assets/giftbg.webp');
             background-size: cover;
@@ -224,7 +227,8 @@
 
 
         /* --- NAV BRAND --- */
-        .navBrand, a.navBrand {
+        .navBrand,
+        a.navBrand {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -671,12 +675,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
         /* Hide mobile share button on desktop by default */
-        .navbar-mobile-share { display: none; }
-        .mobile-share-btn { display: none; }
-        .mobile-share-wrapper { display: none; }
-        
+        .navbar-mobile-share {
+            display: none;
+        }
+
+        .mobile-share-btn {
+            display: none;
+        }
+
+        .mobile-share-wrapper {
+            display: none;
+        }
+
         /* Hide desktop share button on mobile, and vice versa */
-        .navbar-desktop-share { display: none; }
+        .navbar-desktop-share {
+            display: none;
+        }
 
         @media (min-width: 769px) {
             h1.checkoutTitle.giftHeader {
@@ -688,12 +702,15 @@
                 width: 100%;
                 z-index: 10;
             }
+
             #giftContainer {
                 margin-top: 180px;
             }
+
             .bottom-share-container {
                 display: none !important;
             }
+
             .navbar-desktop-share {
                 display: inline-flex !important;
                 padding: 6px 16px !important;
@@ -793,7 +810,8 @@
 
     <!-- Baby Pink Navbar -->
     <nav id="storeNavbar" style="justify-content: space-between;">
-        <a href="index.html" class="navBrand" style="text-decoration: none; flex: 1; text-align: center;">The Gifting Co.</a>
+        <a href="index.html" class="navBrand" style="text-decoration: none; flex: 1; text-align: center;">The Gifting
+            Co.</a>
         <!-- Mobile share button (right side, mobile only) -->
         <button id="shareGiftBtnMobile" class="shiny-cta navbar-mobile-share" onclick="openShareModal()">
             <span style="display: flex; align-items: center;">
@@ -830,7 +848,8 @@
 
             <!-- Step 1: Input Name -->
             <div id="shareStep1">
-                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">What's Your Name?</p>
+                <p style="font-family: var(--font-ui); color: var(--text-color); margin-bottom: 20px;">What's Your Name?
+                </p>
                 <input type="text" id="recipientNameInput" placeholder="What's Your Name?"
                     style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #fac5cf; border-radius: 8px; font-family: var(--font-ui); font-size: 16px; outline: none; box-sizing: border-box;" />
                 <button id="generateLinkBtn" class="shiny-cta"
@@ -876,7 +895,7 @@
             const assetsIndex = path.toLowerCase().indexOf("assets/");
             if (assetsIndex !== -1) {
                 const p = path.substring(assetsIndex);
-                return p.startsWith("/") ? p : "/" + p;
+                return p.startsWith("/") ? p.substring(1) : p;
             }
             return src;
         }
