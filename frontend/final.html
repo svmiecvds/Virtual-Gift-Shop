@@ -103,6 +103,18 @@
             line-height: 1.2 !important;
         }
 
+        .hidden-h1-spacer {
+            visibility: hidden;
+            pointer-events: none;
+            text-align: center;
+            margin-top: 100px;
+            margin-bottom: 20px;
+            font-size: 56px;
+            line-height: 1.2;
+            font-family: 'Pinyon Script', cursive;
+            font-weight: bold;
+        }
+
 
 
 
@@ -704,7 +716,7 @@
             }
 
             #giftContainer {
-                margin-top: 180px;
+                margin-top: 0;
             }
 
             .bottom-share-container {
@@ -750,7 +762,10 @@
                 padding: 0 10px !important;
                 height: auto !important;
                 min-height: 55vw !important;
-                margin-top: 133px !important;
+            }
+            .hidden-h1-spacer {
+                font-size: 36px !important;
+                margin-top: 80px !important;
             }
 
             #giftScene {
@@ -872,6 +887,9 @@
 
 
 
+
+    <!-- Exact spacer matching gift.html h1 to perfectly align background layout -->
+    <div class="hidden-h1-spacer">Create Your Gift</div>
 
     <!-- Display the stationary gift layout exactly like gift.html -->
     <div id="giftContainer"
