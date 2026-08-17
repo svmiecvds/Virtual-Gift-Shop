@@ -675,6 +675,9 @@
         .mobile-share-btn { display: none; }
         .mobile-share-wrapper { display: none; }
         
+        /* Hide desktop share button on mobile, and vice versa */
+        .navbar-desktop-share { display: none; }
+
         @media (min-width: 769px) {
             h1.checkoutTitle.giftHeader {
                 position: absolute;
@@ -689,12 +692,14 @@
                 margin-top: 180px;
             }
             .bottom-share-container {
-                position: absolute;
-                bottom: 30px;
-                left: 0;
-                width: 100%;
-                margin: 0 !important;
-                z-index: 20;
+                display: none !important;
+            }
+            .navbar-desktop-share {
+                display: inline-flex !important;
+                padding: 6px 16px !important;
+                font-size: 14px !important;
+                align-items: center;
+                justify-content: center;
             }
         }
     </style>
@@ -786,9 +791,23 @@
 
 
     <!-- Baby Pink Navbar -->
-    <nav id="storeNavbar">
-        <a href="index.html" class="navBrand" style="text-decoration: none;">The Gifting Co.</a>
+    <nav id="storeNavbar" style="justify-content: space-between;">
+        <a href="index.html" class="navBrand" style="text-decoration: none; flex: 1; text-align: center;">The Gifting Co.</a>
+        <!-- Mobile share button (right side, mobile only) -->
         <button id="shareGiftBtnMobile" class="shiny-cta navbar-mobile-share" onclick="openShareModal()">
+            <span style="display: flex; align-items: center;">
+                <svg style="margin-right: 4px;" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>Share
+            </span>
+        </button>
+        <!-- Desktop share button (right side, desktop only) -->
+        <button id="shareGiftBtn" class="shiny-cta navbar-desktop-share" onclick="openShareModal()">
             <span style="display: flex; align-items: center;">
                 <svg style="margin-right: 4px;" width="14" height="14" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -842,19 +861,6 @@
         </div>
     </div>
 
-
-    <!-- Share Button (Moved to Bottom) -->
-    <div class="bottom-share-container" style="text-align: center; margin: 30px 0 50px;">
-        <button id="shareGiftBtn" class="shiny-cta"><span><svg style="margin-right: 4px;" width="16" height="16"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <circle cx="18" cy="5" r="3"></circle>
-                    <circle cx="6" cy="12" r="3"></circle>
-                    <circle cx="18" cy="19" r="3"></circle>
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                </svg>Share</span></button>
-    </div>
 
     <!-- Dynamic Warning Banner "Click on your gifts!" will be appended here by JS if voice note exists -->
 
