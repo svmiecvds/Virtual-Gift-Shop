@@ -82,7 +82,6 @@
         }
 
         body,
-        body.receiptPage,
         body.giftPage {
             color: var(--text-color);
             background: transparent !important;
@@ -125,31 +124,7 @@
             transition: background 0.5s ease, box-shadow 0.5s ease;
         }
 
-        #customPanel {
-            width: 320px;
-            height: 65vh;
-            background: var(--panel-bg);
-            border-radius: 25px;
-            padding: 15px;
-            overflow-y: auto;
-            transition: background 0.5s ease, box-shadow 0.5s ease;
-            scrollbar-width: thin;
-            scrollbar-color: var(--glow-soft) rgba(0, 0, 0, 0.05);
-        }
 
-        #customPanel::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        #customPanel::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 10px;
-        }
-
-        #customPanel::-webkit-scrollbar-thumb {
-            background: var(--glow-soft);
-            border-radius: 10px;
-        }
 
         #customPanel::-webkit-scrollbar-thumb:hover,
         #assetPanel::-webkit-scrollbar-thumb:hover {
@@ -199,38 +174,6 @@
             font-size: 18px;
         }
 
-        /* --- GIFT CONTROLS --- */
-        .giftControls {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--glow-soft);
-        }
-
-        .giftControls h2 {
-            color: var(--heading-color);
-            margin-bottom: 10px;
-        }
-
-        .giftControlBtn {
-            display: block;
-            width: 100%;
-            margin: 6px 0;
-            padding: 10px 14px;
-            border: none;
-            border-radius: 50px;
-            background: var(--btn-bg);
-            color: var(--btn-text);
-            font-family: var(--font-ui);
-            font-size: 15px;
-            cursor: pointer;
-            transition: transform 0.15s, background 0.3s;
-        }
-
-        .giftControlBtn:hover {
-            transform: scale(1.04);
-        }
-
-        .giftDeleteBtn {}
 
         /* --- Highlight selected gift element --- */
         .gifSelected {
@@ -249,18 +192,6 @@
             word-break: break-word;
         }
 
-        /* --- CUSTOM ALIGNMENTS --- */
-        .checkoutTitle,
-        .customizeTitle {
-            text-align: center !important;
-            font-family: var(--font-heading);
-            color: var(--heading-color);
-            margin-top: 100px;
-            margin-bottom: 25px;
-            font-size: 50px;
-            text-shadow: 2px 2px 4px rgba(250, 197, 207, 0.4);
-            font-weight: bold;
-        }
 
 
 
@@ -450,72 +381,6 @@
         /* --- extra padding for box shadows --- */
 
 
-        .carousel-track {
-            display: flex;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .carousel-slide {
-            flex: 0 0 calc(100% / 3);
-
-            /* --- Show 3 items --- */
-            padding: 0 15px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-        }
-
-
-
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #fafafa;
-            border: 1px solid #e4e4e7;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            color: #52525b;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-
-
-        .carousel-btn:hover:not(:disabled) {
-            background: #f4f4f5;
-            color: #18181b;
-        }
-
-
-
-        .carousel-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .carousel-prev {
-            left: 0;
-        }
-
-        .carousel-next {
-            right: 0;
-        }
-
-        .carousel-slide .flowerCard {
-            width: 100%;
-
-            /* --- Take up the slide width --- */
-            max-width: 320px;
-
-            /* --- Don't get too crazy large --- */
-            margin: 0 auto;
-        }
 
         /* --- NAV BRAND CENTERING --- */
         .navBrand {
@@ -612,40 +477,14 @@
         [class*="popup"],
         [id*="Scene"],
         [class*="item"],
-        .summary,
-        .cart-item,
-        .checkout-panel,
-        .category-card,
-        .spawner-item {
-            border: none !important;
-            box-shadow: none !important;
-            filter: none !important;
-        }
+
 
         button,
         [class*="btn"],
         [class*="button"],
-        .continue-btn,
-        .action-btn,
-        .nav-action-btn,
-        .shiny-cta,
-        .navLink {
-            box-shadow: none !important;
-            text-shadow: none !important;
-            filter: none !important;
-        }
 
-        .flowerCard {
-            height: 100% !important;
-        }
 
-        .flowerSelector {
-            margin-top: auto !important;
-        }
 
-        .flowerCard .customizeBtn {
-            margin-top: 0 !important;
-        }
     </style>
 
 
@@ -658,14 +497,12 @@
                 background-size: 100% 100% !important;
             }
 
-            .checkoutTitle,
             .giftHeader {
                 font-size: 36px !important;
                 margin-top: 80px !important;
             }
 
             body,
-            body.receiptPage,
             body.giftPage {
                 overflow-y: auto !important;
                 overflow-x: hidden !important;
@@ -692,9 +529,7 @@
                 width: 100% !important;
             }
 
-            #storeNavbar>.navLink {
-                display: none !important;
-            }
+
 
             #storeNavbar .navBrand {
                 display: none !important;
